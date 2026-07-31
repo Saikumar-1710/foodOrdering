@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Ordering</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- bootstrap cdn-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+</head>
+
+<body>
+
+    <header class="header">
+
+        <div class="container">
+            <a href="#" class="logo"><img src="images/logo.webp" alt="Food Logo"></a>
+
+            <nav class="navbar">
+                <ul class="nav-list">
+                    <li><a href="#" class="nav-link active">Home</a></li>
+                    <li><a href="#" class="nav-link">Menu</a></li>
+                    <li><a href="transform.html" class="nav-link">Categories</a></li>
+                    <li><a href="#" class="nav-link">Offers</a></li>
+                    <li><a href="#" class="nav-link">About</a></li>
+                    <li><a href="#" class="nav-link">Contact</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+
+                <div class="search-section">
+                    <button class="icon-btn" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    <input type="text" id="searchInput" placeholder="Search food...">
+                    <div id="searchResults"></div>
+                </div>
+                <button class="icon-btn"><i class="fa-solid fa-user"></i></button>
+                <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i><span class="cart-count"></span></button>
+                <button class="icon-btn mobile-menu" id="menuBtn"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+
+            <div id="carouselExampleCaptions" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                <img src="images/banner.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>First slide label</h5>
+                    <p>Some representative placeholder content for the first slide.</p>
+                </div>
+                </div>
+                <div class="carousel-item">
+                <img src="images/c1.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Second slide label</h5>
+                    <p>Some representative placeholder content for the second slide.</p>
+                </div>
+                </div>
+                <div class="carousel-item">
+                <img src="images/c3.jpg" class="d-block w-100" alt="...">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Third slide label</h5>
+                    <p>Some representative placeholder content for the third slide.</p>
+                </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+            </div>
+
+
+    <section class="hero">
+        <div class="container hero-wrapper">
+            <div class="hero-content">
+
+                <span class="hero-subtitle">Delicious & Fresh</span>
+
+                <h1 class="hero-title">Order Your Favourite Food Anytime</h1>
+
+                <p class="hero-description">Freshly prepared meals delivered to your doorstep.
+                    Explore hundreds of delicious dishes from our kitchen.</p>
+
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary">Order Now </a>
+                    <a href="#" class="btn btn-secondary">View Menu</a>
+                </div>
+            </div>
+
+            <div class="hero-image">
+                <img src="images/banner.jpg" alt="Hero Food">
+            </div>
+        </div>
+    </section>
+
+
+    <section class="categories">
+
+        <div class="container">
+            <div class="section-heading">
+                <h2> Popular Categories</h2>
+                <p>Explore our delicious menu</p>
+            </div>
+
+            <div class="category-wrapper">
+                <article class="category-card">
+                    <img src="images/pizza.jpg" alt="Pizza">
+                    <h3>Pizza</h3>
+                </article>
+                <article class="category-card">
+                    <img src="images/burger.jpg" alt="Burger">
+                    <h3>Burger</h3>
+                </article>
+
+                <article class="category-card">
+                    <img src="images/pasta.jpg" alt="Pasta">
+                    <h3>Pasta</h3>
+                </article>
+
+                <article class="category-card">
+                    <img src="images/drinks.jpg" alt="Drinks">
+                    <h3>Drinks</h3>
+                </article>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="products">
+
+        <div class="container">
+            <div class="section-heading">
+                <h2>Featured Dishes</h2>
+            </div>
+
+            <div class="product-grid">
+                <article class="product-card">
+                    <img src="images/burger.jpg" alt="Burger">
+
+                    <div class="product-content">
+                        <span class="rating">★★★★★</span>
+
+                        <h3> Chicken Burger</h3>
+                        <p>Crispy chicken with cheese and vegetables.</p>
+
+                        <div class="product-footer">
+                            <span class="price">₹249</span>
+                            <button class="btn-small add-cart"> Add</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="product-card">
+
+                    <img src="images/pizza.jpg" alt="Pizza">
+
+                    <div class="product-content">
+                        <span class="rating">★★★★★</span>
+
+                        <h3>Veg Pizza </h3>
+                        <p>Loaded with fresh vegetables.</p>
+
+                        <div class="product-footer">
+                            <span class="price"> ₹399</span>
+                            <button class="btn-small add-cart"> Add </button>
+                        </div>
+                    </div>
+                </article>
+
+
+                <article class="product-card">
+
+                    <img src="images/pasta.jpg" alt="Pasta">
+
+                    <div class="product-content">
+                        <span class="rating">★★★★★</span>
+
+                        <h3>White Sauce Pasta</h3>
+                        <p>Creamy Italian style pasta.</p>
+
+                        <div class="product-footer">
+                            <span class="price"> ₹299</span>
+                            <button class="btn-small add-cart">Add</button>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="offer">
+
+        <div class="container">
+            <div class="offer-content">
+                <h2>Get 30% OFF</h2>
+                <p>On your first order.</p>
+
+                <a href="#" class="btn btn-primary"> Order Now </a>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="footer">
+
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Food Order</h3>
+                    <p>Fresh food delivered quickly to your home.</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3> Quick Links</h3>
+
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Menu</a></li>
+                        <li><a href="#">Offers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3> Contact</h3>
+                    <p>info@foodorder.com</p>
+                    <p> +91 9876543210</p>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Follow Us</h3>
+
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 Food Ordering. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="../js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
