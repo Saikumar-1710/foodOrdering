@@ -551,6 +551,51 @@ section {
 }
 
 
+.food-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.food-card {
+    width: 260px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 8px;
+}
+
+.food-card img {
+    width: 100%;
+    object-fit: cover;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    background: white;
+}
+
+th,
+td {
+    padding: 10px;
+    border: 1px solid #ccc;
+}
+
+th {
+    background: #eeeeee;
+}
+
+button {
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+input {
+    padding: 8px;
+}
+
+
 
 
 

@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Customize Food</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+        Customize Your Food
+    </h1>
+
+    <h2 th:text="${food.name}">
+        Food Name
+    </h2>
+
+    <p th:text="${food.description}">
+        Description
+    </p>
+
+    <hr>
+
+    <form method="post"
+          action="/customer/cart/add">
+
+        <input type="hidden"
+               name="foodId"
+               th:value="${food.id}">
+
+        <h2>Food Nutrition</h2>
+
+        <table border="1">
+
+            <tr>
+                <th>Nutrient</th>
+                <th>Quantity</th>
+            </tr>
+
+            <tr>
+                <td>Calories</td>
+                <td>
+                    <span id="calories"
+                          th:text="${food.calories}">
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Protein</td>
+                <td>
+                    <span id="protein"
+                          th:text="${food.protein}">
+                    </span>
+                    g
+                </td>
+            </tr>
+
+            <tr>
+                <td>Carbohydrates</td>
+                <td>
+                    <span id="carbohydrates"
+                          th:text="${food.carbohydrates}">
+                    </span>
+                    g
+                </td>
+            </tr>
+
+            <tr>
+                <td>Fats</td>
+                <td>
+                    <span id="fats"
+                          th:text="${food.fats}">
+                    </span>
+                    g
+                </td>
+            </tr>
+
+            <tr>
+                <td>Fiber</td>
+                <td>
+                    <span id="fiber"
+                          th:text="${food.fiber}">
+                    </span>
+                    g
+                </td>
+            </tr>
+
+            <tr>
+                <td>Magnesium</td>
+                <td>
+                    <span id="magnesium"
+                          th:text="${food.magnesium}">
+                    </span>
+                    mg
+                </td>
+            </tr>
+
+        </table>
+
+        <hr>
+
+        <h2>
+            Customize Your Food
+        </h2>
+
+        <div th:each="option : ${food.customizationOptions}">
+
+            <label>
+
+                <input type="checkbox"
+                       name="optionIds"
+                       th:value="${option.id}"
+
+                       th:attr="
+                       data-calories=${option.calories},
+                       data-protein=${option.protein},
+                       data-carbohydrates=${option.carbohydrates},
+                       data-fats=${option.fats},
+                       data-fiber=${option.fiber},
+                       data-magnesium=${option.magnesium},
+                       data-price=${option.priceAdjustment}">
+
+                <span th:text="${option.name}">
+                </span>
+
+                <span
+                    th:if="${option.priceAdjustment > 0}">
+
+                    +
+                    ₹
+                    <span th:text="${option.priceAdjustment}">
+                    </span>
+
+                </span>
+
+            </label>
+
+            <br>
+
+        </div>
+
+        <hr>
+
+        <h2>
+            Customized Nutrition
+        </h2>
+
+        <table border="1">
+
+            <tr>
+                <th>Nutrient</th>
+                <th>Total</th>
+            </tr>
+
+            <tr>
+                <td>Calories</td>
+                <td id="totalCalories">
+                    <span th:text="${food.calories}">
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Protein</td>
+                <td id="totalProtein">
+                    <span th:text="${food.protein}">
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Carbohydrates</td>
+                <td id="totalCarbohydrates">
+                    <span th:text="${food.carbohydrates}">
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Fats</td>
+                <td id="totalFats">
+                    <span th:text="${food.fats}">
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Fiber</td>
+                <td id="totalFiber">
+                    <span th:text="${food.fiber}">
+                    </span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Magnesium</td>
+                <td id="totalMagnesium">
+                    <span th:text="${food.magnesium}">
+                    </span>
+                </td>
+            </tr>
+
+        </table>
+
+        <br>
+
+        <h3>
+            Base Price:
+            ₹<span th:text="${food.price}"></span>
+        </h3>
+
+        <h3>
+            Customized Price:
+            ₹<span id="totalPrice"
+                   th:text="${food.price}">
+            </span>
+        </h3>
+
+        <br>
+
+        <button type="submit">
+            Add To Cart
+        </button>
+
+    </form>
+
+</div>
+
+<script>
+
+    const checkboxes =
+        document.querySelectorAll(
+            'input[name="optionIds"]'
+        );
+
+    const baseCalories =
+        parseFloat(
+            document.getElementById("calories").innerText
+        );
+
+    const baseProtein =
+        parseFloat(
+            document.getElementById("protein").innerText
+        );
+
+    const baseCarbohydrates =
+        parseFloat(
+            document.getElementById("carbohydrates").innerText
+        );
+
+    const baseFats =
+        parseFloat(
+            document.getElementById("fats").innerText
+        );
+
+    const baseFiber =
+        parseFloat(
+            document.getElementById("fiber").innerText
+        );
+
+    const baseMagnesium =
+        parseFloat(
+            document.getElementById("magnesium").innerText
+        );
+
+    const basePrice =
+        parseFloat(
+            document.getElementById("totalPrice").innerText
+        );
+
+    function calculateNutrition() {
+
+        let calories = baseCalories;
+        let protein = baseProtein;
+        let carbohydrates = baseCarbohydrates;
+        let fats = baseFats;
+        let fiber = baseFiber;
+        let magnesium = baseMagnesium;
+        let price = basePrice;
+
+        checkboxes.forEach(function (checkbox) {
+
+            if (checkbox.checked) {
+
+                calories +=
+                    parseFloat(checkbox.dataset.calories || 0);
+
+                protein +=
+                    parseFloat(checkbox.dataset.protein || 0);
+
+                carbohydrates +=
+                    parseFloat(
+                        checkbox.dataset.carbohydrates || 0
+                    );
+
+                fats +=
+                    parseFloat(checkbox.dataset.fats || 0);
+
+                fiber +=
+                    parseFloat(checkbox.dataset.fiber || 0);
+
+                magnesium +=
+                    parseFloat(
+                        checkbox.dataset.magnesium || 0
+                    );
+
+                price +=
+                    parseFloat(checkbox.dataset.price || 0);
+            }
+
+        });
+
+        document.getElementById("totalCalories")
+            .innerText = calories.toFixed(2);
+
+        document.getElementById("totalProtein")
+            .innerText = protein.toFixed(2);
+
+        document.getElementById("totalCarbohydrates")
+            .innerText = carbohydrates.toFixed(2);
+
+        document.getElementById("totalFats")
+            .innerText = fats.toFixed(2);
+
+        document.getElementById("totalFiber")
+            .innerText = fiber.toFixed(2);
+
+        document.getElementById("totalMagnesium")
+            .innerText = magnesium.toFixed(2);
+
+        document.getElementById("totalPrice")
+            .innerText = price.toFixed(2);
+    }
+
+    checkboxes.forEach(function (checkbox) {
+
+        checkbox.addEventListener(
+            "change",
+            calculateNutrition
+        );
+
+    });
+
+</script>
+
+</body>
+
+</html>

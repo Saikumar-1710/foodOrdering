@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Food Ordering | Login</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+          rel="stylesheet">
+
+    <link rel="stylesheet"
+          th:href="@{/css/login.css}">
+
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<div class="login-box">
+	<div class="login-logoTitle">
+	
+    <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=200"
+         alt="Food Ordering logo"
+         class="brand-logo">
+    <h1>FoodieGo</h1>
+	</div>
+
+    <p class="tagline">Fresh Food • Fast Delivery • Happy Moments</p>
+
+    <form th:action="@{/login}" method="post">
+
+        <p class="error"
+           th:if="${error}"
+           th:text="${error}">
+        </p>
+
+        <div class="input-box">
+            <input
+                    type="text"
+                    name="userName"
+                    id="userName"
+                    placeholder="Enter Username">
+        </div>
+
+        <div class="input-box">
+            <input
+                    type="password"
+                    name="password"
+                    id="password"
+                    placeholder="Enter Password">
+        </div>
+
+        <div class="options">
+
+            <label class="remember">
+                <input type="checkbox" name="rememberMe" id="rememberMe">
+                Remember Me
+            </label>
+
+            <a href="#" class="forgot-link">Forgot Password?</a>
+
+        </div>
+
+        <button type="submit">
+            Login
+        </button>
+
+        <div class="register">
+            Don't have an account?
+            <a th:href="@{/register}">Register Now</a>
+        </div>
+
+        <div class="social">
+            <p>Or Login With</p>
+            <span><i class="fa-brands fa-google"></i></span>
+            <span><i class="fa-brands fa-facebook-f"></i></span>
+            <span><i class="fa-brands fa-apple"></i></span>
+        </div>
+
+        <div class="demo">
+            <h4>Demo Users</h4>
+            <p><span>Admin</span> : admin / admin123</p>
+            <p><span>Staff</span> : staff / staff123</p>
+            <p><span>Customer</span> : customer / customer123</p>
+        </div>
+
+    </form>
+
+</div>
+
+<!-- Forgot Password modal -->
+<div class="forgot-modal" id="forgotModal">
+    <div class="forgot-card">
+        <button type="button" class="close-btn" id="closeForgot">&times;</button>
+        <h3>Reset Password</h3>
+        <p>Enter your email address and we will send you a reset link.</p>
+        <form id="forgotForm">
+            <div class="input-box">
+                <input type="email" placeholder="Email Address" required>
+            </div>
+            <button type="submit">Send Reset Link</button>
+            <p id="forgotMessage" class="feedback"></p>
+        </form>
+    </div>
+</div>
+
+<script th:src="@{/js/login.js}"></script>
+
+</body>
+
+</html>

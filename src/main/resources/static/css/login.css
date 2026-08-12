@@ -1,0 +1,283 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1600&q=80');
+    background-size: cover;
+    background-position: center;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .45);
+    z-index: 1;
+}
+
+.login-box {
+    position: relative;
+    z-index: 3;
+    width: 370px;
+    max-width: 90%;
+    padding: 35px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, .12);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, .3);
+    text-align: center;
+    color: #fff;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, .4);
+}
+.login-logoTitle{
+	display:flex;
+}
+
+.brand-logo {
+    display: block;
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 50%;
+    align-self: center;
+}
+
+.login-box h1 {
+  	padding-left: 10px;
+    font-size: 42px;
+}
+
+.tagline {
+    color: #f5f5f5;
+    margin: 8px 0 25px;
+    font-size: 15px;
+}
+
+.error {
+    background: rgba(255, 80, 80, .2);
+    border: 1px solid rgba(255, 80, 80, .5);
+    color: #ffdada;
+    padding: 10px 14px;
+    border-radius: 10px;
+    font-size: 13px;
+    margin-bottom: 16px;
+}
+
+.input-box {
+    margin: 18px 0;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    font-size: 15px;
+    background: rgba(255, 255, 255, .2);
+    color: #fff;
+}
+
+.input-box input::placeholder {
+    color: #eee;
+}
+
+/* Remember me / forgot password row */
+.options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    margin: 8px 0 20px;
+}
+
+.options .remember {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.options .remember input {
+    accent-color: #ff6b00;
+}
+
+.options a.forgot-link {
+    color: #fff;
+    text-decoration: none;
+}
+
+.options a.forgot-link:hover {
+    text-decoration: underline;
+}
+
+/* Submit button */
+button[type="submit"] {
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 30px;
+    background: linear-gradient(45deg, #ff6b00, #ffcc00);
+    color: #fff;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .4s;
+}
+
+button[type="submit"]:hover {
+    transform: scale(1.05);
+}
+
+/* Register link */
+.register {
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.register a {
+    color: #FFD700;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register a:hover {
+    text-decoration: underline;
+}
+
+/* Social login */
+.social {
+    margin-top: 20px;
+}
+
+.social p {
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+.social span {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #fff;
+    color: #ff6b00;
+    margin: 0 6px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.social span:hover {
+    transform: translateY(-5px);
+}
+
+/* Demo users */
+.demo {
+    margin-top: 22px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, .25);
+    font-size: 13px;
+    color: #f0f0f0;
+}
+
+.demo h4 {
+    margin-bottom: 8px;
+    color: #FFD700;
+    font-size: 14px;
+}
+
+.demo p {
+    margin: 3px 0;
+}
+
+.demo span {
+    font-weight: 600;
+    color: #fff;
+}
+
+/* Forgot password modal */
+.forgot-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, .7);
+    justify-content: center;
+    align-items: center;
+    z-index: 10;
+}
+
+.forgot-card {
+    width: 360px;
+    max-width: 90%;
+    background: #fff;
+    color: #333;
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, .25);
+}
+
+.forgot-card .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    border: none;
+    background: none;
+    font-size: 22px;
+    cursor: pointer;
+    color: #666;
+}
+
+.forgot-card h3 {
+    margin-bottom: 8px;
+    color: #ff6b00;
+}
+
+.forgot-card p {
+    margin-bottom: 12px;
+    font-size: 14px;
+}
+
+.forgot-card .input-box input {
+    background: #f2f2f2;
+    color: #333;
+}
+
+.forgot-card .input-box input::placeholder {
+    color: #888;
+}
+
+.forgot-card button[type="submit"] {
+    font-size: 15px;
+}
+
+.feedback {
+    margin-top: 10px;
+    color: #22a06b;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+@media (max-width: 450px) {
+    .login-box {
+        width: 90%;
+    }
+
+    .forgot-card {
+        width: 90%;
+    }
+}

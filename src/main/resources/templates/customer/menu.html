@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Food Menu</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Food Menu</h1>
+
+    <a href="/customer/dashboard">
+        Customer Dashboard
+    </a>
+
+    &nbsp;&nbsp;
+
+    <a href="/customer/cart">
+        Cart
+    </a>
+
+    <hr>
+
+    <div class="food-container">
+
+        <div class="food-card"
+             th:each="food : ${foods}">
+
+            <img th:if="${food.imageUrl != null}"
+                 th:src="${food.imageUrl}"
+                 width="180"
+                 height="120">
+
+            <h2 th:text="${food.name}">
+                Food Name
+            </h2>
+
+            <p th:text="${food.description}">
+                Description
+            </p>
+
+            <p>
+                Category:
+                <span th:text="${food.category}">
+                </span>
+            </p>
+
+            <h3>
+                ₹
+                <span th:text="${food.price}">
+                </span>
+            </h3>
+
+            <p>
+                Protein:
+                <b th:text="${food.protein}"></b> g
+            </p>
+
+            <p>
+                Calories:
+                <b th:text="${food.calories}"></b>
+            </p>
+
+            <a th:href="@{/customer/food/{id}(id=${food.id})}">
+
+                Customize Food
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

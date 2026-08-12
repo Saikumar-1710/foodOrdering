@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard</title>
+
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <h2>Food Admin</h2>
+
+        <ul>
+
+            <li><a href="#"><i class="fa fa-house"></i> Dashboard</a></li>
+
+            <li><a href="#"><i class="fa fa-utensils"></i> Categories</a></li>
+
+            <li><a href="#"><i class="fa fa-burger"></i> Food Items</a></li>
+
+            <li><a href="#"><i class="fa fa-users"></i> Users</a></li>
+
+            <li><a href="#"><i class="fa fa-cart-shopping"></i> Orders</a></li>
+
+            <li><a href="#"><i class="fa fa-chart-line"></i> Reports</a></li>
+
+            <li><a th:href="@{/logout}">
+                <i class="fa fa-right-from-bracket"></i>
+                Logout
+            </a></li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Main -->
+
+    <main class="content">
+
+        <header class="topbar">
+
+            <h2>Admin Dashboard</h2>
+
+            <div>
+
+                Welcome,
+
+                <strong th:text="${session.username}"></strong>
+
+            </div>
+
+        </header>
+
+        <!-- Dashboard Cards -->
+
+        <section class="cards">
+
+            <div class="card">
+
+                <h3>Total Categories</h3>
+
+                <h1>10</h1>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Total Food Items</h3>
+
+                <h1>85</h1>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Total Users</h3>
+
+                <h1>30</h1>
+
+            </div>
+
+            <div class="card">
+
+                <h3>Today's Orders</h3>
+
+                <h1>52</h1>
+
+            </div>
+
+        </section>
+
+        <!-- Recent Orders -->
+
+        <section class="table-section">
+
+            <h3>Recent Orders</h3>
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th>ID</th>
+
+                    <th>Customer</th>
+
+                    <th>Food</th>
+
+                    <th>Status</th>
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                <tr>
+
+                    <td>101</td>
+
+                    <td>Sai</td>
+
+                    <td>Veg Pizza</td>
+
+                    <td>Completed</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>102</td>
+
+                    <td>Rahul</td>
+
+                    <td>Burger</td>
+
+                    <td>Preparing</td>
+
+                </tr>
+
+                <tr>
+
+                    <td>103</td>
+
+                    <td>Kiran</td>
+
+                    <td>Pasta</td>
+
+                    <td>Delivered</td>
+
+                </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+
+</html>
