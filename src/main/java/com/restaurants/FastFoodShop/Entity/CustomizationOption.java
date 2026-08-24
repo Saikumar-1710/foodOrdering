@@ -12,36 +12,49 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@Table(name = "customization_option")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CustomizationOption {
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
-	@Column(nullable=false)
-	private String name;
-	
-	@Enumerated(EnumType.STRING)
-	@Column(nullable=false)
-	private CustomizationType type;
-	
-	//Add or Remove - Nutrion changes
-	private Double priceAdjustment = 0.0;
-	
-	private Double protein = 0.0;
-	private Double calories= 0.0;
-	private Double carbohydrates = 0.0;
-	private Double fats=0.0;
-	private Double fiber=0.0;
-	private Double magnesium=0.0;
-	
-	private boolean avaliable = true;
-	
-	@ManyToOne(fetch= FetchType.LAZY)
-	@JoinColumn(name="food_id",nullable=false)
-	private Food food;
-	
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+
+    @Column(nullable = false)
+    private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private CustomizationType type;
+
+    @Column(name = "price_adjustment")
+    private Double priceAdjustment = 0.0;
+
+    private Double calories = 0.0;
+
+    private Double protein = 0.0;
+
+    private Double carbohydrates = 0.0;
+
+    private Double fats = 0.0;
+
+    private Double fiber = 0.0;
+
+    private Double magnesium = 0.0;
+
+    @Column(name = "available", nullable = false)
+    private boolean available = true;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "food_id", nullable = false)
+    private Food food;
 }

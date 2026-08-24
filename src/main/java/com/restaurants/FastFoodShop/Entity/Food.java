@@ -47,7 +47,7 @@ public class Food {
 	//creating list for CustomizationOptions
 	
 	@OneToMany(mappedBy = "food", cascade = CascadeType.ALL, orphanRemoval = true)
-	List<CustomizationOption> customizationOption = new ArrayList<>();
+	private List<CustomizationOption> customizationOption = new ArrayList<>();
 	
 	
 }

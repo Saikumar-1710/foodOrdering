@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Food</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+        Add Food
+    </h1>
+
+    <a href="/admin/dashboard">
+        Admin Dashboard
+    </a>
+
+    &nbsp; | &nbsp;
+
+    <a href="/admin/foods">
+        Food List
+    </a>
+
+    <hr>
+
+    <form
+            th:action="@{/admin/foods/save}"
+            th:object="${food}"
+            method="post">
+
+        <input
+                type="hidden"
+                th:field="*{id}">
+
+
+        <label>
+            Food Name
+        </label>
+
+        <br>
+
+        <input
+                type="text"
+                th:field="*{name}"
+                placeholder="Enter food name"
+                required>
+
+        <br><br>
+
+
+        <label>
+            Description
+        </label>
+
+        <br>
+
+        <textarea
+                th:field="*{description}"
+                placeholder="Enter food description">
+        </textarea>
+
+        <br><br>
+
+
+        <label>
+            Price
+        </label>
+
+        <br>
+
+        <input
+                type="number"
+                step="0.01"
+                th:field="*{price}"
+                placeholder="Enter price"
+                required>
+
+        <br><br>
+
+
+        <label>
+            Category
+        </label>
+
+        <br>
+
+        <input
+                type="text"
+                th:field="*{category}"
+                placeholder="Burger / Pizza / Rice">
+
+        <br><br>
+
+
+        <label>
+            Image URL
+        </label>
+
+        <br>
+
+        <input
+                type="text"
+                th:field="*{imageUrl}"
+                placeholder="Enter image URL">
+
+        <br><br>
+
+
+        <h2>
+            Nutrition Per Serving
+        </h2>
+
+
+        <label>
+            Calories
+        </label>
+
+        <br>
+
+        <input
+                type="number"
+                step="0.01"
+                th:field="*{calories}">
+
+        <br><br>
+
+
+        <label>
+            Protein (g)
+        </label>
+
+        <br>
+
+        <input
+                type="number"
+                step="0.01"
+                th:field="*{protein}">
+
+        <br><br>
+
+
+        <label>
+            Carbohydrates (g)
+        </label>
+
+        <br>
+
+        <input
+                type="number"
+                step="0.01"
+                th:field="*{carbohydrates}">
+
+        <br><br>
+
+
+        <label>
+            Fats (g)
+        </label>
+
+        <br>
+
+        <input
+                type="number"
+                step="0.01"
+                th:field="*{fats}">
+
+        <br><br>
+
+
+        <label>
+            Fiber (g)
+        </label>
+
+        <br>
+
+        <input
+                type="number"
+                step="0.01"
+                th:field="*{fiber}">
+
+        <br><br>
+
+
+        <label>
+            Magnesium (mg)
+        </label>
+
+        <br>
+
+        <input
+                type="number"
+                step="0.01"
+                th:field="*{magnesium}">
+
+        <br><br>
+
+
+        <label>
+
+            <input
+                    type="checkbox"
+                    th:field="*{available}">
+
+            Food Available
+
+        </label>
+
+        <br><br>
+
+
+        <button type="submit">
+
+            Save Food
+
+        </button>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>

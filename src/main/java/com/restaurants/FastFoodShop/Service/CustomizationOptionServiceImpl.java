@@ -10,24 +10,32 @@ import com.restaurants.FastFoodShop.Entity.CustomizationOption;
 import com.restaurants.FastFoodShop.Repository.CustomizationOptionRepository;
 
 @Service
-public class CustomizationOptionServiceImpl implements CustomizationOptionService{
+public class CustomizationOptionServiceImpl
+        implements CustomizationOptionService {
 
-	@Autowired
-	private CustomizationOptionRepository customizationOptionRepository;
-	
-	@Override
-	public CustomizationOption saveOption(CustomizationOption customizationOption) {
-		return customizationOptionRepository.save(customizationOption);
-	}
+    @Autowired
+    private CustomizationOptionRepository customizationOptionRepository;
 
-	@Override
-	public List<CustomizationOption> getOptionByFood(Integer foodId) {
-		return customizationOptionRepository.findByFoodAndAvaliableTrue(foodId);
-	}
+    @Override
+    public CustomizationOption saveOption(
+            CustomizationOption customizationOption) {
 
-	@Override
-	public Optional<CustomizationOption> getOptionById(Integer id) {		
-		return customizationOptionRepository.findById(id);
-	}
+        return customizationOptionRepository
+                .save(customizationOption);
+    }
 
+    @Override
+    public List<CustomizationOption> getOptionByFood(Integer foodId) {
+
+        return customizationOptionRepository
+                .findByFood_IdAndAvailableTrue(foodId);
+    }
+
+    @Override
+    public Optional<CustomizationOption> getOptionById(
+            Integer id) {
+
+        return customizationOptionRepository
+                .findById(id);
+    }
 }

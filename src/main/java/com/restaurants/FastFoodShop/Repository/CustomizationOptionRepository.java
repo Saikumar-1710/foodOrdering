@@ -7,9 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import com.restaurants.FastFoodShop.Entity.CustomizationOption;
 
-
 @Repository
-public interface CustomizationOptionRepository extends JpaRepository<CustomizationOption, Integer> {
+public interface CustomizationOptionRepository
+        extends JpaRepository<CustomizationOption, Integer> {
 
-	List<CustomizationOption> findByFoodAndAvaliableTrue(Integer foodid);
+    List<CustomizationOption> findByFood_IdAndAvailableTrue(
+            Integer foodId
+    );
 }
