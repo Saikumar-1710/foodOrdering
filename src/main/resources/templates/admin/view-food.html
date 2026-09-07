@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>View Food - Food Bridge</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="/css/admin.css">
+
+	<link rel="stylesheet" href="/css/admin/view-food.css">
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <i class="fa-solid fa-utensils"></i>
+            <span>Food Bridge</span>
+        </div>
+
+        <nav class="navigation">
+
+            <a href="/admin/dashboard" class="nav-item">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/admin/foods" class="nav-item active">
+                <i class="fa-solid fa-burger"></i>
+                <span>Food Management</span>
+            </a>
+
+            <a href="/admin/foods/add" class="nav-item">
+                <i class="fa-solid fa-circle-plus"></i>
+                <span>Add Food</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/admin/foods" class="nav-item">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Back to Foods</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="page-header">
+            <h1>Food Details</h1>
+            <p>View complete information about this food item</p>
+        </div>
+
+
+        <div id="loading" class="loading">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            Loading food details...
+        </div>
+
+
+        <div id="foodContainer">
+
+            <div class="food-detail-card">
+
+                <div class="food-top">
+
+                    <div>
+                        <img
+                            id="foodImage"
+                            class="food-main-image"
+                            src=""
+                            alt="Food">
+                    </div>
+
+
+                    <div>
+
+                        <h2 id="foodName" class="food-title"></h2>
+
+                        <p id="foodDescription"
+                           class="food-description"></p>
+
+
+                        <div class="food-meta">
+
+                            <span class="meta-item">
+                                Category:
+                                <strong id="foodCategory"></strong>
+                            </span>
+
+                            <span class="meta-item">
+                                Price:
+                                <strong id="foodPrice"
+                                        class="price-value"></strong>
+                            </span>
+
+                            <span id="foodStatus"></span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Nutrition -->
+                <div class="nutrition-section">
+
+                    <h2>
+                        <i class="fa-solid fa-heart-pulse"></i>
+                        Nutrition Information
+                    </h2>
+
+                    <div class="nutrition-grid">
+
+                        <div class="nutrition-card">
+                            <i class="fa-solid fa-dumbbell"></i>
+                            <p>Protein</p>
+                            <strong id="protein"></strong> g
+                        </div>
+
+                        <div class="nutrition-card">
+                            <i class="fa-solid fa-fire"></i>
+                            <p>Calories</p>
+                            <strong id="calories"></strong> kcal
+                        </div>
+
+                        <div class="nutrition-card">
+                            <i class="fa-solid fa-wheat-awn"></i>
+                            <p>Carbohydrates</p>
+                            <strong id="carbohydrates"></strong> g
+                        </div>
+
+                        <div class="nutrition-card">
+                            <i class="fa-solid fa-droplet"></i>
+                            <p>Fats</p>
+                            <strong id="fats"></strong> g
+                        </div>
+
+                        <div class="nutrition-card">
+                            <i class="fa-solid fa-seedling"></i>
+                            <p>Fiber</p>
+                            <strong id="fiber"></strong> g
+                        </div>
+
+                        <div class="nutrition-card">
+                            <i class="fa-solid fa-flask"></i>
+                            <p>Magnesium</p>
+                            <strong id="magniseium"></strong> mg
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="page-actions">
+
+                    <a href="/admin/foods" class="secondary-btn">
+                        <i class="fa-solid fa-arrow-left"></i>
+                        Back
+                    </a>
+
+                    <button
+                        id="editButton"
+                        class="primary-btn">
+                        <i class="fa-solid fa-pen"></i>
+                        Edit Food
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    const params = new URLSearchParams(window.location.search);
+
+    const foodId = params.get("id");
+
+
+    async function loadFood() {
+
+        if (!foodId) {
+
+            document.getElementById("loading").innerHTML =
+                "Food ID is missing.";
+
+            return;
+        }
+
+
+        try {
+
+            const response =
+                await fetch(`/api/admin/foods/${foodId}`);
+
+
+            if (!response.ok) {
+
+                throw new Error("Food not found");
+
+            }
+
+
+            const food = await response.json();
+
+
+            document.getElementById("foodImage").src =
+                food.imageUrl ||
+                "https://via.placeholder.com/300";
+
+
+            document.getElementById("foodName").textContent =
+                food.name;
+
+
+            document.getElementById("foodDescription").textContent =
+                food.description ||
+                "No description available";
+
+
+            document.getElementById("foodCategory").textContent =
+                food.category || "Other";
+
+
+            document.getElementById("foodPrice").textContent =
+                "₹" + food.price;
+
+
+            document.getElementById("protein").textContent =
+                food.protein || 0;
+
+
+            document.getElementById("calories").textContent =
+                food.calories || 0;
+
+
+            document.getElementById("carbohydrates").textContent =
+                food.carbohydrates || 0;
+
+
+            document.getElementById("fats").textContent =
+                food.fats || 0;
+
+
+            document.getElementById("fiber").textContent =
+                food.fiber || 0;
+
+
+            document.getElementById("magniseium").textContent =
+                food.magniseium || 0;
+
+
+            const status =
+                document.getElementById("foodStatus");
+
+
+            if (food.avaliable) {
+
+                status.innerHTML =
+                    '<span class="status available">' +
+                    '<i class="fa-solid fa-circle-check"></i>' +
+                    'Available</span>';
+
+            } else {
+
+                status.innerHTML =
+                    '<span class="status unavailable">' +
+                    '<i class="fa-solid fa-circle-xmark"></i>' +
+                    'Unavailable</span>';
+            }
+
+
+            document.getElementById("editButton").onclick =
+                function() {
+
+                    window.location.href =
+                        "/admin/foods/edit?id=" + food.id;
+
+                };
+
+
+            document.getElementById("loading").style.display =
+                "none";
+
+            document.getElementById("foodContainer").style.display =
+                "block";
+
+
+        } catch (error) {
+
+            document.getElementById("loading").innerHTML =
+                "<p>Unable to load food details.</p>";
+
+            console.error(error);
+
+        }
+
+    }
+
+
+    loadFood();
+
+</script>
+
+</body>
+</html>

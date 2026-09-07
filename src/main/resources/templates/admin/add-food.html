@@ -1,236 +1,347 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
-
-    <title>Add Food</title>
+    <title>Add Food - Food Bridge</title>
 
     <link rel="stylesheet"
-          th:href="@{/css/style.css}">
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="/css/admin.css">
+    
+	<link rel="stylesheet" href="/css/admin/add-food.css">
 
 </head>
 
 <body>
 
-<div class="container">
+<div class="admin-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <i class="fa-solid fa-utensils"></i>
+            <span>Food Bridge</span>
+        </div>
+
+        <nav class="navigation">
+
+            <a href="/admin/dashboard" class="nav-item">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
 
-    <h1>
-        Add Food
-    </h1>
+            <a href="/admin/foods" class="nav-item">
+                <i class="fa-solid fa-burger"></i>
+                <span>Food Management</span>
+            </a>
+
+            <a href="/admin/foods/add" class="nav-item active">
+                <i class="fa-solid fa-circle-plus"></i>
+                <span>Add Food</span>
+            </a>
 
-    <a href="/admin/dashboard">
-        Admin Dashboard
-    </a>
+        </nav>
 
-    &nbsp; | &nbsp;
+        <div class="sidebar-bottom">
+            <a href="/admin/foods" class="nav-item">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Back to Foods</span>
+            </a>
+        </div>
 
-    <a href="/admin/foods">
-        Food List
-    </a>
+    </aside>
 
-    <hr>
 
-    <form
-            th:action="@{/admin/foods/save}"
-            th:object="${food}"
-            method="post">
+    <!-- Main Content -->
+    <main class="main-content">
 
-        <input
-                type="hidden"
-                th:field="*{id}">
+        <div class="form-header">
+            <h1>Add New Food</h1>
+            <p>Add a new food item to your menu</p>
+        </div>
 
 
-        <label>
-            Food Name
-        </label>
+        <div id="successMessage" class="message success">
+            Food added successfully!
+        </div>
 
-        <br>
+        <div id="errorMessage" class="message error">
+            Unable to add food. Please try again.
+        </div>
 
-        <input
-                type="text"
-                th:field="*{name}"
-                placeholder="Enter food name"
-                required>
 
-        <br><br>
+        <div class="food-form-card">
 
+            <form id="foodForm">
 
-        <label>
-            Description
-        </label>
+                <!-- Basic Information -->
+                <div class="form-section">
 
-        <br>
+                    <h2>
+                        <i class="fa-solid fa-circle-info"></i>
+                        Basic Information
+                    </h2>
 
-        <textarea
-                th:field="*{description}"
-                placeholder="Enter food description">
-        </textarea>
-
-        <br><br>
-
-
-        <label>
-            Price
-        </label>
-
-        <br>
-
-        <input
-                type="number"
-                step="0.01"
-                th:field="*{price}"
-                placeholder="Enter price"
-                required>
-
-        <br><br>
-
-
-        <label>
-            Category
-        </label>
-
-        <br>
-
-        <input
-                type="text"
-                th:field="*{category}"
-                placeholder="Burger / Pizza / Rice">
-
-        <br><br>
-
-
-        <label>
-            Image URL
-        </label>
-
-        <br>
-
-        <input
-                type="text"
-                th:field="*{imageUrl}"
-                placeholder="Enter image URL">
-
-        <br><br>
-
-
-        <h2>
-            Nutrition Per Serving
-        </h2>
-
-
-        <label>
-            Calories
-        </label>
-
-        <br>
-
-        <input
-                type="number"
-                step="0.01"
-                th:field="*{calories}">
-
-        <br><br>
-
-
-        <label>
-            Protein (g)
-        </label>
-
-        <br>
-
-        <input
-                type="number"
-                step="0.01"
-                th:field="*{protein}">
-
-        <br><br>
-
-
-        <label>
-            Carbohydrates (g)
-        </label>
-
-        <br>
-
-        <input
-                type="number"
-                step="0.01"
-                th:field="*{carbohydrates}">
-
-        <br><br>
-
-
-        <label>
-            Fats (g)
-        </label>
-
-        <br>
-
-        <input
-                type="number"
-                step="0.01"
-                th:field="*{fats}">
-
-        <br><br>
-
-
-        <label>
-            Fiber (g)
-        </label>
-
-        <br>
-
-        <input
-                type="number"
-                step="0.01"
-                th:field="*{fiber}">
-
-        <br><br>
-
-
-        <label>
-            Magnesium (mg)
-        </label>
-
-        <br>
-
-        <input
-                type="number"
-                step="0.01"
-                th:field="*{magnesium}">
-
-        <br><br>
-
-
-        <label>
-
-            <input
-                    type="checkbox"
-                    th:field="*{available}">
-
-            Food Available
-
-        </label>
-
-        <br><br>
-
-
-        <button type="submit">
-
-            Save Food
-
-        </button>
-
-    </form>
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label>Food Name *</label>
+                            <input
+                                type="text"
+                                id="name"
+                                required
+                                placeholder="Enter food name">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Category</label>
+                            <input
+                                type="text"
+                                id="category"
+                                placeholder="e.g. Burger, Pizza">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Price *</label>
+                            <input
+                                type="text"
+                                id="price"
+                                required
+                                placeholder="Enter price">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Image URL</label>
+                            <input
+                                type="url"
+                                id="imageUrl"
+                                placeholder="https://example.com/image.jpg">
+                        </div>
+
+                        <div class="form-group full">
+                            <label>Description</label>
+                            <textarea
+                                id="description"
+                                placeholder="Enter food description"></textarea>
+                        </div>
+
+                        <div class="form-group full">
+
+                            <label>Availability</label>
+
+                            <div class="availability-box">
+
+                                <input
+                                    type="checkbox"
+                                    id="avaliable"
+                                    checked>
+
+                                <span>Food is available</span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Nutrition -->
+                <div class="form-section">
+
+                    <h2>
+                        <i class="fa-solid fa-heart-pulse"></i>
+                        Nutrition Information
+                    </h2>
+
+                    <div class="form-grid">
+
+                        <div class="form-group">
+                            <label>Protein (g)</label>
+                            <input
+                                type="number"
+                                step="0.1"
+                                id="protein"
+                                value="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Calories</label>
+                            <input
+                                type="number"
+                                step="0.1"
+                                id="calories"
+                                value="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Carbohydrates (g)</label>
+                            <input
+                                type="number"
+                                step="0.1"
+                                id="carbohydrates"
+                                value="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Fats (g)</label>
+                            <input
+                                type="number"
+                                step="0.1"
+                                id="fats"
+                                value="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Fiber (g)</label>
+                            <input
+                                type="number"
+                                step="0.1"
+                                id="fiber"
+                                value="0">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Magnesium (mg)</label>
+                            <input
+                                type="number"
+                                step="0.1"
+                                id="magniseium"
+                                value="0">
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Buttons -->
+                <div class="form-actions">
+
+                    <button type="submit" class="primary-btn">
+                        <i class="fa-solid fa-plus"></i>
+                        Add Food
+                    </button>
+
+                    <a href="/admin/foods" class="secondary-btn">
+                        Cancel
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </main>
 
 </div>
 
-</body>
 
+<script>
+
+    document.getElementById("foodForm").addEventListener("submit", async function(event) {
+
+        event.preventDefault();
+
+        const food = {
+
+            name: document.getElementById("name").value,
+
+            description:
+                document.getElementById("description").value,
+
+            price:
+                document.getElementById("price").value,
+
+            category:
+                document.getElementById("category").value,
+
+            imageUrl:
+                document.getElementById("imageUrl").value,
+
+            avaliable:
+                document.getElementById("avaliable").checked,
+
+            protein:
+                Number(document.getElementById("protein").value) || 0,
+
+            calories:
+                Number(document.getElementById("calories").value) || 0,
+
+            carbohydrates:
+                Number(document.getElementById("carbohydrates").value) || 0,
+
+            fats:
+                Number(document.getElementById("fats").value) || 0,
+
+            fiber:
+                Number(document.getElementById("fiber").value) || 0,
+
+            magniseium:
+                Number(document.getElementById("magniseium").value) || 0
+        };
+
+
+        try {
+
+            const response = await fetch("/api/admin/foods", {
+
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify(food)
+
+            });
+
+
+            if (!response.ok) {
+                throw new Error("Failed to add food");
+            }
+
+
+            document.getElementById("successMessage").style.display = "block";
+
+            document.getElementById("errorMessage").style.display = "none";
+
+            document.getElementById("foodForm").reset();
+
+            document.getElementById("avaliable").checked = true;
+
+            window.scrollTo({
+                top: 0,
+                behavior: "smooth"
+            });
+
+
+            setTimeout(function() {
+
+                window.location.href = "/admin/foods";
+
+            }, 1200);
+
+
+        } catch (error) {
+
+            document.getElementById("errorMessage").style.display = "block";
+
+            document.getElementById("successMessage").style.display = "none";
+
+            console.error(error);
+
+        }
+
+    });
+
+</script>
+
+</body>
 </html>

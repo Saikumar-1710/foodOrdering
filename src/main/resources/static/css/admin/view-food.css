@@ -1,0 +1,178 @@
+/*   View Food Page  */
+
+.page-header {
+    margin-bottom: 25px;
+}
+
+.page-header h1 {
+    margin-bottom: 6px;
+}
+
+.page-header p {
+    color: #777;
+}
+
+
+.food-detail-card {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    max-width: 1000px;
+}
+
+.food-top {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.food-main-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-radius: 15px;
+    background: #f1f1f1;
+}
+
+.food-title {
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.food-description {
+    color: #777;
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+
+.food-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.meta-item {
+    padding: 8px 12px;
+    background: #f7f7f7;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.price-value {
+    color: #ff6b35;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+.status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.available {
+    background: #e8f8ef;
+    color: #16884e;
+}
+
+.unavailable {
+    background: #ffe9e9;
+    color: #d33;
+}
+
+.nutrition-section {
+    border-top: 1px solid #eee;
+    padding-top: 25px;
+}
+
+.nutrition-section h2 {
+    margin-bottom: 20px;
+}
+
+.nutrition-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.nutrition-card {
+    background: #f8f9fb;
+    padding: 18px;
+    border-radius: 12px;
+}
+
+.nutrition-card i {
+    color: #ff6b35;
+    margin-bottom: 10px;
+}
+
+.nutrition-card p {
+    color: #777;
+    font-size: 13px;
+    margin-bottom: 5px;
+}
+
+.nutrition-card strong {
+    font-size: 20px;
+}
+
+.page-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 30px;
+}
+
+.secondary-btn {
+    padding: 12px 18px;
+    border-radius: 9px;
+    border: 1px solid #ddd;
+    background: white;
+    font-weight: bold;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.secondary-btn:hover {
+    background: #f5f5f5;
+}
+
+.loading {
+    text-align: center;
+    padding: 60px;
+    color: #777;
+}
+
+#foodContainer {
+    display: none;
+}
+
+@media (max-width: 750px) {
+
+    .food-top {
+        grid-template-columns: 1fr;
+    }
+
+    .nutrition-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .nutrition-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .food-detail-card {
+        padding: 20px;
+    }
+}

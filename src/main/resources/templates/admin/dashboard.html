@@ -1,181 +1,245 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Admin Dashboard</title>
-
-    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <title>Food Bridge - Admin Dashboard</title>
 
     <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
+    <link rel="stylesheet" href="/css/admin.css">
 </head>
 
 <body>
 
-<div class="container">
+    <div class="admin-layout">
 
-    <!-- Sidebar -->
+        <!-- Sidebar -->
+        <aside class="sidebar">
 
-    <aside class="sidebar">
-
-        <h2>Food Admin</h2>
-
-        <ul>
-
-            <li><a href="#"><i class="fa fa-house"></i> Dashboard</a></li>
-
-            <li><a href="#"><i class="fa fa-utensils"></i> Categories</a></li>
-
-            <li><a th:href="@{/admin/foods}"><i class="fa fa-burger"></i>Food Items</a></li>
-
-            <li><a href="#"><i class="fa fa-users"></i> Users</a></li>
-
-            <li><a href="#"><i class="fa fa-cart-shopping"></i> Orders</a></li>
-
-            <li><a href="#"><i class="fa fa-chart-line"></i> Reports</a></li>
-
-            <li><a th:href="@{/logout}">
-                <i class="fa fa-right-from-bracket"></i>
-                Logout
-            </a></li>
-
-        </ul>
-
-    </aside>
-
-    <!-- Main -->
-
-    <main class="content">
-
-        <header class="topbar">
-
-            <h2>Admin Dashboard</h2>
-
-            <div>
-
-                Welcome,
-
-                <strong th:text="${session.username}"></strong>
-
+            <div class="logo">
+                <i class="fa-solid fa-utensils"></i>
+                <span>Food Bridge</span>
             </div>
 
-        </header>
+            <nav class="navigation">
 
-        <!-- Dashboard Cards -->
+                <a href="/admin/dashboard" class="nav-item active">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
 
-        <section class="cards">
+                <a href="/admin/foods" class="nav-item">
+                    <i class="fa-solid fa-burger"></i>
+                    <span>Food Management</span>
+                </a>
 
-            <div class="card">
+                <a href="/admin/foods/add" class="nav-item">
+                    <i class="fa-solid fa-circle-plus"></i>
+                    <span>Add Food</span>
+                </a>
 
-                <h3>Total Categories</h3>
+            </nav>
 
-                <h1>10</h1>
-
+            <div class="sidebar-bottom">
+               
             </div>
 
-            <div class="card">
+        </aside>
 
-                <h3>Total Food Items</h3>
 
-                <h1>85</h1>
+        <!-- Main Content -->
+        <main class="main-content">
 
-            </div>
+            <!-- Top Header -->
+            <header class="top-header">
 
-            <div class="card">
+                <div>
+                    <h1>Admin Dashboard</h1>
+                    <p>Manage your food ordering system</p>
+                </div>
 
-                <h3>Total Users</h3>
+                <div class="admin-profile">
+                    <div class="profile-icon">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
 
-                <h1>30</h1>
+                    <div>
+                        <strong>Administrator</strong>
+                        <small>Admin</small>
+                    </div>
+                </div>
 
-            </div>
+            </header>
 
-            <div class="card">
 
-                <h3>Today's Orders</h3>
+            <!-- Dashboard Cards -->
+            <section class="stats-grid">
 
-                <h1>52</h1>
+                <div class="stat-card">
+                    <div class="stat-icon food-icon">
+                        <i class="fa-solid fa-burger"></i>
+                    </div>
 
-            </div>
+                    <div>
+                        <p>Total Foods</p>
+                        <h2 id="totalFoods">0</h2>
+                    </div>
+                </div>
 
-        </section>
 
-        <!-- Recent Orders -->
+                <div class="stat-card">
+                    <div class="stat-icon customization-icon">
+                        <i class="fa-solid fa-sliders"></i>
+                    </div>
 
-        <section class="table-section">
+                    <div>
+                        <p>Total Customizations</p>
+                        <h2 id="totalCustomizations">0</h2>
+                    </div>
+                </div>
 
-            <h3>Recent Orders</h3>
 
-            <table>
+                <div class="stat-card">
+                    <div class="stat-icon order-icon">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                    </div>
 
-                <thead>
+                    <div>
+                        <p>Total Orders</p>
+                        <h2 id="totalOrders">0</h2>
+                    </div>
+                </div>
 
-                <tr>
 
-                    <th>ID</th>
+                <div class="stat-card">
+                    <div class="stat-icon customer-icon">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
 
-                    <th>Customer</th>
+                    <div>
+                        <p>Total Customers</p>
+                        <h2 id="totalCustomers">0</h2>
+                    </div>
+                </div>
 
-                    <th>Food</th>
 
-                    <th>Status</th>
+                <div class="stat-card">
+                    <div class="stat-icon staff-icon">
+                        <i class="fa-solid fa-user-tie"></i>
+                    </div>
 
-                </tr>
+                    <div>
+                        <p>Total Staff</p>
+                        <h2 id="totalStaff">0</h2>
+                    </div>
+                </div>
 
-                </thead>
+            </section>
 
-                <tbody>
 
-                <tr>
+            <!-- Quick Actions -->
+            <section class="dashboard-section">
 
-                    <td>101</td>
+                <div class="section-header">
+                    <div>
+                        <h2>Food Management</h2>
+                        <p>Manage all food items from one place</p>
+                    </div>
 
-                    <td>Sai</td>
+                    <a href="/admin/foods/add" class="primary-btn">
+                        <i class="fa-solid fa-plus"></i>
+                        Add Food
+                    </a>
+                </div>
 
-                    <td>Veg Pizza</td>
 
-                    <td>Completed</td>
+                <div class="quick-actions">
 
-                </tr>
+                    <a href="/admin/foods" class="action-card">
 
-                <tr>
+                        <div class="action-icon">
+                            <i class="fa-solid fa-list"></i>
+                        </div>
 
-                    <td>102</td>
+                        <div>
+                            <h3>View Foods</h3>
+                            <p>View and manage all food items</p>
+                        </div>
 
-                    <td>Rahul</td>
+                        <i class="fa-solid fa-arrow-right arrow"></i>
 
-                    <td>Burger</td>
+                    </a>
 
-                    <td>Preparing</td>
 
-                </tr>
+                    <a href="/admin/foods/add" class="action-card">
 
-                <tr>
+                        <div class="action-icon">
+                            <i class="fa-solid fa-burger"></i>
+                        </div>
 
-                    <td>103</td>
+                        <div>
+                            <h3>Add New Food</h3>
+                            <p>Add a new item to the menu</p>
+                        </div>
 
-                    <td>Kiran</td>
+                        <i class="fa-solid fa-arrow-right arrow"></i>
 
-                    <td>Pasta</td>
+                    </a>
 
-                    <td>Delivered</td>
+                </div>
 
-                </tr>
+            </section>
 
-                </tbody>
+        </main>
 
-            </table>
+    </div>
 
-        </section>
 
-    </main>
+    <!-- Dashboard API -->
+    <script>
 
-</div>
+        async function loadDashboardStats() {
+
+            try {
+
+                const response =
+                    await fetch('/api/admin/dashboard/stats');
+
+                if (!response.ok) {
+                    throw new Error("Failed to load dashboard data");
+                }
+
+                const stats = await response.json();
+
+                document.getElementById("totalFoods").textContent =
+                    stats.totalFoods;
+
+                document.getElementById("totalCustomizations").textContent =
+                    stats.totalCustomizations;
+
+                document.getElementById("totalOrders").textContent =
+                    stats.totalOrders;
+
+                document.getElementById("totalCustomers").textContent =
+                    stats.totalCustomers;
+
+                document.getElementById("totalStaff").textContent =
+                    stats.totalStaff;
+
+            } catch (error) {
+
+                console.error("Dashboard Error:", error);
+
+            }
+
+        }
+
+        loadDashboardStats();
+
+    </script>
 
 </body>
-
 </html>

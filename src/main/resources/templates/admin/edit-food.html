@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Edit Food - Food Bridge</title>
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="/css/admin.css">
+
+    <link rel="stylesheet" href="/css/admin/edit-food.css">
+    
+</head>
+
+<body>
+
+<div class="admin-layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <i class="fa-solid fa-utensils"></i>
+            <span>Food Bridge</span>
+        </div>
+
+        <nav class="navigation">
+
+            <a href="/admin/dashboard" class="nav-item">
+                <i class="fa-solid fa-chart-line"></i>
+                <span>Dashboard</span>
+            </a>
+
+            <a href="/admin/foods" class="nav-item active">
+                <i class="fa-solid fa-burger"></i>
+                <span>Food Management</span>
+            </a>
+
+            <a href="/admin/foods/add" class="nav-item">
+                <i class="fa-solid fa-circle-plus"></i>
+                <span>Add Food</span>
+            </a>
+
+        </nav>
+
+        <div class="sidebar-bottom">
+
+            <a href="/admin/foods" class="nav-item">
+                <i class="fa-solid fa-arrow-left"></i>
+                <span>Back to Foods</span>
+            </a>
+
+        </div>
+
+    </aside>
+
+
+    <!-- Main Content -->
+    <main class="main-content">
+
+        <div class="form-header">
+            <h1>Edit Food</h1>
+            <p>Update food information</p>
+        </div>
+
+
+        <div id="loading" class="loading">
+            <i class="fa-solid fa-spinner fa-spin"></i>
+            Loading food information...
+        </div>
+
+
+        <div id="formContainer">
+
+            <div id="successMessage" class="message success">
+                Food updated successfully!
+            </div>
+
+            <div id="errorMessage" class="message error">
+                Unable to update food. Please try again.
+            </div>
+
+
+            <div class="food-form-card">
+
+                <form id="foodForm">
+
+                    <!-- Basic Information -->
+                    <div class="form-section">
+
+                        <h2>
+                            <i class="fa-solid fa-circle-info"></i>
+                            Basic Information
+                        </h2>
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label>Food Name *</label>
+
+                                <input
+                                    type="text"
+                                    id="name"
+                                    required>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Category</label>
+
+                                <input
+                                    type="text"
+                                    id="category">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Price *</label>
+
+                                <input
+                                    type="text"
+                                    id="price"
+                                    required>
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Image URL</label>
+
+                                <input
+                                    type="url"
+                                    id="imageUrl">
+                            </div>
+
+
+                            <div class="form-group full">
+                                <label>Description</label>
+
+                                <textarea
+                                    id="description"></textarea>
+                            </div>
+
+
+                            <div class="form-group full">
+
+                                <label>Availability</label>
+
+                                <div class="availability-box">
+
+                                    <input
+                                        type="checkbox"
+                                        id="avaliable">
+
+                                    <span>Food is available</span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- Nutrition -->
+                    <div class="form-section">
+
+                        <h2>
+                            <i class="fa-solid fa-heart-pulse"></i>
+                            Nutrition Information
+                        </h2>
+
+                        <div class="form-grid">
+
+                            <div class="form-group">
+                                <label>Protein (g)</label>
+
+                                <input
+                                    type="number"
+                                    step="0.1"
+                                    id="protein">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Calories</label>
+
+                                <input
+                                    type="number"
+                                    step="0.1"
+                                    id="calories">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Carbohydrates (g)</label>
+
+                                <input
+                                    type="number"
+                                    step="0.1"
+                                    id="carbohydrates">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Fats (g)</label>
+
+                                <input
+                                    type="number"
+                                    step="0.1"
+                                    id="fats">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Fiber (g)</label>
+
+                                <input
+                                    type="number"
+                                    step="0.1"
+                                    id="fiber">
+                            </div>
+
+
+                            <div class="form-group">
+                                <label>Magnesium (mg)</label>
+
+                                <input
+                                    type="number"
+                                    step="0.1"
+                                    id="magniseium">
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-actions">
+
+                        <button
+                            type="submit"
+                            class="primary-btn">
+
+                            <i class="fa-solid fa-save"></i>
+                            Update Food
+
+                        </button>
+
+
+                        <a
+                            href="/admin/foods"
+                            class="secondary-btn">
+
+                            Cancel
+
+                        </a>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script>
+
+    const params =
+        new URLSearchParams(window.location.search);
+
+    const foodId =
+        params.get("id");
+
+
+    async function loadFood() {
+
+        if (!foodId) {
+
+            document.getElementById("loading").textContent =
+                "Food ID is missing.";
+
+            return;
+        }
+
+
+        try {
+
+            const response =
+                await fetch(`/api/admin/foods/${foodId}`);
+
+
+            if (!response.ok) {
+                throw new Error("Food not found");
+            }
+
+
+            const food =
+                await response.json();
+
+
+            document.getElementById("name").value =
+                food.name || "";
+
+
+            document.getElementById("description").value =
+                food.description || "";
+
+
+            document.getElementById("price").value =
+                food.price || "";
+
+
+            document.getElementById("category").value =
+                food.category || "";
+
+
+            document.getElementById("imageUrl").value =
+                food.imageUrl || "";
+
+
+            document.getElementById("avaliable").checked =
+                food.avaliable;
+
+
+            document.getElementById("protein").value =
+                food.protein || 0;
+
+
+            document.getElementById("calories").value =
+                food.calories || 0;
+
+
+            document.getElementById("carbohydrates").value =
+                food.carbohydrates || 0;
+
+
+            document.getElementById("fats").value =
+                food.fats || 0;
+
+
+            document.getElementById("fiber").value =
+                food.fiber || 0;
+
+
+            document.getElementById("magniseium").value =
+                food.magniseium || 0;
+
+
+            document.getElementById("loading").style.display =
+                "none";
+
+
+            document.getElementById("formContainer").style.display =
+                "block";
+
+
+        } catch (error) {
+
+            document.getElementById("loading").innerHTML =
+                "<p>Unable to load food information.</p>";
+
+            console.error(error);
+
+        }
+
+    }
+
+
+    document.getElementById("foodForm").addEventListener(
+        "submit",
+        async function(event) {
+
+            event.preventDefault();
+
+
+            const updatedFood = {
+
+                name:
+                    document.getElementById("name").value,
+
+                description:
+                    document.getElementById("description").value,
+
+                price:
+                    document.getElementById("price").value,
+
+                category:
+                    document.getElementById("category").value,
+
+                imageUrl:
+                    document.getElementById("imageUrl").value,
+
+                avaliable:
+                    document.getElementById("avaliable").checked,
+
+                protein:
+                    Number(
+                        document.getElementById("protein").value
+                    ) || 0,
+
+                calories:
+                    Number(
+                        document.getElementById("calories").value
+                    ) || 0,
+
+                carbohydrates:
+                    Number(
+                        document.getElementById("carbohydrates").value
+                    ) || 0,
+
+                fats:
+                    Number(
+                        document.getElementById("fats").value
+                    ) || 0,
+
+                fiber:
+                    Number(
+                        document.getElementById("fiber").value
+                    ) || 0,
+
+                magniseium:
+                    Number(
+                        document.getElementById("magniseium").value
+                    ) || 0
+
+            };
+
+
+            try {
+
+                const response =
+                    await fetch(
+                        `/api/admin/foods/${foodId}`,
+                        {
+                            method: "PUT",
+
+                            headers: {
+                                "Content-Type":
+                                    "application/json"
+                            },
+
+                            body:
+                                JSON.stringify(updatedFood)
+                        }
+                    );
+
+
+                if (!response.ok) {
+                    throw new Error("Update failed");
+                }
+
+
+                document.getElementById(
+                    "successMessage"
+                ).style.display = "block";
+
+
+                document.getElementById(
+                    "errorMessage"
+                ).style.display = "none";
+
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+
+                setTimeout(function() {
+
+                    window.location.href =
+                        "/admin/foods";
+
+                }, 1200);
+
+
+            } catch (error) {
+
+                document.getElementById(
+                    "errorMessage"
+                ).style.display = "block";
+
+
+                document.getElementById(
+                    "successMessage"
+                ).style.display = "none";
+
+
+                console.error(error);
+
+            }
+
+        }
+    );
+
+
+    loadFood();
+
+</script>
+
+</body>
+</html>
