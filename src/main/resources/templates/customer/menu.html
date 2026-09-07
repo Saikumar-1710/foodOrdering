@@ -2,79 +2,249 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Food Menu</title>
 
-    <link rel="stylesheet"
-          th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 
+    <style>
+        .menu-page {
+            padding: 40px 0 80px;
+            background: #fff7f2;
+            min-height: 100vh;
+        }
+
+        .menu-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .menu-header h1 {
+            font-size: 42px;
+            color: #222;
+            margin-bottom: 10px;
+        }
+
+        .menu-header p {
+            color: #777;
+        }
+
+        .menu-links {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .menu-links a {
+            padding: 11px 22px;
+            border-radius: 8px;
+            background: #ff6b35;
+            color: white;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .menu-links a:hover {
+            transform: translateY(-3px);
+            background: #e85622;
+        }
+
+        .food-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .food-card {
+            width: auto;
+            padding: 0;
+            overflow: hidden;
+            border: none;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: 0.3s ease;
+        }
+
+        .food-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.14);
+        }
+
+        .food-image {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            background: #eeeeee;
+        }
+
+        .food-content {
+            padding: 22px;
+        }
+
+        .food-content h2 {
+            margin-bottom: 8px;
+            color: #222;
+        }
+
+        .food-description {
+            color: #777;
+            min-height: 48px;
+            margin-bottom: 12px;
+        }
+
+        .food-category {
+            color: #777;
+            margin-bottom: 8px;
+        }
+
+        .food-price {
+            color: #ff6b35;
+            font-size: 24px;
+            font-weight: 700;
+            margin: 12px 0;
+        }
+
+        .food-nutrition {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .customize-btn {
+            display: inline-block;
+            width: 100%;
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            background: #ff6b35;
+            color: white;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .customize-btn:hover {
+            background: #e85622;
+        }
+
+        .empty-menu {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .empty-menu h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty-menu p {
+            color: #777;
+        }
+
+        @media (max-width: 992px) {
+            .food-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .food-container {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-header h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="menu-page">
 
-    <h1>Food Menu</h1>
+    <div class="container">
 
-    <a href="/customer/dashboard">
-        Customer Dashboard
-    </a>
+        <div class="menu-header">
+            <h1>🍔 Food Menu</h1>
+            <p>Choose your favourite food and customize it your way.</p>
+        </div>
 
-    &nbsp;&nbsp;
+        <div class="menu-links">
+            <a href="/customer/dashboard">Customer Dashboard</a>
+            <a href="/customer/cart">🛒 Cart</a>
+        </div>
 
-    <a href="/customer/cart">
-        Cart
-    </a>
+        <div class="food-container"
+             th:if="${foods != null and !foods.isEmpty()}">
 
-    <hr>
+            <div class="food-card"
+                 th:each="food : ${foods}">
 
-    <div class="food-container">
+                <img class="food-image"
+                     th:if="${food.imageUrl != null and !food.imageUrl.isEmpty()}"
+                     th:src="${food.imageUrl}"
+                     alt="Food">
 
-        <div class="food-card"
-             th:each="food : ${foods}">
+                <div class="food-content">
 
-            <img th:if="${food.imageUrl != null}"
-                 th:src="${food.imageUrl}"
-                 width="180"
-                 height="120">
+                    <h2 th:text="${food.name}">
+                        Food Name
+                    </h2>
 
-            <h2 th:text="${food.name}">
-                Food Name
-            </h2>
+                    <p class="food-description"
+                       th:text="${food.description}">
+                        Delicious food
+                    </p>
 
-            <p th:text="${food.description}">
-                Description
-            </p>
+                    <p class="food-category">
+                        Category:
+                        <strong th:text="${food.category}">
+                            Category
+                        </strong>
+                    </p>
+
+                    <div class="food-price">
+                        ₹<span th:text="${food.price}">0</span>
+                    </div>
+
+                    <div class="food-nutrition">
+                        <div>
+                            Protein:
+                            <b th:text="${food.protein}">0</b> g
+                        </div>
+
+                        <div>
+                            Calories:
+                            <b th:text="${food.calories}">0</b>
+                        </div>
+                    </div>
+
+                    <a class="customize-btn"
+                       th:href="@{/customer/food/{id}(id=${food.id})}">
+                        Customize Food
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="empty-menu"
+             th:if="${foods == null or foods.isEmpty()}">
+
+            <h2>No Food Available</h2>
 
             <p>
-                Category:
-                <span th:text="${food.category}">
-                </span>
+                There are currently no available food items.
             </p>
-
-            <h3>
-                ₹
-                <span th:text="${food.price}">
-                </span>
-            </h3>
-
-            <p>
-                Protein:
-                <b th:text="${food.protein}"></b> g
-            </p>
-
-            <p>
-                Calories:
-                <b th:text="${food.calories}"></b>
-            </p>
-
-            <a th:href="@{/customer/food/{id}(id=${food.id})}">
-
-                Customize Food
-
-            </a>
 
         </div>
 
@@ -83,5 +253,4 @@
 </div>
 
 </body>
-
 </html>
