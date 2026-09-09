@@ -99,5 +99,16 @@ public class CartItem {
     public Integer getId() {
         return id;
     }
+    public Food getFood() {
+        return food;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public Double getUnitPrice() {
+        return unitPrice;
+    }
 
 }

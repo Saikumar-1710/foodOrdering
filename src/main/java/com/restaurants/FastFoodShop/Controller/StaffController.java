@@ -1,16 +1,9 @@
 package com.restaurants.FastFoodShop.Controller;
 
-<<<<<<< Updated upstream
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
-=======
-import org.springframework.stereotype.Controller;
-
-
-import org.springframework.web.bind.annotation.GetMapping;
->>>>>>> Stashed changes
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,7 +22,6 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class StaffController {
 
-<<<<<<< Updated upstream
     private final OrderService orderService;
     private final AttendanceService attendanceService;
 
@@ -49,10 +41,12 @@ public class StaffController {
 
         User user = (User) session.getAttribute("loggedUser");
 
+        // Check login
         if (user == null) {
             return "redirect:/login";
         }
 
+        // Allow only STAFF
         if (user.getRole() == null ||
                 !"STAFF".equalsIgnoreCase(
                         user.getRole().getRoleName())) {
@@ -62,11 +56,17 @@ public class StaffController {
 
         Integer staffId = user.getId();
 
-        // Get staff orders
+        // =====================================================
+        // GET STAFF ORDERS
+        // =====================================================
+
         List<Order> orders =
                 orderService.getOrdersByStaff(staffId);
 
-        // Get staff attendance
+        // =====================================================
+        // GET STAFF ATTENDANCE
+        // =====================================================
+
         List<Attendance> attendanceList =
                 attendanceService.getAttendanceByStaff(staffId);
 
@@ -100,6 +100,7 @@ public class StaffController {
                         "COMPLETED".equalsIgnoreCase(
                                 order.getStatus()))
                 .count();
+
         // =====================================================
         // TODAY'S WORKING HOURS
         // =====================================================
@@ -115,12 +116,15 @@ public class StaffController {
 
         if (todayAttendance != null) {
 
+            // If logout has already happened
             if (todayAttendance.getWorkingHours() != null) {
 
                 todayWorkingHours =
                         todayAttendance.getWorkingHours();
 
-            } else if (todayAttendance.getLoginTime() != null) {
+            }
+            // If staff is still working
+            else if (todayAttendance.getLoginTime() != null) {
 
                 LocalDateTime loginTime =
                         todayAttendance.getLoginTime();
@@ -154,7 +158,8 @@ public class StaffController {
         model.addAttribute("todayOrders", todayOrders);
         model.addAttribute("totalOrders", totalOrders);
         model.addAttribute("completedOrders", completedOrders);
-        model.addAttribute("todayWorkingHours", todayWorkingHours);
+        model.addAttribute("todayWorkingHours",
+                todayWorkingHours);
 
         return "staff/dashboard";
     }
@@ -172,10 +177,12 @@ public class StaffController {
         User user =
                 (User) session.getAttribute("loggedUser");
 
+        // Check login
         if (user == null) {
             return "redirect:/login";
         }
 
+        // Allow only STAFF
         if (user.getRole() == null ||
                 !"STAFF".equalsIgnoreCase(
                         user.getRole().getRoleName())) {
@@ -183,6 +190,7 @@ public class StaffController {
             return "redirect:/login";
         }
 
+        // Find order
         Order order =
                 orderService
                         .getOrderById(orderId)
@@ -192,7 +200,11 @@ public class StaffController {
             return "redirect:/staff/dashboard";
         }
 
+        // =====================================================
+        // SECURITY CHECK
         // Staff can update only their own order
+        // =====================================================
+
         if (order.getStaff() == null ||
                 !order.getStaff()
                         .getId()
@@ -201,15 +213,17 @@ public class StaffController {
             return "redirect:/staff/dashboard";
         }
 
-        // Allowed order statuses
+        // =====================================================
+        // ALLOWED ORDER STATUSES
+        // =====================================================
+
         if ("PENDING".equalsIgnoreCase(status) ||
                 "PREPARING".equalsIgnoreCase(status) ||
                 "READY".equalsIgnoreCase(status) ||
                 "COMPLETED".equalsIgnoreCase(status) ||
                 "CANCELLED".equalsIgnoreCase(status)) {
 
-            order.setStatus(
-                    status.toUpperCase());
+            order.setStatus(status.toUpperCase());
 
             orderService.updateOrder(order);
         }
@@ -255,7 +269,7 @@ public class StaffController {
 
         // =====================================================
         // SECURITY CHECK
-        // Staff can update ONLY their own orders
+        // Staff can update only their own order
         // =====================================================
 
         if (order.getStaff() == null ||
@@ -283,23 +297,3 @@ public class StaffController {
         return "redirect:/staff/dashboard";
     }
 }
-=======
-	
-	@GetMapping("/staff/dashboard")
-	public String staffDashboard(HttpSession session) {
-		
-		User user = (User) session.getAttribute("loggedUser");
-		
-		if(user == null) {
-			return "redirect:/login";
-		}
-		
-		if (user.getRole() == null ||
-			    !"STAFF".equalsIgnoreCase(user.getRole().getRoleName())) {
-			    return "redirect:/login";
-			}
-		
-		return "staff/dashboard";
-	}
-}
->>>>>>> Stashed changes
