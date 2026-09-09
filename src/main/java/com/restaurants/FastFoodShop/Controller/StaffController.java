@@ -1,9 +1,16 @@
 package com.restaurants.FastFoodShop.Controller;
 
+<<<<<<< Updated upstream
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+=======
+import org.springframework.stereotype.Controller;
+
+
+import org.springframework.web.bind.annotation.GetMapping;
+>>>>>>> Stashed changes
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +29,7 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class StaffController {
 
+<<<<<<< Updated upstream
     private final OrderService orderService;
     private final AttendanceService attendanceService;
 
@@ -275,3 +283,23 @@ public class StaffController {
         return "redirect:/staff/dashboard";
     }
 }
+=======
+	
+	@GetMapping("/staff/dashboard")
+	public String staffDashboard(HttpSession session) {
+		
+		User user = (User) session.getAttribute("loggedUser");
+		
+		if(user == null) {
+			return "redirect:/login";
+		}
+		
+		if (user.getRole() == null ||
+			    !"STAFF".equalsIgnoreCase(user.getRole().getRoleName())) {
+			    return "redirect:/login";
+			}
+		
+		return "staff/dashboard";
+	}
+}
+>>>>>>> Stashed changes

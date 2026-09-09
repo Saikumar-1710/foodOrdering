@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Food Management</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+        Food Management
+    </h1>
+
+    <a href="/admin/dashboard">
+        Dashboard
+    </a>
+
+    &nbsp;&nbsp;
+
+    <a href="/admin/foods/add">
+
+        Add New Food
+
+    </a>
+
+    <hr>
+
+
+    <table>
+
+        <thead>
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>Food</th>
+
+            <th>Category</th>
+
+            <th>Price</th>
+
+            <th>Calories</th>
+
+            <th>Protein</th>
+
+            <th>Available</th>
+
+            <th>Actions</th>
+
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        <tr th:each="food : ${foods}">
+
+            <td
+                    th:text="${food.id}">
+            </td>
+
+            <td
+                    th:text="${food.name}">
+            </td>
+
+            <td
+                    th:text="${food.category}">
+            </td>
+
+            <td>
+
+                ₹
+
+                <span
+                        th:text="${food.price}">
+                </span>
+
+            </td>
+
+            <td
+                    th:text="${food.calories}">
+            </td>
+
+            <td>
+
+                <span
+                        th:text="${food.protein}">
+                </span>
+
+                g
+
+            </td>
+
+            <td
+                    th:text="${food.available}">
+            </td>
+
+            <td>
+
+                <a
+                        th:href="@{/admin/foods/edit/{id}(id=${food.id})}">
+
+                    Edit
+
+                </a>
+
+                &nbsp; | &nbsp;
+
+                <a
+                        th:href="@{/admin/foods/delete/{id}(id=${food.id})}"
+                        onclick="return confirm('Delete this food?')">
+
+                    Delete
+
+                </a>
+
+                &nbsp; | &nbsp;
+
+                <a
+                        th:href="@{/admin/customizations/food/{id}(id=${food.id})}">
+
+                    Customizations
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+</div>
+
+</body>
+
+</html>

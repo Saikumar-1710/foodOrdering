@@ -1,10 +1,13 @@
 package com.restaurants.FastFoodShop.Controller;
+//package com.restaurants.FastFoodShop.Controller;
 
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import org.springframework.stereotype.Controller;
+
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,8 +23,56 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class LoginController {
 
+<<<<<<< Updated upstream
     private final UserService userService;
     private final AttendanceService attendanceService;
+=======
+	private final UserService userService;
+	
+	public LoginController(UserService userService) {
+		this.userService =userService;
+	}
+	
+	//http methods
+	@GetMapping("/")
+	public String home() {
+		return "redirect:/login";
+	}
+	
+	@GetMapping("/login")
+	public String loginPage() {
+		return "login";
+	}
+	
+	@PostMapping("/login")
+	public String login(@RequestParam String userName,@RequestParam String password, HttpSession session,Model model) {
+		
+		//Creating User obj
+		User user = userService.login(userName, password);
+			if(user == null) {
+				model.addAttribute("error", "Invalid UserName or Password");
+				return "login";
+			}
+			//store the loged in user in session
+			session.setAttribute("loggedUser", user);
+			session.setAttribute("userName", user.getUserName());
+			session.setAttribute("role",user.getRole());
+			
+			//based on role Navigating to dashboard.
+			String role = user.getRole().getRoleName();
+			
+			if("ADMIN".equalsIgnoreCase(role)) {
+				return "redirect:/admin/dashboard";
+			}
+			if("STAFF".equalsIgnoreCase(role)) {
+				return "redirect:/staff/dashboard";
+			}
+			if("CUSTOMER".equalsIgnoreCase(role)) {
+				return "redirect:/customer/dashboard";
+			}
+			
+			model.addAttribute("error","Role Not Found");
+>>>>>>> Stashed changes
 
     public LoginController(UserService userService,
                            AttendanceService attendanceService) {

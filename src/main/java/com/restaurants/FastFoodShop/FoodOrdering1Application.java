@@ -1,6 +1,7 @@
-package com.restaurants.FastFoodShop;
 
+package com.restaurants.FastFoodShop;
 import org.springframework.boot.SpringApplication;
+
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication

@@ -1,6 +1,9 @@
 package com.restaurants.FastFoodShop.Entity;
 
 import jakarta.persistence.Column;
+
+
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -35,6 +38,8 @@ public class User {
 	
 	@Column(nullable=false,unique=true)
 	private String email;
+	/*@Column(nullable = false)
+	private boolean primeUser = false;*/
 	
 	//@Pattern(regexp = "^[6-9][0-9]{9}$")
 	@Column(nullable=false, unique=true, length=10)
@@ -42,10 +47,60 @@ public class User {
 	
 	@Column(nullable=false)
 	private boolean enabled = true;
+	
+	
 	//maintain the relationship with role table
+	@Column(name = "prime_user", nullable = false)
+	private boolean primeUser = false;
+	
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="role_id", nullable=false)
 	private Role role;
-	
+
+	// Getters
+
+    public Integer getId() {
+        return id;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    // Prime User getter
+    public boolean isPrimeUser() {
+        return primeUser;
+    }
+
+    // Prime User setter
+    public void setPrimeUser(boolean primeUser) {
+        this.primeUser = primeUser;
+    }
+
 }
+

@@ -1,6 +1,8 @@
 package com.restaurants.FastFoodShop.Entity;
 
 import java.util.ArrayList;
+
+
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -48,6 +50,43 @@ public class Food {
 	
 	@OneToMany(mappedBy = "food", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<CustomizationOption> customizationOption = new ArrayList<>();
+	
+	public Integer getId() {
+	    return id;
+	}
+
+	public String getName() {
+	    return name;
+	}
+	public Double getPrice() {
+	    return price;
+	}
+
+	public Double getCalories() {
+	    return calories;
+	}
+
+	public Double getProtein() {
+	    return protein;
+	}
+
+	public Double getCarbohydrates() {
+	    return carbohydrates;
+	}
+
+	public Double getFats() {
+	    return fats;
+	}
+
+	public Double getFiber() {
+	    return fiber;
+	}
+
+	public Double getMagnesium() {
+	    return magnesium;
+	}
+
+	
 	
 	
 }
