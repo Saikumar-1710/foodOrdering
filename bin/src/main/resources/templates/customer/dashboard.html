@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Customer Dashboard</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+        Customer Dashboard
+    </h1>
+
+    <h2>
+
+        Welcome,
+
+        <span th:text="${session.userName}">
+            Customer
+        </span>
+
+    </h2>
+
+    <hr>
+
+    <div class="food-container">
+
+        <div class="food-card">
+
+            <h2>
+                🍔 Food Menu
+            </h2>
+
+            <p>
+                Browse available food items.
+            </p>
+
+            <a href="/customer/menu">
+
+                View Food Menu
+
+            </a>
+
+        </div>
+
+
+        <div class="food-card">
+
+            <h2>
+                🥗 Customize Food
+            </h2>
+
+            <p>
+                Select food and customize ingredients.
+            </p>
+
+            <a href="/customer/menu">
+
+                Customize Food
+
+            </a>
+
+        </div>
+
+
+        <div class="food-card">
+
+            <h2>
+                🛒 My Cart
+            </h2>
+
+            <p>
+                View customized food items.
+            </p>
+
+            <a href="/customer/cart">
+
+                View Cart
+
+            </a>
+
+        </div>
+
+
+        <div class="food-card">
+
+            <h2>
+                💪 Nutrition
+            </h2>
+
+            <p>
+                Manage your nutrition target.
+            </p>
+
+            <a href="/customer/profile/nutrition">
+
+                Nutrition Profile
+
+            </a>
+
+        </div>
+
+
+        <div class="food-card">
+
+            <h2>
+                🥩 Protein Foods
+            </h2>
+
+            <p>
+                Find high-protein food items.
+            </p>
+
+            <a href="/customer/recommendations">
+
+                View Recommendations
+
+            </a>
+
+        </div>
+
+
+        <div class="food-card">
+
+            <h2>
+                📦 My Orders
+            </h2>
+
+            <p>
+                View your previous orders.
+            </p>
+
+            <a href="/customer/orders">
+
+                My Orders
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <a href="/logout">
+
+        Logout
+
+    </a>
+
+</div>
+
+</body>
+
+</html>

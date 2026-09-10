@@ -1,6 +1,8 @@
 package com.restaurants.FastFoodShop.Controller;
 
 import org.springframework.stereotype.Controller;
+
+
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.restaurants.FastFoodShop.Entity.User;
@@ -19,9 +21,11 @@ public class AdminController {
 			return "redirect:/login";
 		}
 		
-		if(!user.getRole().getRoleName().equalsIgnoreCase("ADMIN")) {
-			return "redirect:/login";
-		}
+		if (user.getRole() == null ||
+	            !"ADMIN".equalsIgnoreCase(user.getRole().getRoleName())) {
+	            return "redirect:/login";
+	        }
+		
 		
 		return "admin/dashboard";
 	}

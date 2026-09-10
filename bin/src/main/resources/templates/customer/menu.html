@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>FoodieGo - Food Menu</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="menu-header">
+
+        <div>
+            <h1>
+                <i class="fa-solid fa-utensils"></i>
+                Food Menu
+            </h1>
+
+            <p>Choose your favourite food</p>
+        </div>
+
+        <!-- GUEST USER -->
+
+        <div class="user-badge guest-badge"
+             th:if="${isGuest}">
+
+            <i class="fa-solid fa-user"></i>
+
+            Guest User
+
+        </div>
+
+
+        <!-- PRIME USER -->
+
+        <div class="user-badge prime-badge"
+             th:if="${isPrime}">
+
+            <i class="fa-solid fa-crown"></i>
+
+            Prime User
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= NAVIGATION ================= -->
+
+    <div class="navigation">
+
+        <!-- Dashboard only for logged-in customer -->
+
+        <a th:if="${isPrime}"
+           th:href="@{/customer/dashboard}">
+
+            <i class="fa-solid fa-house"></i>
+
+            Customer Dashboard
+
+        </a>
+
+
+        <a th:href="@{/customer/cart}">
+
+            <i class="fa-solid fa-cart-shopping"></i>
+
+            Cart
+
+        </a>
+
+
+        <!-- Login option for Guest -->
+
+        <a th:if="${isGuest}"
+           th:href="@{/login}">
+
+            <i class="fa-solid fa-right-to-bracket"></i>
+
+            Login
+
+        </a>
+
+
+        <!-- Logout option for Prime User -->
+
+        <a th:if="${isPrime}"
+           th:href="@{/logout}">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </a>
+
+    </div>
+
+
+    <hr>
+
+
+    <!-- ================= FOOD CARDS ================= -->
+
+    <div class="food-container">
+
+        <div class="food-card"
+             th:each="food : ${foods}">
+
+
+            <!-- FOOD IMAGE -->
+
+            <div class="food-image">
+
+                <img th:if="${food.imageUrl != null}"
+                     th:src="${food.imageUrl}"
+                     th:alt="${food.name}">
+
+                <div class="no-image"
+                     th:if="${food.imageUrl == null}">
+
+                    <i class="fa-solid fa-bowl-food"></i>
+
+                </div>
+
+
+                <!-- PRIME DISCOUNT BADGE -->
+
+                <span class="discount-badge"
+                      th:if="${isPrime}">
+
+                    10% OFF
+
+                </span>
+
+            </div>
+
+
+            <!-- FOOD INFORMATION -->
+
+            <div class="food-info">
+
+                <h2 th:text="${food.name}">
+                    Food Name
+                </h2>
+
+
+                <p class="description"
+                   th:text="${food.description}">
+
+                    Food Description
+
+                </p>
+
+
+                <p class="category">
+
+                    <strong>Category:</strong>
+
+                    <span th:text="${food.category}">
+                        Category
+                    </span>
+
+                </p>
+
+
+                <!-- PRICE -->
+
+                <div class="price">
+
+                    ₹<span th:text="${food.price}">
+                        0
+                    </span>
+
+                </div>
+
+
+                <!-- NUTRITION -->
+
+                <div class="nutrition">
+
+                    <span>
+
+                        <i class="fa-solid fa-dumbbell"></i>
+
+                        Protein:
+
+                        <b th:text="${food.protein}">
+                            0
+                        </b> g
+
+                    </span>
+
+
+                    <span>
+
+                        <i class="fa-solid fa-fire"></i>
+
+                        Calories:
+
+                        <b th:text="${food.calories}">
+                            0
+                        </b>
+
+                    </span>
+
+                </div>
+
+
+                <!-- CUSTOMIZE -->
+
+                <a class="customize-btn"
+                   th:href="@{/customer/food-details/{id}(id=${food.id})}">
+
+                    <i class="fa-solid fa-sliders"></i>
+
+                    Customize Food
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,13 +1,31 @@
 package com.restaurants.FastFoodShop.Service;
 
 import com.restaurants.FastFoodShop.Entity.*;
+
+
+import com.restaurants.FastFoodShop.Entity.Cart;
+import com.restaurants.FastFoodShop.Entity.CartItem;
+import com.restaurants.FastFoodShop.Entity.CartItemOption;
+import com.restaurants.FastFoodShop.Entity.CustomizationOption;
+import com.restaurants.FastFoodShop.Entity.Food;
+import com.restaurants.FastFoodShop.Entity.User;
+
+
 import com.restaurants.FastFoodShop.Repository.*;
+import com.restaurants.FastFoodShop.Repository.FoodRepository;
+import com.restaurants.FastFoodShop.Repository.CustomizationOptionRepository;
+import com.restaurants.FastFoodShop.Repository.CartRepository;
+import com.restaurants.FastFoodShop.Repository.CartItemRepository;
+
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+
+
+
 
 @Service
 public class CartServiceImpl implements CartService {
@@ -32,6 +50,7 @@ public class CartServiceImpl implements CartService {
     @Override
     @Transactional
     public Cart getCart(User user) {
+    	
 
         return cartRepository
                 .findByUserId(user.getId())
@@ -44,8 +63,9 @@ public class CartServiceImpl implements CartService {
                     cart.setItems(new ArrayList<>());
 
                     return cartRepository.save(cart);
-                });
+                });           
     }
+    
 
     @Override
     @Transactional
@@ -110,6 +130,9 @@ public class CartServiceImpl implements CartService {
 
                 selectedOptions.add(cartItemOption);
             }
+        }
+        if (user.isPrimeUser()) {
+            price = price * 0.90;
         }
 
         cartItem.setUnitPrice(price);

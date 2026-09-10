@@ -1,6 +1,7 @@
 package com.restaurants.FastFoodShop.Entity;
 
 import java.util.ArrayList;
+
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -31,4 +32,9 @@ public class Role {
 	//one role can have multiple users
 	@OneToMany(mappedBy="role", cascade = CascadeType.ALL, fetch= FetchType.LAZY)
 	private List<User> users = new ArrayList<>(); 
+
+	public String getRoleName() {
+	    return roleName;
+	}
 }
+

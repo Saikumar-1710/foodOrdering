@@ -22,7 +22,7 @@ public class FoodController {
 
 	//Http Actions
 	
-	@GetMapping("/menu")
+	@GetMapping("/food-menu")
 	public String menu(Model model) {
 		model.addAttribute("foods",foodService.getAvaliableFoods());
 		return "customer/menu";

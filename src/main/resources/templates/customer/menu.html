@@ -2,86 +2,524 @@
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Food Menu</title>
+    <title>FoodieGo - Food Menu</title>
 
+    <!-- Existing main CSS -->
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+
+    <!-- Font Awesome -->
     <link rel="stylesheet"
-          th:href="@{/css/style.css}">
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
+    <style>
+
+        .menu-page {
+            padding: 40px 0 80px;
+            background: #fff7f2;
+            min-height: 100vh;
+        }
+
+        .menu-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .menu-header h1 {
+            font-size: 42px;
+            color: #222;
+            margin-bottom: 10px;
+        }
+
+        .menu-header p {
+            color: #777;
+        }
+
+        .user-badge {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 20px;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+
+        .guest-badge {
+            background: #eee;
+            color: #555;
+        }
+
+        .prime-badge {
+            background: #ffd700;
+            color: #222;
+            text-decoration: none;
+        }
+
+        .normal-badge {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 10px 18px;
+            border-radius: 20px;
+            background: #f1f1f1;
+            color: #555;
+            font-weight: 600;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
+        }
+
+        .navigation a {
+            padding: 11px 22px;
+            border-radius: 8px;
+            background: #ff6b35;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .navigation a:hover {
+            transform: translateY(-3px);
+            background: #e85622;
+        }
+
+        .food-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+        }
+
+        .food-card {
+            overflow: hidden;
+            border: none;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            transition: 0.3s ease;
+        }
+
+        .food-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.14);
+        }
+
+        .food-image {
+            width: 100%;
+            height: 210px;
+            object-fit: cover;
+            background: #eeeeee;
+        }
+
+        .food-image-container {
+            position: relative;
+        }
+
+        .no-image {
+            width: 100%;
+            height: 210px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #eeeeee;
+            font-size: 50px;
+            color: #aaa;
+        }
+
+        .discount-badge {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: #ff6b35;
+            color: white;
+            padding: 7px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 13px;
+        }
+
+        .food-info {
+            padding: 22px;
+        }
+
+        .food-info h2 {
+            margin-bottom: 8px;
+            color: #222;
+        }
+
+        .description {
+            color: #777;
+            min-height: 48px;
+            margin-bottom: 12px;
+        }
+
+        .category {
+            color: #777;
+            margin-bottom: 12px;
+        }
+
+        .price {
+            font-size: 24px;
+            font-weight: 700;
+            margin: 15px 0;
+        }
+
+        .old-price {
+            color: #999;
+            text-decoration: line-through;
+            margin-right: 10px;
+            font-size: 18px;
+        }
+
+        .prime-price {
+            color: #ff6b35;
+        }
+
+        .nutrition {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 18px;
+        }
+
+        .customize-btn {
+            display: block;
+            width: 100%;
+            text-align: center;
+            padding: 12px;
+            border-radius: 8px;
+            background: #ff6b35;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .customize-btn:hover {
+            background: #e85622;
+        }
+
+        .empty-menu {
+            text-align: center;
+            padding: 60px 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            max-width: 900px;
+            margin: auto;
+        }
+
+        .empty-menu h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty-menu p {
+            color: #777;
+        }
+
+        .login-message {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 12px;
+            background: #fff3cd;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        @media (max-width: 992px) {
+            .food-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+            .food-container {
+                grid-template-columns: 1fr;
+            }
+
+            .menu-header h1 {
+                font-size: 32px;
+            }
+        }
+
+    </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="menu-page">
 
-    <h1>Food Menu</h1>
+    <!-- ================= HEADER ================= -->
 
-    <a href="/customer/dashboard">
-        Customer Dashboard
-    </a>
+    <div class="menu-header">
 
-    &nbsp;&nbsp;
+        <h1>
+            <i class="fa-solid fa-utensils"></i>
+            Food Menu
+        </h1>
 
-    <a href="/customer/cart">
-        Cart
-    </a>
+        <p>Choose your favourite food</p>
 
-    <hr>
+        <!-- Guest User -->
+        <div class="user-badge guest-badge"
+             th:if="${isGuest}">
 
-    <div class="food-container">
+            <i class="fa-solid fa-user"></i>
+            Guest User
+
+        </div>
+
+        <!-- Prime User -->
+        <a th:if="${isPrime}"
+           th:href="@{/customer/prime}"
+           class="user-badge prime-badge">
+
+            <i class="fa-solid fa-crown"></i>
+            Prime User
+
+        </a>
+
+        <!-- Normal Customer -->
+        <span th:if="${!isGuest and !isPrime}"
+              class="normal-badge">
+
+            👤 Normal Customer
+
+        </span>
+
+    </div>
+
+
+    <!-- ================= NAVIGATION ================= -->
+
+    <div class="navigation">
+
+        <!-- Dashboard -->
+        <a th:if="${isPrime}"
+           th:href="@{/customer/dashboard}">
+
+            <i class="fa-solid fa-house"></i>
+            Customer Dashboard
+
+        </a>
+
+        <!-- Cart -->
+        <a th:href="@{/customer/cart}">
+
+            <i class="fa-solid fa-cart-shopping"></i>
+            Cart
+
+        </a>
+
+        <!-- Login for Guest -->
+        <a th:if="${isGuest}"
+           th:href="@{/login}">
+
+            <i class="fa-solid fa-right-to-bracket"></i>
+            Login
+
+        </a>
+
+        <!-- Logout for Prime -->
+        <a th:if="${isPrime}"
+           th:href="@{/logout}">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+
+        </a>
+
+    </div>
+
+
+    <!-- Cart Message -->
+
+    <div th:if="${session.cartMessage}"
+         class="login-message">
+
+        ⚠️
+        <span th:text="${session.cartMessage}"></span>
+
+    </div>
+
+
+    <!-- ================= FOOD CARDS ================= -->
+
+    <div class="food-container"
+         th:if="${foods != null and !foods.isEmpty()}">
 
         <div class="food-card"
              th:each="food : ${foods}">
 
-            <img th:if="${food.imageUrl != null}"
-                 th:src="${food.imageUrl}"
-                 width="180"
-                 height="120">
+            <!-- FOOD IMAGE -->
 
-            <h2 th:text="${food.name}">
-                Food Name
-            </h2>
+            <div class="food-image-container">
 
-            <p th:text="${food.description}">
-                Description
-            </p>
+                <img class="food-image"
+                     th:if="${food.imageUrl != null and !food.imageUrl.isEmpty()}"
+                     th:src="${food.imageUrl}"
+                     th:alt="${food.name}">
 
-            <p>
-                Category:
-                <span th:text="${food.category}">
+                <div class="no-image"
+                     th:if="${food.imageUrl == null or food.imageUrl.isEmpty()}">
+
+                    <i class="fa-solid fa-bowl-food"></i>
+
+                </div>
+
+                <!-- PRIME DISCOUNT -->
+
+                <span class="discount-badge"
+                      th:if="${isPrime}">
+
+                    10% OFF
+
                 </span>
-            </p>
 
-            <h3>
-                ₹
-                <span th:text="${food.price}">
-                </span>
-            </h3>
+            </div>
 
-            <p>
-                Protein:
-                <b th:text="${food.protein}"></b> g
-            </p>
 
-            <p>
-                Calories:
-                <b th:text="${food.calories}"></b>
-            </p>
+            <!-- FOOD INFORMATION -->
 
-            <a th:href="@{/customer/food/{id}(id=${food.id})}">
+            <div class="food-info">
 
-                Customize Food
+                <h2 th:text="${food.name}">
+                    Food Name
+                </h2>
 
-            </a>
+
+                <p class="description"
+                   th:text="${food.description}">
+
+                    Food Description
+
+                </p>
+
+
+                <p class="category">
+
+                    <strong>Category:</strong>
+
+                    <span th:text="${food.category}">
+                        Category
+                    </span>
+
+                </p>
+
+
+                <!-- ================= PRICE ================= -->
+
+                <div class="price">
+
+                    <!-- Guest / Normal Customer -->
+
+                    <div th:if="${!isPrime}">
+
+                        <span>
+                            ₹<span th:text="${food.price}">0</span>
+                        </span>
+
+                    </div>
+
+
+                    <!-- Prime Customer -->
+
+                    <div th:if="${isPrime}">
+
+                        <span class="old-price"
+                              th:text="'₹' + ${food.price}">
+
+                            ₹0
+
+                        </span>
+
+                        <span class="prime-price"
+                              th:text="'₹' + #numbers.formatDecimal(food.price * 0.90, 1, 2)">
+
+                            ₹0
+
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- ================= NUTRITION ================= -->
+
+                <div class="nutrition">
+
+                    <span>
+
+                        <i class="fa-solid fa-dumbbell"></i>
+
+                        Protein:
+
+                        <b th:text="${food.protein}">
+                            0
+                        </b> g
+
+                    </span>
+
+
+                    <span>
+
+                        <i class="fa-solid fa-fire"></i>
+
+                        Calories:
+
+                        <b th:text="${food.calories}">
+                            0
+                        </b>
+
+                    </span>
+
+                </div>
+
+
+                <!-- ================= CUSTOMIZE ================= -->
+
+                <a class="customize-btn"
+                   th:href="@{/customer/food-details/{id}(id=${food.id})}">
+
+                    <i class="fa-solid fa-sliders"></i>
+                    Customize Food
+
+                </a>
+
+            </div>
 
         </div>
+
+    </div>
+
+
+    <!-- ================= EMPTY MENU ================= -->
+
+    <div class="empty-menu"
+         th:if="${foods == null or foods.isEmpty()}">
+
+        <h2>
+            No Food Available
+        </h2>
+
+        <p>
+            There are currently no available food items.
+        </p>
 
     </div>
 
 </div>
 
 </body>
-
 </html>

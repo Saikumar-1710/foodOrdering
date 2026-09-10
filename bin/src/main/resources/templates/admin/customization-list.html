@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Food Customizations</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+        Food Customizations
+    </h1>
+
+    <h2>
+
+        Food:
+
+        <span
+                th:text="${food.name}">
+        </span>
+
+    </h2>
+
+    <a
+            th:href="@{/admin/customizations/add/{id}(id=${food.id})}">
+
+        Add Customization
+
+    </a>
+
+    <hr>
+
+
+    <table>
+
+        <thead>
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>Name</th>
+
+            <th>Type</th>
+
+            <th>Price</th>
+
+            <th>Calories</th>
+
+            <th>Protein</th>
+
+            <th>Carbs</th>
+
+            <th>Fats</th>
+
+            <th>Fiber</th>
+
+            <th>Magnesium</th>
+
+            <th>Available</th>
+
+        </tr>
+
+        </thead>
+
+
+        <tbody>
+
+        <tr
+                th:each="option : ${options}">
+
+            <td
+                    th:text="${option.id}">
+            </td>
+
+            <td
+                    th:text="${option.name}">
+            </td>
+
+            <td
+                    th:text="${option.type}">
+            </td>
+
+            <td>
+
+                ₹
+
+                <span
+                        th:text="${option.priceAdjustment}">
+                </span>
+
+            </td>
+
+            <td
+                    th:text="${option.calories}">
+            </td>
+
+            <td
+                    th:text="${option.protein}">
+            </td>
+
+            <td
+                    th:text="${option.carbohydrates}">
+            </td>
+
+            <td
+                    th:text="${option.fats}">
+            </td>
+
+            <td
+                    th:text="${option.fiber}">
+            </td>
+
+            <td
+                    th:text="${option.magnesium}">
+            </td>
+
+            <td th:text="${option.available}"></td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <a href="/admin/foods">
+
+        Back to Food Management
+
+    </a>
+
+</div>
+
+</body>
+
+</html>
