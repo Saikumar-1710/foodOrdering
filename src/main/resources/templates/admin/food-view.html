@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Food Details</title>
+
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/admin-layout.css}">
+    <link rel="stylesheet" th:href="@{/css/food-view.css}">
+
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <aside class="sidebar">
+
+        <h2>Food Admin</h2>
+
+        <ul>
+
+            <li>
+                <a th:href="@{/admin/dashboard}">
+                    <i class="fa fa-house"></i>
+                    Dashboard
+                </a>
+            </li>
+
+            <li class="active">
+                <a th:href="@{/admin/foods}">
+                    <i class="fa fa-utensils"></i>
+                    Food Management
+                </a>
+            </li>
+
+            <li class="logout-item">
+                <a th:href="@{/logout}">
+                    <i class="fa fa-right-from-bracket"></i>
+                    Logout
+                </a>
+            </li>
+
+        </ul>
+
+    </aside>
+
+
+    <main class="content">
+
+        <header class="topbar">
+
+            <div>
+                <h2>Food Details</h2>
+                <p>Complete information about this food item</p>
+            </div>
+
+            <div class="welcome">
+                Welcome,
+                <strong th:text="${session.username}">
+                    Admin
+                </strong>
+            </div>
+
+        </header>
+
+
+        <section class="food-view-card">
+
+            <div class="food-view-image">
+
+                <img th:if="${food.imageUrl != null and !#strings.isEmpty(food.imageUrl)}"
+                     th:src="${food.imageUrl}"
+                     th:alt="${food.name}">
+
+                <i th:unless="${food.imageUrl != null and !#strings.isEmpty(food.imageUrl)}"
+                   class="fa fa-utensils">
+                </i>
+
+            </div>
+
+
+            <div class="food-view-main">
+
+                <div class="food-view-title">
+
+                    <div>
+
+                        <span class="category-badge"
+                              th:text="${food.category}">
+                            Category
+                        </span>
+
+                        <h1 th:text="${food.name}">
+                            Food Name
+                        </h1>
+
+                    </div>
+
+
+                    <div>
+
+                        <span th:if="${food.available}"
+                              class="detail-status available-detail">
+                            <i class="fa fa-circle-check"></i>
+                            Available
+                        </span>
+
+                        <span th:unless="${food.available}"
+                              class="detail-status unavailable-detail">
+                            <i class="fa fa-circle-xmark"></i>
+                            Unavailable
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <p class="food-description"
+                   th:text="${food.description}">
+                    Food description
+                </p>
+
+
+                <div class="food-price-large">
+
+                    ₹<span th:text="${food.price}">
+                        0
+                    </span>
+
+                </div>
+
+
+                <div class="nutrition-cards">
+
+                    <div>
+                        <i class="fa fa-fire"></i>
+                        <strong th:text="${food.calories}">0</strong>
+                        <span>Calories</span>
+                    </div>
+
+                    <div>
+                        <i class="fa fa-dumbbell"></i>
+                        <strong th:text="${food.protein}">0</strong>
+                        <span>Protein (g)</span>
+                    </div>
+
+                    <div>
+                        <i class="fa fa-wheat-awn"></i>
+                        <strong th:text="${food.carbohydrates}">0</strong>
+                        <span>Carbs (g)</span>
+                    </div>
+
+                    <div>
+                        <i class="fa fa-droplet"></i>
+                        <strong th:text="${food.fats}">0</strong>
+                        <span>Fats (g)</span>
+                    </div>
+
+                    <div>
+                        <i class="fa fa-seedling"></i>
+                        <strong th:text="${food.fiber}">0</strong>
+                        <span>Fiber (g)</span>
+                    </div>
+
+                    <div>
+                        <i class="fa fa-flask"></i>
+                        <strong th:text="${food.magnesium}">0</strong>
+                        <span>Magnesium (mg)</span>
+                    </div>
+
+                </div>
+
+
+                <div class="food-view-actions">
+
+                    <a th:href="@{/admin/foods}"
+                       class="back-btn">
+
+                        <i class="fa fa-arrow-left"></i>
+                        Back
+
+                    </a>
+
+                    <a th:href="@{/admin/foods/edit/{id}(id=${food.id})}"
+                       class="edit-main-btn">
+
+                        <i class="fa fa-pen"></i>
+                        Edit Food
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>
