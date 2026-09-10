@@ -1,0 +1,314 @@
+/* ADD / EDIT FOOD PAGE */
+
+.food-form-container {
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px;
+    margin-top: 25px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+}
+
+
+/* FORM HEADER */
+
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding-bottom: 25px;
+    margin-bottom: 25px;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.form-icon {
+    width: 55px;
+    height: 55px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff7ed;
+    color: #ea580c;
+    font-size: 23px;
+    flex-shrink: 0;
+}
+
+.form-header h2 {
+    color: #1f2937;
+    margin-bottom: 5px;
+}
+
+.form-header p {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+
+/* FORM SECTION */
+
+.form-section {
+    padding: 22px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.form-section h3 {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin-bottom: 20px;
+    color: #374151;
+    font-size: 17px;
+}
+
+.form-section h3 i {
+    color: #f97316;
+}
+
+
+/* BASIC FORM GRID */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+
+/* NUTRITION GRID */
+
+.nutrition-form-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+
+/* FORM GROUP */
+ 
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-group label {
+    color: #374151;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 10px;
+    outline: none;
+    background: #ffffff;
+    color: #1f2937;
+    font-size: 14px;
+    transition: all 0.25s ease;
+}
+
+.form-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+    color: #9ca3af;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #f97316;
+    box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.10);
+}
+
+
+/* AVAILABILITY */
+
+.availability-section {
+    border-bottom: none;
+}
+
+.availability-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.availability-toggle input {
+    display: none;
+}
+
+.toggle-slider {
+    width: 48px;
+    height: 26px;
+    border-radius: 20px;
+    background: #d1d5db;
+    position: relative;
+    transition: 0.3s;
+}
+
+.toggle-slider::after {
+    content: "";
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #ffffff;
+    position: absolute;
+    top: 3px;
+    left: 4px;
+    transition: 0.3s;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.20);
+}
+
+.availability-toggle input:checked + .toggle-slider {
+    background: #22c55e;
+}
+
+.availability-toggle input:checked + .toggle-slider::after {
+    transform: translateX(20px);
+}
+
+
+/* FORM ACTION BUTTONS */
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 25px;
+}
+
+.cancel-btn,
+.save-food-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.cancel-btn {
+    background: #f3f4f6;
+    color: #374151;
+}
+
+.cancel-btn:hover {
+    background: #e5e7eb;
+    transform: translateY(-1px);
+}
+
+.save-food-btn {
+    border: none;
+    cursor: pointer;
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: #ffffff;
+    box-shadow: 0 6px 15px rgba(234, 88, 12, 0.20);
+}
+
+.save-food-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(234, 88, 12, 0.30);
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+
+    .nutrition-form-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .food-form-container {
+        padding: 20px;
+    }
+
+    .form-grid,
+    .nutrition-form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-header {
+        align-items: flex-start;
+    }
+
+    .form-actions {
+        flex-direction: column-reverse;
+    }
+
+    .cancel-btn,
+    .save-food-btn {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 500px) {
+
+    .food-form-container {
+        padding: 15px;
+        border-radius: 12px;
+    }
+
+    .form-header {
+        gap: 10px;
+    }
+
+    .form-icon {
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+
+    .form-header h2 {
+        font-size: 19px;
+    }
+}
+
+/* FOOD AVAILABILITY CHECKBOX */
+
+.availability-checkbox {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+    color: #374151;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.availability-checkbox input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #16a34a;
+}
+
+.availability-checkbox:hover {
+    color: #16a34a;
+}

@@ -13,4 +13,10 @@ public interface OrderRepository extends JpaRepository<Order, Integer> {
     List<Order> findByStaffId(Integer staffId);
 
     List<Order> findByStaffIdAndStatus(Integer staffId, String status);
+    
+    long countByOrderDateBetween(
+            java.time.LocalDateTime start,
+            java.time.LocalDateTime end);
+
+    List<Order> findTop5ByOrderByOrderDateDesc();
 }
