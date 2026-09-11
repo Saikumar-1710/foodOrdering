@@ -9,16 +9,25 @@ import org.springframework.stereotype.Repository;
 import com.restaurants.FastFoodShop.Entity.User;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, Integer>{
+public interface UserRepository extends JpaRepository<User, Integer> {
 
-	Optional<User> findByUserName(String userName);
-	Optional<User> findByEmail(String email);
-	Optional<User> findByPhone(String mobile);
-	
+    Optional<User> findByUserName(String userName);
+
+    Optional<User> findByEmail(String email);
+
+    Optional<User> findByPhone(String mobile);
+
     boolean existsByUserName(String userName);
+
     boolean existsByEmail(String email);
-	boolean existsByPhone(String mobile);
-	
-	List<User> findByEnabled(boolean enabled);
-	
+
+    boolean existsByPhone(String mobile);
+
+    List<User> findByEnabled(boolean enabled);
+
+    List<User> findByEnabledAndRoleRoleName(
+            boolean enabled,
+            String roleName);
+    
+    long countByRoleRoleName(String roleName);
 }

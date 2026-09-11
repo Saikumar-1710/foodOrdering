@@ -1,18 +1,20 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <title th:text="${food.id == null ? 'Add Food' : 'Edit Food'}">
+        Add Food
+    </title>
 
-    <title>Add Food</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+	<link rel="stylesheet" th:href="@{/css/add-food.css}">
 
     <link rel="stylesheet"
-          th:href="@{/css/style.css}">
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 </head>
 
@@ -20,217 +22,368 @@
 
 <div class="container">
 
-    <h1>
-        Add Food
-    </h1>
+    <!-- Sidebar -->
+    <aside class="sidebar">
 
-    <a href="/admin/dashboard">
-        Admin Dashboard
-    </a>
+        <h2>Food Admin</h2>
 
-    &nbsp; | &nbsp;
+        <ul>
 
-    <a href="/admin/foods">
-        Food List
-    </a>
+            <li>
+                <a th:href="@{/admin/dashboard}">
+                    <i class="fa fa-house"></i>
+                    Dashboard
+                </a>
+            </li>
 
-    <hr>
+            <li class="active">
+                <a th:href="@{/admin/foods}">
+                    <i class="fa fa-utensils"></i>
+                    Food Items
+                </a>
+            </li>
 
-    <form
-            th:action="@{/admin/foods/save}"
-            th:object="${food}"
-            method="post">
+            <li class="logout-item">
+                <a th:href="@{/logout}">
+                    <i class="fa fa-right-from-bracket"></i>
+                    Logout
+                </a>
+            </li>
 
-        <input
-                type="hidden"
-                th:field="*{id}">
+        </ul>
 
+    </aside>
 
-        <label>
-            Food Name
-        </label>
 
-        <br>
+    <!-- Main Content -->
+    <main class="content">
 
-        <input
-                type="text"
-                th:field="*{name}"
-                placeholder="Enter food name"
-                required>
+        <!-- Topbar -->
+        <header class="topbar">
 
-        <br><br>
+            <div>
 
+                <h2 th:text="${food.id == null ? 'Add New Food' : 'Edit Food'}">
+                    Add New Food
+                </h2>
 
-        <label>
-            Description
-        </label>
+                <p>
+                    Manage food details and nutritional information
+                </p>
 
-        <br>
+            </div>
 
-        <textarea
-                th:field="*{description}"
-                placeholder="Enter food description">
-        </textarea>
+            <div class="welcome">
+                Welcome,
+                <strong th:text="${session.username}">
+                    Admin
+                </strong>
+            </div>
 
-        <br><br>
+        </header>
 
 
-        <label>
-            Price
-        </label>
+        <!-- Form Container -->
+        <section class="food-form-container">
 
-        <br>
+            <div class="form-header">
 
-        <input
-                type="number"
-                step="0.01"
-                th:field="*{price}"
-                placeholder="Enter price"
-                required>
+                <div class="form-icon">
+                    <i class="fa fa-utensils"></i>
+                </div>
 
-        <br><br>
+                <div>
 
+                    <h2 th:text="${food.id == null ? 'Add Food Item' : 'Update Food Item'}">
+                        Add Food Item
+                    </h2>
 
-        <label>
-            Category
-        </label>
+                    <p>
+                        Enter all important details about the food item.
+                    </p>
 
-        <br>
+                </div>
 
-        <input
-                type="text"
-                th:field="*{category}"
-                placeholder="Burger / Pizza / Rice">
+            </div>
 
-        <br><br>
 
+            <form th:action="@{/admin/foods/save}"
+                  th:object="${food}"
+                  method="post">
 
-        <label>
-            Image URL
-        </label>
 
-        <br>
+                <!-- Hidden ID for Edit -->
+                <input type="hidden"
+                       th:field="*{id}">
 
-        <input
-                type="text"
-                th:field="*{imageUrl}"
-                placeholder="Enter image URL">
 
-        <br><br>
+                <!-- Basic Information -->
+                <div class="form-section">
 
+                    <h3>
+                        <i class="fa fa-circle-info"></i>
+                        Basic Information
+                    </h3>
 
-        <h2>
-            Nutrition Per Serving
-        </h2>
 
+                    <div class="form-grid">
 
-        <label>
-            Calories
-        </label>
+                        <!-- Food Name -->
+                        <div class="form-group">
 
-        <br>
+                            <label for="name">
+                                Food Name
+                            </label>
 
-        <input
-                type="number"
-                step="0.01"
-                th:field="*{calories}">
+                            <input type="text"
+                                   id="name"
+                                   th:field="*{name}"
+                                   placeholder="Enter food name"
+                                   required>
 
-        <br><br>
+                        </div>
 
 
-        <label>
-            Protein (g)
-        </label>
+                        <!-- Category -->
+                        <div class="form-group">
 
-        <br>
+                            <label for="category">
+                                Category
+                            </label>
 
-        <input
-                type="number"
-                step="0.01"
-                th:field="*{protein}">
+                            <input type="text"
+                                   id="category"
+                                   th:field="*{category}"
+                                   placeholder="e.g. Pizza, Burger, Pasta"
+                                   required>
 
-        <br><br>
+                        </div>
 
 
-        <label>
-            Carbohydrates (g)
-        </label>
+                        <!-- Price -->
+                        <div class="form-group">
 
-        <br>
+                            <label for="price">
+                                Price (₹)
+                            </label>
 
-        <input
-                type="number"
-                step="0.01"
-                th:field="*{carbohydrates}">
+                            <input type="number"
+                                   id="price"
+                                   th:field="*{price}"
+                                   placeholder="Enter price"
+                                   step="0.01"
+                                   min="0"
+                                   required>
 
-        <br><br>
+                        </div>
 
 
-        <label>
-            Fats (g)
-        </label>
+                        <!-- Image URL -->
+                        <div class="form-group">
 
-        <br>
+                            <label for="imageUrl">
+                                Image URL
+                            </label>
 
-        <input
-                type="number"
-                step="0.01"
-                th:field="*{fats}">
+                            <input type="text"
+                                   id="imageUrl"
+                                   th:field="*{imageUrl}"
+                                   placeholder="Enter food image URL">
 
-        <br><br>
+                        </div>
 
 
-        <label>
-            Fiber (g)
-        </label>
+                        <!-- Description -->
+                        <div class="form-group full-width">
 
-        <br>
+                            <label for="description">
+                                Description
+                            </label>
 
-        <input
-                type="number"
-                step="0.01"
-                th:field="*{fiber}">
+                            <textarea id="description"
+                                      th:field="*{description}"
+                                      placeholder="Enter food description"
+                                      rows="4">
+                            </textarea>
 
-        <br><br>
+                        </div>
 
+                    </div>
 
-        <label>
-            Magnesium (mg)
-        </label>
+                </div>
 
-        <br>
 
-        <input
-                type="number"
-                step="0.01"
-                th:field="*{magnesium}">
+                <!-- Nutrition -->
+                <div class="form-section">
 
-        <br><br>
+                    <h3>
+                        <i class="fa fa-heart-pulse"></i>
+                        Nutrition Information
+                    </h3>
 
 
-        <label>
+                    <div class="nutrition-form-grid">
 
-            <input
-                    type="checkbox"
-                    th:field="*{available}">
+                        <!-- Calories -->
+                        <div class="form-group">
 
-            Food Available
+                            <label for="calories">
+                                Calories (kcal)
+                            </label>
 
-        </label>
+                            <input type="number"
+                                   id="calories"
+                                   th:field="*{calories}"
+                                   placeholder="0"
+                                   step="0.01"
+                                   min="0">
 
-        <br><br>
+                        </div>
 
 
-        <button type="submit">
+                        <!-- Protein -->
+                        <div class="form-group">
 
-            Save Food
+                            <label for="protein">
+                                Protein (g)
+                            </label>
 
-        </button>
+                            <input type="number"
+                                   id="protein"
+                                   th:field="*{protein}"
+                                   placeholder="0"
+                                   step="0.01"
+                                   min="0">
 
-    </form>
+                        </div>
+
+
+                        <!-- Carbohydrates -->
+                        <div class="form-group">
+
+                            <label for="carbohydrates">
+                                Carbohydrates (g)
+                            </label>
+
+                            <input type="number"
+                                   id="carbohydrates"
+                                   th:field="*{carbohydrates}"
+                                   placeholder="0"
+                                   step="0.01"
+                                   min="0">
+
+                        </div>
+
+
+                        <!-- Fats -->
+                        <div class="form-group">
+
+                            <label for="fats">
+                                Fats (g)
+                            </label>
+
+                            <input type="number"
+                                   id="fats"
+                                   th:field="*{fats}"
+                                   placeholder="0"
+                                   step="0.01"
+                                   min="0">
+
+                        </div>
+
+
+                        <!-- Fiber -->
+                        <div class="form-group">
+
+                            <label for="fiber">
+                                Fiber (g)
+                            </label>
+
+                            <input type="number"
+                                   id="fiber"
+                                   th:field="*{fiber}"
+                                   placeholder="0"
+                                   step="0.01"
+                                   min="0">
+
+                        </div>
+
+
+                        <!-- Magnesium -->
+                        <div class="form-group">
+
+                            <label for="magnesium">
+                                Magnesium (mg)
+                            </label>
+
+                            <input type="number"
+                                   id="magnesium"
+                                   th:field="*{magnesium}"
+                                   placeholder="0"
+                                   step="0.01"
+                                   min="0">
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Availability -->
+
+				<div class="form-section availability-section">
+				
+				    <h3>
+				        <i class="fa fa-circle-check"></i>
+				        Food Availability
+				    </h3>
+				
+				    <label class="availability-checkbox">
+				
+				        <input type="checkbox"
+				               th:field="*{available}">
+				
+				        <span>Food is currently available</span>
+				
+				    </label>
+				
+				</div>
+
+
+                <!-- Buttons -->
+                <div class="form-actions">
+
+                    <a th:href="@{/admin/foods}"
+                       class="cancel-btn">
+
+                        <i class="fa fa-arrow-left"></i>
+                        Cancel
+
+                    </a>
+
+
+                    <button type="submit"
+                            class="save-food-btn">
+
+                        <i class="fa fa-save"></i>
+
+                        <span th:text="${food.id == null ? 'Save Food' : 'Update Food'}">
+                            Save Food
+                        </span>
+
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </section>
+
+    </main>
 
 </div>
 
 </body>
-
 </html>
