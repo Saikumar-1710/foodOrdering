@@ -28,4 +28,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByEnabledAndRoleRoleName(
             boolean enabled,
             String roleName);
+    
+    long countByRoleRoleName(String roleName);
 }

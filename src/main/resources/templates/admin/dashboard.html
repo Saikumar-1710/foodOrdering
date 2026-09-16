@@ -2,11 +2,10 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Admin Dashboard</title>
+    <title>Admin Dashboard | Food Admin</title>
 
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
 
@@ -15,160 +14,386 @@
 
 </head>
 
+
 <body>
 
 <div class="container">
 
-    <!-- Sidebar -->
+    <!--Sidebar-->
 
     <aside class="sidebar">
 
-        <h2>Food Admin</h2>
+        <h2>
+            <i class="fa-solid fa-utensils"></i>
+            Food Admin
+        </h2>
 
         <ul>
 
-            <li><a href="#"><i class="fa fa-house"></i> Dashboard</a></li>
+            <!-- Dashboard -->
+            <li>
+                <a th:href="@{/admin/dashboard}" class="active">
+                    <i class="fa fa-house"></i>
+                    Dashboard
+                </a>
+            </li>
 
-            <li><a href="#"><i class="fa fa-utensils"></i> Categories</a></li>
+            <!-- Food Management -->
+            <li>
+                <a th:href="@{/admin/foods}">
+                    <i class="fa fa-burger"></i>
+                    Food Management
+                </a>
+            </li>
 
-            <li><a th:href="@{/admin/foods}"><i class="fa fa-burger"></i>Food Items</a></li>
-
-            <li><a href="#"><i class="fa fa-users"></i> Users</a></li>
-
-            <li><a href="#"><i class="fa fa-cart-shopping"></i> Orders</a></li>
-
-            <li><a href="#"><i class="fa fa-chart-line"></i> Reports</a></li>
-
-            <li><a th:href="@{/logout}">
-                <i class="fa fa-right-from-bracket"></i>
-                Logout
-            </a></li>
+            <!-- Logout -->
+            <li class="logout-item">
+                <a th:href="@{/logout}">
+                    <i class="fa fa-right-from-bracket"></i>
+                    Logout
+                </a>
+            </li>
 
         </ul>
 
     </aside>
 
-    <!-- Main -->
+
+    <!--Main Content-->
 
     <main class="content">
 
+        <!-- Top Bar -->
+
         <header class="topbar">
 
-            <h2>Admin Dashboard</h2>
+            <h2>
+                <i class="fa-solid fa-chart-line"></i>
+                Admin Dashboard
+            </h2>
 
-            <div>
+            <div class="welcome">
 
                 Welcome,
 
-                <strong th:text="${session.username}"></strong>
+                <strong th:text="${session.username}">
+                    Admin
+                </strong>
 
             </div>
 
         </header>
 
-        <!-- Dashboard Cards -->
+
+        <!--Dashboard Statistics -->
 
         <section class="cards">
 
+
+            <!-- Total Categories -->
+
             <div class="card">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-layer-group"></i>
+                </div>
 
                 <h3>Total Categories</h3>
 
-                <h1>10</h1>
+                <h1 th:text="${totalCategories}">
+                    0
+                </h1>
 
             </div>
 
+
+            <!-- Total Foods -->
+
             <div class="card">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-burger"></i>
+                </div>
 
                 <h3>Total Food Items</h3>
 
-                <h1>85</h1>
+                <h1 th:text="${totalFoods}">
+                    0
+                </h1>
 
             </div>
 
+
+            <!-- Total Customizations -->
+
             <div class="card">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-sliders"></i>
+                </div>
+
+                <h3>Total Customizations</h3>
+
+                <h1 th:text="${totalCustomizations}">
+                    0
+                </h1>
+
+            </div>
+
+
+            <!-- Total Orders -->
+
+            <div class="card">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-cart-shopping"></i>
+                </div>
+
+                <h3>Total Orders</h3>
+
+                <h1 th:text="${totalOrders}">
+                    0
+                </h1>
+
+            </div>
+
+
+            <!-- Total Customers -->
+
+            <div class="card">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-user-group"></i>
+                </div>
+
+                <h3>Total Customers</h3>
+
+                <h1 th:text="${totalCustomers}">
+                    0
+                </h1>
+
+            </div>
+
+
+            <!-- Total Staff -->
+
+            <div class="card">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-user-tie"></i>
+                </div>
+
+                <h3>Total Staff</h3>
+
+                <h1 th:text="${totalStaff}">
+                    0
+                </h1>
+
+            </div>
+
+
+            <!-- Total Users -->
+
+            <div class="card">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-users"></i>
+                </div>
 
                 <h3>Total Users</h3>
 
-                <h1>30</h1>
+                <h1 th:text="${totalUsers}">
+                    0
+                </h1>
 
             </div>
 
+
+            <!-- Today's Orders -->
+
             <div class="card">
+
+                <div class="card-icon">
+                    <i class="fa-solid fa-calendar-day"></i>
+                </div>
 
                 <h3>Today's Orders</h3>
 
-                <h1>52</h1>
+                <h1 th:text="${todaysOrders}">
+                    0
+                </h1>
 
             </div>
 
         </section>
 
-        <!-- Recent Orders -->
+
+        <!--Recent Orders -->
 
         <section class="table-section">
 
-            <h3>Recent Orders</h3>
+            <div class="section-header">
 
-            <table>
+                <h3>
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    Recent Orders
+                </h3>
 
-                <thead>
+                <a th:href="@{/admin/foods}" class="view-food-btn">
+                    <i class="fa-solid fa-burger"></i>
+                    Manage Foods
+                </a>
 
-                <tr>
+            </div>
 
-                    <th>ID</th>
 
-                    <th>Customer</th>
+            <!-- Orders Available -->
 
-                    <th>Food</th>
+            <div th:if="${recentOrders != null and !recentOrders.isEmpty()}">
 
-                    <th>Status</th>
+                <table>
 
-                </tr>
+                    <thead>
 
-                </thead>
+                    <tr>
 
-                <tbody>
+                        <th>Order ID</th>
 
-                <tr>
+                        <th>Customer</th>
 
-                    <td>101</td>
+                        <th>Total Amount</th>
 
-                    <td>Sai</td>
+                        <th>Payment</th>
 
-                    <td>Veg Pizza</td>
+                        <th>Status</th>
 
-                    <td>Completed</td>
+                        <th>Order Date</th>
 
-                </tr>
+                    </tr>
 
-                <tr>
+                    </thead>
 
-                    <td>102</td>
 
-                    <td>Rahul</td>
+                    <tbody>
 
-                    <td>Burger</td>
+                    <tr th:each="order : ${recentOrders}">
 
-                    <td>Preparing</td>
+                        <!-- Order ID -->
 
-                </tr>
+                        <td>
+                            <strong th:text="'#' + ${order.id}">
+                                #101
+                            </strong>
+                        </td>
 
-                <tr>
 
-                    <td>103</td>
+                        <!-- Customer -->
 
-                    <td>Kiran</td>
+                        <td>
 
-                    <td>Pasta</td>
+                            <span th:if="${order.customer != null}"
+                                  th:text="${order.customer.fullName}">
+                                Customer
+                            </span>
 
-                    <td>Delivered</td>
+                            <span th:if="${order.customer == null}">
+                                Unknown
+                            </span>
 
-                </tr>
+                        </td>
 
-                </tbody>
 
-            </table>
+                        <!-- Total Amount -->
+
+                        <td>
+
+                            <strong th:if="${order.totalAmount != null}"
+                                    th:text="'₹' + ${order.totalAmount}">
+                                ₹0
+                            </strong>
+
+                            <span th:if="${order.totalAmount == null}">
+                                ₹0
+                            </span>
+
+                        </td>
+
+
+                        <!-- Payment -->
+
+                        <td>
+
+                            <span th:if="${order.paymentMethod != null}"
+                                  th:text="${order.paymentMethod}">
+                                Cash
+                            </span>
+
+                            <span th:if="${order.paymentMethod == null}">
+                                -
+                            </span>
+
+                        </td>
+
+
+                        <!-- Status -->
+
+                        <td>
+
+                            <span th:if="${order.status != null}"
+                                  class="status"
+                                  th:text="${order.status}"
+                                  th:classappend="${#strings.toLowerCase(order.status) == 'completed' ? ' status-completed' :
+                                                   (#strings.toLowerCase(order.status) == 'delivered' ? ' status-delivered' :
+                                                   (#strings.toLowerCase(order.status) == 'preparing' ? ' status-preparing' :
+                                                   (#strings.toLowerCase(order.status) == 'pending' ? ' status-pending' :
+                                                   (#strings.toLowerCase(order.status) == 'cancelled' ? ' status-cancelled' : ' status-default'))))}">
+                                Completed
+                            </span>
+
+                            <span th:if="${order.status == null}"
+                                  class="status status-default">
+                                Unknown
+                            </span>
+
+                        </td>
+
+
+                        <!-- Order Date -->
+
+                        <td>
+
+                            <span th:if="${order.orderDate != null}"
+                                  th:text="${#temporals.format(order.orderDate, 'dd MMM yyyy, hh:mm a')}">
+                                01 Jan 2026
+                            </span>
+
+                            <span th:if="${order.orderDate == null}">
+                                -
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- No Orders -->
+
+            <div class="empty-orders"
+                 th:if="${recentOrders == null or recentOrders.isEmpty()}">
+
+                <i class="fa-solid fa-receipt"></i>
+
+                <p>
+                    No orders available yet.
+                </p>
+
+            </div>
 
         </section>
 
@@ -177,5 +402,4 @@
 </div>
 
 </body>
-
 </html>
