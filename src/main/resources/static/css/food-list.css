@@ -1,0 +1,324 @@
+/* FOOD LIST PAGE */
+
+.food-management {
+    margin-top: 20px;
+}
+
+.add-food-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, #f97316, #ea580c);
+    color: #ffffff;
+    text-decoration: none;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 15px rgba(234, 88, 12, 0.20);
+}
+
+.add-food-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(234, 88, 12, 0.30);
+}
+
+
+/*  FOOD INFORMATION */
+
+.food-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-width: 250px;
+}
+
+.food-image {
+    width: 55px;
+    height: 55px;
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff7ed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.food-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.food-image i {
+    font-size: 22px;
+    color: #f97316;
+}
+
+.food-info strong {
+    display: block;
+    color: #1f2937;
+    font-size: 15px;
+}
+
+.food-info p {
+    margin-top: 4px;
+    color: #6b7280;
+    font-size: 12px;
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+/* CATEGORY */
+
+.category-badge {
+    display: inline-block;
+    padding: 6px 11px;
+    border-radius: 20px;
+    background: #fff7ed;
+    color: #ea580c;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+
+/*  PRICE */
+
+.food-price {
+    color: #15803d;
+    font-size: 16px;
+}
+
+
+/* NUTRITION */
+
+.nutrition-info {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-size: 12px;
+    color: #4b5563;
+}
+
+.nutrition-info i {
+    width: 16px;
+    color: #f97316;
+}
+
+
+/* AVAILABILITY STATUS */
+
+.status-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 11px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.status-available {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.status-unavailable {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+
+/* ACTION BUTTONS */
+
+.action-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.action-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    transition: all 0.25s ease;
+}
+
+.edit-btn {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.edit-btn:hover {
+    background: #2563eb;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.delete-btn {
+    background: #fef2f2;
+    color: #dc2626;
+}
+
+.delete-btn:hover {
+    background: #dc2626;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+
+/* EMPTY FOOD STATE */
+
+.empty-foods {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-foods > i {
+    display: block;
+    font-size: 50px;
+    color: #d1d5db;
+    margin-bottom: 15px;
+}
+
+.empty-foods h3 {
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.empty-foods p {
+    color: #6b7280;
+    margin-bottom: 20px;
+}
+
+
+/* TABLE RESPONSIVE */
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.table-wrapper table {
+    min-width: 950px;
+}
+
+
+/* HOVER EFFECT */
+
+.food-management table tbody tr {
+    transition: all 0.2s ease;
+}
+
+.food-management table tbody tr:hover {
+    background: #fffaf5;
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 1000px) {
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    .table-wrapper table {
+        min-width: 950px;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .food-info {
+        min-width: 210px;
+    }
+
+    .add-food-btn {
+        width: 100%;
+    }
+}
+
+/* View Button */
+
+.view-btn {
+    background: #f0fdf4;
+    color: #16a34a;
+}
+
+.view-btn:hover {
+    background: #16a34a;
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+
+/* Availability Switch */
+
+.availability-control {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.availability-switch {
+    width: 44px;
+    height: 24px;
+    border-radius: 20px;
+    display: inline-block;
+    position: relative;
+    transition: 0.3s ease;
+    text-decoration: none;
+}
+
+.switch-on {
+    background: #22c55e;
+}
+
+.switch-off {
+    background: #d1d5db;
+}
+
+.switch-circle {
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    top: 3px;
+    border-radius: 50%;
+    background: #ffffff;
+    transition: 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.switch-on .switch-circle {
+    left: 23px;
+}
+
+.switch-off .switch-circle {
+    left: 3px;
+}
+
+.availability-label {
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.available-label {
+    color: #16a34a;
+}
+
+.unavailable-label {
+    color: #dc2626;
+}

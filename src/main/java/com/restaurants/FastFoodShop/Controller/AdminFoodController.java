@@ -81,4 +81,38 @@ public class AdminFoodController {
 
         return "redirect:/admin/foods";
     }
+    
+    @GetMapping("/view/{id}")
+    public String viewFood(
+            @PathVariable Integer id,
+            Model model) {
+
+        Food food = foodService
+                .getFoodById(id)
+                .orElseThrow(
+                        () -> new RuntimeException("Food Not Found")
+                );
+
+        model.addAttribute("food", food);
+
+        return "admin/food-view";
+    }
+
+
+    @GetMapping("/toggle/{id}")
+    public String toggleAvailability(
+            @PathVariable Integer id) {
+
+        Food food = foodService
+                .getFoodById(id)
+                .orElseThrow(
+                        () -> new RuntimeException("Food Not Found")
+                );
+
+        food.setAvailable(!food.isAvailable());
+
+        foodService.updateFood(food);
+
+        return "redirect:/admin/foods";
+    }
 }
