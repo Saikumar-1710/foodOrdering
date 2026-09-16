@@ -1,0 +1,374 @@
+```html
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | FoodService</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Poppins", Arial, sans-serif;
+            background: #fff7f2;
+            color: #222;
+        }
+
+        .checkout-page {
+            min-height: 100vh;
+            padding: 45px 20px 70px;
+        }
+
+        .checkout-wrapper {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        .checkout-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .checkout-header h1 {
+            margin: 0 0 8px;
+            font-size: 40px;
+        }
+
+        .checkout-header p {
+            color: #777;
+            margin: 0;
+        }
+
+        .checkout-grid {
+            display: grid;
+            grid-template-columns: 1.4fr 0.8fr;
+            gap: 25px;
+            align-items: start;
+        }
+
+        .checkout-card {
+            background: white;
+            border-radius: 18px;
+            padding: 28px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .checkout-card h2 {
+            margin-top: 0;
+            margin-bottom: 22px;
+        }
+
+        .order-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            padding: 16px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .order-item:last-child {
+            border-bottom: none;
+        }
+
+        .item-name {
+            font-weight: 700;
+        }
+
+        .item-details {
+            color: #777;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .item-price {
+            color: #ff6b35;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .total-box {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .total-label {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .total-amount {
+            font-size: 28px;
+            font-weight: 800;
+            color: #ff6b35;
+        }
+
+        .payment-options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .payment-option {
+            position: relative;
+        }
+
+        .payment-option input {
+            position: absolute;
+            opacity: 0;
+        }
+
+        .payment-option label {
+            display: block;
+            padding: 17px;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 600;
+        }
+
+        .payment-option label:hover {
+            border-color: #ff6b35;
+            transform: translateY(-2px);
+        }
+
+        .payment-option input:checked + label {
+            border-color: #ff6b35;
+            background: #fff3ed;
+            color: #ff6b35;
+        }
+
+        .payment-icon {
+            font-size: 22px;
+            margin-right: 8px;
+        }
+
+        .place-order-btn {
+            width: 100%;
+            margin-top: 25px;
+            padding: 16px;
+            border: none;
+            border-radius: 11px;
+            background: #ff6b35;
+            color: white;
+            font-size: 17px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .place-order-btn:hover {
+            background: #e85622;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-top: 18px;
+            color: #ff6b35;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .secure-note {
+            margin-top: 15px;
+            text-align: center;
+            color: #777;
+            font-size: 13px;
+        }
+
+        @media (max-width: 800px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .checkout-header h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="checkout-page">
+
+    <div class="checkout-wrapper">
+
+        <div class="checkout-header">
+            <h1>🛍️ Checkout</h1>
+            <p>Review your order and select your payment method.</p>
+        </div>
+
+        <div class="checkout-grid">
+
+            <!-- ORDER SUMMARY -->
+            <div class="checkout-card">
+
+                <h2>Order Summary</h2>
+
+                <div th:each="item : ${cart.items}"
+                     class="order-item">
+
+                    <div>
+
+                        <div class="item-name"
+                             th:text="${item.food.name}">
+                            Food Name
+                        </div>
+
+                        <div class="item-details">
+
+                            Quantity:
+                            <span th:text="${item.quantity}">
+                                1
+                            </span>
+
+                            <span
+                                th:if="${!#lists.isEmpty(item.selectedOptions)}">
+
+                                · Customization:
+                                <span
+                                    th:each="selected : ${item.selectedOptions}">
+
+                                    <span
+                                        th:text="${selected.option.name}">
+                                        Option
+                                    </span>
+
+                                </span>
+
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <div class="item-price">
+
+                        ₹<span
+                            th:text="${item.unitPrice * item.quantity}">
+                            0
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="total-box">
+
+                    <span class="total-label">
+                        Total Amount
+                    </span>
+
+                    <span class="total-amount">
+
+                        ₹<span
+                            th:text="${#aggregates.sum(cart.items.![unitPrice * quantity])}">
+                            0
+                        </span>
+
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- PAYMENT -->
+            <div class="checkout-card">
+
+                <h2>Payment Method</h2>
+
+                <form action="/customer/checkout"
+                      method="post">
+
+                    <div class="payment-options">
+
+                        <div class="payment-option">
+
+                            <input
+                                type="radio"
+                                id="cash"
+                                name="paymentMethod"
+                                value="CASH"
+                                checked>
+
+                            <label for="cash">
+                                <span class="payment-icon">💵</span>
+                                Cash
+                            </label>
+
+                        </div>
+
+                        <div class="payment-option">
+
+                            <input
+                                type="radio"
+                                id="card"
+                                name="paymentMethod"
+                                value="CARD">
+
+                            <label for="card">
+                                <span class="payment-icon">💳</span>
+                                Card
+                            </label>
+
+                        </div>
+
+                        <div class="payment-option">
+
+                            <input
+                                type="radio"
+                                id="online"
+                                name="paymentMethod"
+                                value="ONLINE">
+
+                            <label for="online">
+                                <span class="payment-icon">📱</span>
+                                Online
+                            </label>
+
+                        </div>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        class="place-order-btn">
+                        Place Order →
+                    </button>
+
+                </form>
+
+                <div class="secure-note">
+                    🔒 Your order information is handled securely.
+                </div>
+
+                <a class="back-link"
+                   href="/customer/cart">
+                    ← Back to Cart
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+```

@@ -1,11 +1,1391 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Staff Dashboard | FastFoodShop</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            background: linear-gradient(135deg, #ff6b35, #ff3d00);
+            color: white;
+            padding: 22px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.12);
+        }
+
+        .header-left h1 {
+            font-size: 28px;
+            margin-bottom: 5px;
+        }
+
+        .header-left p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .staff-info {
+            text-align: right;
+        }
+
+        .staff-info strong {
+            display: block;
+            font-size: 17px;
+        }
+
+        .staff-info span {
+            font-size: 13px;
+            opacity: 0.9;
+        }
+
+        .logout-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: rgba(255,255,255,0.18);
+            color: white;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,0.35);
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            transition: 0.25s ease;
+        }
+
+        .logout-btn:hover {
+            background: white;
+            color: #ff5722;
+            transform: translateY(-2px);
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 94%;
+            max-width: 1400px;
+            margin: 30px auto;
+        }
+
+        /* ================= SUMMARY ================= */
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 18px;
+            padding: 23px;
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.07);
+            transition: 0.3s ease;
+            animation: slideUp 0.6s ease;
+        }
+
+        .summary-card:hover {
+            transform: translateY(-7px);
+            box-shadow: 0 14px 35px rgba(0,0,0,0.12);
+        }
+
+        .summary-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 27px;
+            background: #fff1eb;
+        }
+
+        .summary-content h3 {
+            font-size: 27px;
+            margin-bottom: 4px;
+        }
+
+        .summary-content h3 small {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .summary-content p {
+            color: #6b7280;
+            font-size: 14px;
+        }
+
+        /* ================= SECTION ================= */
+
+        .section {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.06);
+            overflow: hidden;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .section-header h2 {
+            font-size: 21px;
+        }
+
+        .section-header span {
+            color: #777;
+            font-size: 13px;
+        }
+
+        /* ================= TABLE ================= */
+
+        .table-wrapper {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            min-width: 1050px;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #f8fafc;
+        }
+
+        th {
+            padding: 15px 12px;
+            text-align: left;
+            font-size: 13px;
+            color: #6b7280;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        td {
+            padding: 17px 12px;
+            border-top: 1px solid #eef0f3;
+            font-size: 14px;
+            vertical-align: top;
+        }
+
+        tbody tr {
+            transition: 0.25s ease;
+        }
+
+        tbody tr:hover {
+            background: #fff8f5;
+        }
+
+        .order-id {
+            font-weight: 700;
+            color: #ff5722;
+        }
+
+        .customer-name {
+            font-weight: 600;
+        }
+
+        /* ================= FOOD ITEMS ================= */
+
+        .food-list {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
+
+        .food-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: #f8fafc;
+            border-radius: 8px;
+            padding: 7px 10px;
+            width: fit-content;
+            max-width: 260px;
+        }
+
+        .food-name {
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .quantity {
+            font-weight: 700;
+            color: #ff5722;
+        }
+
+        /* ================= PRICE ================= */
+
+        .amount {
+            font-weight: 700;
+            color: #111827;
+            white-space: nowrap;
+        }
+
+        /* ================= PAYMENT ================= */
+
+        .payment-method {
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .payment-form {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            min-width: 110px;
+        }
+
+        .payment-select {
+            border: 1px solid #e5e7eb;
+            border-radius: 9px;
+            padding: 8px 10px;
+            background: white;
+            color: #374151;
+            font-size: 12px;
+            font-weight: 700;
+            outline: none;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .payment-select:focus {
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 3px rgba(255,107,53,0.12);
+        }
+
+        .payment-update-btn {
+            border: none;
+            border-radius: 9px;
+            padding: 8px 10px;
+            background: #059669;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .payment-update-btn:hover {
+            background: #047857;
+            transform: translateY(-1px);
+        }
+
+        .payment-badge {
+            display: inline-block;
+            width: fit-content;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .payment-pending {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .payment-paid {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .payment-failed {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        /* ================= ORDER STATUS ================= */
+
+        .status-form {
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+            min-width: 125px;
+        }
+
+        .status-select {
+            border: 1px solid #e5e7eb;
+            border-radius: 9px;
+            padding: 8px 10px;
+            background: white;
+            color: #374151;
+            font-size: 12px;
+            font-weight: 700;
+            outline: none;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .status-select:focus {
+            border-color: #ff6b35;
+            box-shadow: 0 0 0 3px rgba(255,107,53,0.12);
+        }
+
+        .update-btn {
+            border: none;
+            border-radius: 9px;
+            padding: 8px 10px;
+            background: #ff5722;
+            color: white;
+            font-size: 11px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.25s ease;
+        }
+
+        .update-btn:hover {
+            background: #e64a19;
+            transform: translateY(-1px);
+        }
+
+        /* ================= STATUS BADGES ================= */
+
+        .current-status {
+            display: inline-block;
+            width: fit-content;
+            padding: 5px 9px;
+            border-radius: 20px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .current-pending {
+            background: #fef3c7;
+            color: #b45309;
+        }
+
+        .current-preparing {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .current-ready {
+            background: #ede9fe;
+            color: #7c3aed;
+        }
+
+        .current-completed {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .current-cancelled {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .current-default {
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            text-align: center;
+            padding: 45px !important;
+            color: #9ca3af;
+        }
+
+        .empty-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        /* ================= ATTENDANCE ================= */
+
+        .attendance-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .attendance-card {
+            border: 1px solid #edf0f4;
+            border-radius: 16px;
+            padding: 22px;
+            position: relative;
+            transition: 0.3s ease;
+            background: #fff;
+        }
+
+        .attendance-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+        }
+
+        .attendance-card.today {
+            border: 2px solid #ff6b35;
+        }
+
+        .today-label {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ff6b35;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 10px;
+            font-weight: bold;
+        }
+
+        .attendance-date {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #111827;
+        }
+
+        /* Login + Logout */
+
+        .attendance-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .attendance-box {
+            background: #f8fafc;
+            border-radius: 12px;
+            padding: 14px;
+            transition: 0.25s ease;
+        }
+
+        .attendance-box:hover {
+            transform: translateY(-2px);
+        }
+
+        .attendance-box small {
+            display: block;
+            color: #9ca3af;
+            font-size: 11px;
+            margin-bottom: 5px;
+        }
+
+        .attendance-box strong {
+            font-size: 14px;
+        }
+
+        /* ================= SEPARATE WORKING HOURS BOX ================= */
+
+        .working-hours-box {
+            grid-column: 1 / -1;
+            background: #fff7f2;
+            border: 1px solid #ffd8c8;
+            border-radius: 14px;
+            padding: 16px;
+            margin-top: 4px;
+            text-align: center;
+        }
+
+        .working-hours-box small {
+            color: #c96a45;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .working-hours {
+            display: block;
+            margin-top: 6px;
+            color: #ff5722;
+            font-size: 20px !important;
+            font-weight: 800;
+        }
+
+        /* ================= ANIMATION ================= */
+
+        @keyframes slideUp {
+
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        .summary-card:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .summary-card:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .summary-card:nth-child(3) {
+            animation-delay: 0.3s;
+        }
+
+        .summary-card:nth-child(4) {
+            animation-delay: 0.4s;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1000px) {
+
+            .summary-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .attendance-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+        @media (max-width: 650px) {
+
+            .header {
+                padding: 20px;
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .staff-info {
+                text-align: left;
+            }
+
+            .container {
+                width: 92%;
+            }
+
+            .summary-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section {
+                padding: 18px;
+            }
+
+            .attendance-details {
+                grid-template-columns: 1fr;
+            }
+
+            .working-hours-box {
+                grid-column: auto;
+            }
+
+        }
+
+    </style>
+
 </head>
+
 <body>
-<h3> welcome to staff dashboard</h3>
+
+
+<!-- ================= HEADER ================= -->
+
+<header class="header">
+
+    <div class="header-left">
+
+        <h1>🍔 Staff Dashboard</h1>
+
+        <p>
+            Monitor your orders, payments and attendance
+        </p>
+
+    </div>
+
+
+    <div class="staff-info">
+
+        <strong th:text="${staff.fullName}">
+            Staff Name
+        </strong>
+
+        <span>
+            Staff Member
+        </span>
+
+        <br>
+
+        <a href="/logout" class="logout-btn">
+            🚪 Logout
+        </a>
+
+    </div>
+
+</header>
+
+
+
+<div class="container">
+
+
+    <!-- ================= SUMMARY CARDS ================= -->
+
+    <div class="summary-grid">
+
+
+        <!-- TODAY'S ORDERS -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+                🛒
+            </div>
+
+            <div class="summary-content">
+
+                <h3 th:text="${todayOrders}">
+                    0
+                </h3>
+
+                <p>
+                    Today's Orders
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- TOTAL ORDERS -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+                📦
+            </div>
+
+            <div class="summary-content">
+
+                <h3 th:text="${totalOrders}">
+                    0
+                </h3>
+
+                <p>
+                    Total Orders
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- COMPLETED ORDERS -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+                ✅
+            </div>
+
+            <div class="summary-content">
+
+                <h3 th:text="${completedOrders}">
+                    0
+                </h3>
+
+                <p>
+                    Completed Orders
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- TODAY'S WORKING HOURS -->
+
+        <div class="summary-card">
+
+            <div class="summary-icon">
+                ⏱️
+            </div>
+
+            <div class="summary-content">
+
+                <h3>
+
+                    <span th:text="${#numbers.formatDecimal(todayWorkingHours, 1, 2)}">
+                        0.00
+                    </span>
+
+                    <small>
+                        hrs
+                    </small>
+
+                </h3>
+
+                <p>
+                    Today's Working Hours
+                </p>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================= ORDERS ================= -->
+
+    <section class="section">
+
+
+        <div class="section-header">
+
+            <h2>
+                📋 My Orders
+            </h2>
+
+            <span>
+                Orders handled by you
+            </span>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+
+            <table>
+
+
+                <thead>
+
+                <tr>
+
+                    <th>Order ID</th>
+
+                    <th>Customer</th>
+
+                    <th>Food Items & Quantity</th>
+
+                    <th>Total Amount</th>
+
+                    <th>Order Date</th>
+
+                    <th>Payment</th>
+
+                    <th>Payment Status</th>
+
+                    <th>Order Status</th>
+
+                </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                <!-- ================= ORDER ROW ================= -->
+
+                <tr th:each="order : ${orders}">
+
+
+                    <!-- ORDER ID -->
+
+                    <td>
+
+                        <span class="order-id"
+                              th:text="'#' + ${order.id}">
+
+                            #1
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- CUSTOMER -->
+
+                    <td>
+
+                        <span class="customer-name"
+                              th:text="${order.customer != null ? order.customer.fullName : 'Customer'}">
+
+                            Customer
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- FOOD ITEMS -->
+
+                    <td>
+
+                        <div class="food-list">
+
+                            <div class="food-item"
+                                 th:each="item : ${order.items}">
+
+                                <span class="food-name"
+                                      th:text="${item.food != null ? item.food.name : 'Food Item'}">
+
+                                    Chicken Burger
+
+                                </span>
+
+                                <span class="quantity"
+                                      th:text="'× ' + ${item.quantity}">
+
+                                    × 1
+
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </td>
+
+
+                    <!-- TOTAL -->
+
+                    <td>
+
+                        <span class="amount">
+
+                            ₹
+
+                            <span th:text="${order.totalAmount != null ? #numbers.formatDecimal(order.totalAmount, 1, 2) : '0.00'}">
+
+                                0.00
+
+                            </span>
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- ORDER DATE -->
+
+                    <td>
+
+                        <span th:if="${order.orderDate != null}"
+                              th:text="${#temporals.format(order.orderDate, 'dd-MM-yyyy hh:mm a')}">
+
+                            01-09-2026 09:30 AM
+
+                        </span>
+
+                        <span th:if="${order.orderDate == null}">
+                            -
+                        </span>
+
+                    </td>
+
+
+                    <!-- PAYMENT METHOD -->
+
+                    <td>
+
+                        <span class="payment-method"
+                              th:text="${order.paymentMethod != null ? order.paymentMethod : 'Not Available'}">
+
+                            Cash
+
+                        </span>
+
+                    </td>
+
+
+                    <!-- PAYMENT STATUS -->
+
+                    <td>
+
+                        <form class="payment-form"
+                              th:action="@{/staff/order/update-payment}"
+                              method="post">
+
+
+                            <input type="hidden"
+                                   name="orderId"
+                                   th:value="${order.id}">
+
+
+                            <select name="paymentStatus"
+                                    class="payment-select">
+
+
+                                <option value="PENDING"
+                                        th:selected="${order.paymentStatus == null or #strings.equalsIgnoreCase(order.paymentStatus, 'PENDING')}">
+
+                                    PENDING
+
+                                </option>
+
+
+                                <option value="PAID"
+                                        th:selected="${order.paymentStatus != null and #strings.equalsIgnoreCase(order.paymentStatus, 'PAID')}">
+
+                                    PAID
+
+                                </option>
+
+
+                                <option value="FAILED"
+                                        th:selected="${order.paymentStatus != null and #strings.equalsIgnoreCase(order.paymentStatus, 'FAILED')}">
+
+                                    FAILED
+
+                                </option>
+
+
+                            </select>
+
+
+                            <button type="submit"
+                                    class="payment-update-btn">
+
+                                Update
+
+                            </button>
+
+
+                            <!-- PAYMENT BADGE -->
+
+                            <span class="payment-badge payment-pending"
+                                  th:if="${order.paymentStatus == null or #strings.equalsIgnoreCase(order.paymentStatus, 'PENDING')}">
+
+                                PENDING
+
+                            </span>
+
+
+                            <span class="payment-badge payment-paid"
+                                  th:if="${order.paymentStatus != null and #strings.equalsIgnoreCase(order.paymentStatus, 'PAID')}">
+
+                                PAID
+
+                            </span>
+
+
+                            <span class="payment-badge payment-failed"
+                                  th:if="${order.paymentStatus != null and #strings.equalsIgnoreCase(order.paymentStatus, 'FAILED')}">
+
+                                FAILED
+
+                            </span>
+
+
+                        </form>
+
+                    </td>
+
+
+                    <!-- ORDER STATUS -->
+
+                    <td>
+
+                        <form class="status-form"
+                              th:action="@{/staff/order/update-status}"
+                              method="post">
+
+
+                            <input type="hidden"
+                                   name="orderId"
+                                   th:value="${order.id}">
+
+
+                            <select name="status"
+                                    class="status-select">
+
+
+                                <option value="PENDING"
+                                        th:selected="${order.status != null and #strings.equalsIgnoreCase(order.status, 'PENDING')}">
+
+                                    PENDING
+
+                                </option>
+
+
+                                <option value="PREPARING"
+                                        th:selected="${order.status != null and #strings.equalsIgnoreCase(order.status, 'PREPARING')}">
+
+                                    PREPARING
+
+                                </option>
+
+
+                                <option value="READY"
+                                        th:selected="${order.status != null and #strings.equalsIgnoreCase(order.status, 'READY')}">
+
+                                    READY
+
+                                </option>
+
+
+                                <option value="COMPLETED"
+                                        th:selected="${order.status != null and #strings.equalsIgnoreCase(order.status, 'COMPLETED')}">
+
+                                    COMPLETED
+
+                                </option>
+
+
+                                <option value="CANCELLED"
+                                        th:selected="${order.status != null and #strings.equalsIgnoreCase(order.status, 'CANCELLED')}">
+
+                                    CANCELLED
+
+                                </option>
+
+
+                            </select>
+
+
+                            <button type="submit"
+                                    class="update-btn">
+
+                                Update Status
+
+                            </button>
+
+
+                            <!-- CURRENT STATUS -->
+
+                            <span class="current-status current-pending"
+                                  th:if="${order.status != null and #strings.equalsIgnoreCase(order.status, 'PENDING')}">
+
+                                PENDING
+
+                            </span>
+
+
+                            <span class="current-status current-preparing"
+                                  th:if="${order.status != null and #strings.equalsIgnoreCase(order.status, 'PREPARING')}">
+
+                                PREPARING
+
+                            </span>
+
+
+                            <span class="current-status current-ready"
+                                  th:if="${order.status != null and #strings.equalsIgnoreCase(order.status, 'READY')}">
+
+                                READY
+
+                            </span>
+
+
+                            <span class="current-status current-completed"
+                                  th:if="${order.status != null and #strings.equalsIgnoreCase(order.status, 'COMPLETED')}">
+
+                                COMPLETED
+
+                            </span>
+
+
+                            <span class="current-status current-cancelled"
+                                  th:if="${order.status != null and #strings.equalsIgnoreCase(order.status, 'CANCELLED')}">
+
+                                CANCELLED
+
+                            </span>
+
+
+                            <span class="current-status current-default"
+                                  th:if="${order.status == null}">
+
+                                UNKNOWN
+
+                            </span>
+
+
+                        </form>
+
+                    </td>
+
+
+                </tr>
+
+
+                <!-- ================= EMPTY ORDERS ================= -->
+
+                <tr th:if="${#lists.isEmpty(orders)}">
+
+                    <td colspan="8"
+                        class="empty">
+
+                        <div class="empty-icon">
+                            📦
+                        </div>
+
+                        <strong>
+                            No orders found
+                        </strong>
+
+                        <br>
+
+                        <span>
+                            You haven't handled any orders yet.
+                        </span>
+
+                    </td>
+
+                </tr>
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+
+
+    <!-- ================= ATTENDANCE ================= -->
+
+    <section class="section">
+
+
+        <div class="section-header">
+
+            <h2>
+                🕐 My Attendance
+            </h2>
+
+            <span>
+                Your working hours
+            </span>
+
+        </div>
+
+
+        <div class="attendance-grid">
+
+
+            <!-- ================= ATTENDANCE CARD ================= -->
+
+            <div class="attendance-card"
+
+                 th:each="attendance : ${attendanceList}"
+
+                 th:classappend="${attendance.date != null and attendance.date.equals(T(java.time.LocalDate).now())} ? ' today' : ''">
+
+
+                <!-- TODAY -->
+
+                <span class="today-label"
+
+                      th:if="${attendance.date != null and attendance.date.equals(T(java.time.LocalDate).now())}">
+
+                    TODAY
+
+                </span>
+
+
+                <!-- DATE -->
+
+                <div class="attendance-date">
+
+                    📅
+
+                    <span th:if="${attendance.date != null}"
+
+                          th:text="${#temporals.format(attendance.date, 'dd-MM-yyyy')}">
+
+                        01-09-2026
+
+                    </span>
+
+
+                    <span th:if="${attendance.date == null}">
+                        -
+                    </span>
+
+                </div>
+
+
+                <!-- LOGIN + LOGOUT -->
+
+                <div class="attendance-details">
+
+
+                    <!-- LOGIN TIME -->
+
+                    <div class="attendance-box">
+
+                        <small>
+                            Login Time
+                        </small>
+
+                        <strong>
+
+                            <span th:if="${attendance.loginTime != null}"
+
+                                  th:text="${#temporals.format(attendance.loginTime, 'hh:mm a')}">
+
+                                09:30 AM
+
+                            </span>
+
+
+                            <span th:if="${attendance.loginTime == null}">
+                                -
+                            </span>
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- LOGOUT TIME -->
+
+                    <div class="attendance-box">
+
+                        <small>
+                            Logout Time
+                        </small>
+
+                        <strong>
+
+                            <span th:if="${attendance.logoutTime != null}"
+
+                                  th:text="${#temporals.format(attendance.logoutTime, 'hh:mm a')}">
+
+                                06:30 PM
+
+                            </span>
+
+
+                            <span th:if="${attendance.logoutTime == null}">
+
+                                <span th:if="${attendance.date != null and attendance.date.equals(T(java.time.LocalDate).now())}">
+
+                                    Currently Working
+
+                                </span>
+
+
+                                <span th:if="${attendance.date == null or !attendance.date.equals(T(java.time.LocalDate).now())}">
+
+                                    Not Logged Out
+
+                                </span>
+
+                            </span>
+
+                        </strong>
+
+                    </div>
+
+
+                    <!-- ================= SEPARATE WORKING HOURS BOX ================= -->
+
+                    <div class="working-hours-box">
+
+                        <small>
+                            ⏱️ Working Hours
+                        </small>
+
+
+                        <strong class="working-hours">
+
+                            <span th:if="${attendance.workingHours != null}"
+
+                                  th:text="${#numbers.formatDecimal(attendance.workingHours, 1, 2)} + ' Hours'">
+
+                                9.00 Hours
+
+                            </span>
+
+
+                            <span th:if="${attendance.workingHours == null}"
+
+                                  th:text="${attendance.loginTime != null ? '0.00 Hours' : '-'}">
+
+                                0.00 Hours
+
+                            </span>
+
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= EMPTY ATTENDANCE ================= -->
+
+            <div class="attendance-card"
+
+                 th:if="${#lists.isEmpty(attendanceList)}">
+
+
+                <div class="attendance-date">
+
+                    📅 No Attendance Records
+
+                </div>
+
+
+                <p style="color:#9ca3af;">
+
+                    Your attendance information will appear here.
+
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+    </section>
+
+
+</div>
+
 
 </body>
+
 </html>
