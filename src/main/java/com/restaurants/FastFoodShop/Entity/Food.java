@@ -3,6 +3,7 @@ package com.restaurants.FastFoodShop.Entity;
 import java.util.ArrayList;
 
 
+
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
@@ -85,7 +86,14 @@ public class Food {
 	public Double getMagnesium() {
 	    return magnesium;
 	}
+	
+    public boolean isAvailable() {
+        return available;
+    }
 
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
 	
 	
 	

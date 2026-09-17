@@ -1,153 +1,299 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
-
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Food Management</title>
 
-    <link rel="stylesheet"
-          th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+	<link rel="stylesheet" th:href="@{/css/food-list.css}">
 
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 </head>
 
 <body>
 
 <div class="container">
 
-    <h1>
-        Food Management
-    </h1>
-
-    <a href="/admin/dashboard">
-        Dashboard
-    </a>
-
-    &nbsp;&nbsp;
-
-    <a href="/admin/foods/add">
-
-        Add New Food
-
-    </a>
-
-    <hr>
-
-
-    <table>
-
-        <thead>
-
-        <tr>
-
-            <th>ID</th>
-
-            <th>Food</th>
-
-            <th>Category</th>
-
-            <th>Price</th>
-
-            <th>Calories</th>
-
-            <th>Protein</th>
-
-            <th>Available</th>
-
-            <th>Actions</th>
-
-        </tr>
-
-        </thead>
+    <!-- Sidebar -->
+	<aside class="sidebar">
+	
+	    <h2>
+	    	<i class="fa-solid fa-utensils"></i>
+	    	Food Admin
+    	</h2>
+	
+	    <ul>
+	
+	        <li>
+	            <a th:href="@{/admin/dashboard}">
+	                <i class="fa fa-house"></i>
+	                Dashboard
+	            </a>
+	        </li>
+	
+	        <li class="active">
+	            <a th:href="@{/admin/foods}">
+	                <i class="fa fa-utensils"></i>
+	                Food Management
+	            </a>
+	        </li>
+	
+	        <li class="logout-item">
+	            <a th:href="@{/logout}">
+	                <i class="fa fa-right-from-bracket"></i>
+	                Logout
+	            </a>
+	        </li>
+	
+	    </ul>
+	
+	</aside>
 
 
-        <tbody>
+    <!-- Main Content -->
+    <main class="content">
 
-        <tr th:each="food : ${foods}">
+        <!-- Top Bar -->
+        <header class="topbar">
 
-            <td
-                    th:text="${food.id}">
-            </td>
+            <div>
+                <h2>Food Management</h2>
+                <p>Manage your food items from one place</p>
+            </div>
 
-            <td
-                    th:text="${food.name}">
-            </td>
+            <div class="welcome">
+                Welcome,
+                <strong th:text="${session.username}">Admin</strong>
+            </div>
 
-            <td
-                    th:text="${food.category}">
-            </td>
+        </header>
 
-            <td>
 
-                ₹
+        <!-- Page Header -->
+        <section class="section-header">
 
-                <span
-                        th:text="${food.price}">
-                </span>
+            <div>
+                <h2>
+                    <i class="fa fa-burger"></i>
+                    Food Items
+                </h2>
 
-            </td>
+                <p>Add, edit, delete and manage food availability.</p>
+            </div>
 
-            <td
-                    th:text="${food.calories}">
-            </td>
+            <a th:href="@{/admin/foods/add}" class="add-food-btn">
+                <i class="fa fa-plus"></i>
+                Add Food
+            </a>
 
-            <td>
+        </section>
 
-                <span
-                        th:text="${food.protein}">
-                </span>
 
-                g
+        <!-- Food Table -->
+        <section class="table-section food-management">
 
-            </td>
+            <div class="table-wrapper">
 
-            <td
-                    th:text="${food.available}">
-            </td>
+                <table>
 
-            <td>
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Food</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Nutrition</th>
+                        <th>Availability</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
 
-                <a
-                        th:href="@{/admin/foods/edit/{id}(id=${food.id})}">
+                    <tbody>
 
-                    Edit
+                    <!-- Food Records -->
+                    <tr th:each="food : ${foods}">
 
-                </a>
+                        <!-- ID -->
+                        <td th:text="${food.id}">1</td>
 
-                &nbsp; | &nbsp;
 
-                <a
-                        th:href="@{/admin/foods/delete/{id}(id=${food.id})}"
-                        onclick="return confirm('Delete this food?')">
+                        <!-- Food -->
+                        <td>
 
-                    Delete
+                            <div class="food-info">
 
-                </a>
+                                <div class="food-image">
 
-                &nbsp; | &nbsp;
+                                    <img th:if="${food.imageUrl != null and !#strings.isEmpty(food.imageUrl)}"
+                                         th:src="${food.imageUrl}"
+                                         th:alt="${food.name}">
 
-                <a
-                        th:href="@{/admin/customizations/food/{id}(id=${food.id})}">
+                                    <i th:unless="${food.imageUrl != null and !#strings.isEmpty(food.imageUrl)}"
+                                       class="fa fa-utensils">
+                                    </i>
 
-                    Customizations
+                                </div>
 
-                </a>
+                                <div>
 
-            </td>
+                                    <strong th:text="${food.name}">
+                                        Food Name
+                                    </strong>
 
-        </tr>
+                                    <p th:text="${food.description}">
+                                        Food description
+                                    </p>
 
-        </tbody>
+                                </div>
 
-    </table>
+                            </div>
+
+                        </td>
+
+
+                        <!-- Category -->
+                        <td>
+
+                            <span class="category-badge"
+                                  th:text="${food.category}">
+                                Category
+                            </span>
+
+                        </td>
+
+
+                        <!-- Price -->
+                        <td>
+
+                            <strong class="food-price">
+                                ₹<span th:text="${food.price}">0</span>
+                            </strong>
+
+                        </td>
+
+
+                        <!-- Nutrition -->
+                        <td>
+
+                            <div class="nutrition-info">
+
+                                <span>
+                                    <i class="fa fa-fire"></i>
+                                    <span th:text="${food.calories}">0</span> kcal
+                                </span>
+
+                                <span>
+                                    <i class="fa fa-dumbbell"></i>
+                                    <span th:text="${food.protein}">0</span>g protein
+                                </span>
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- Availability -->
+                        <td>
+							<div class="availability-status">
+							
+							    <span th:if="${food.available}"
+							          class="status-badge status-available">
+							        <i class="fa fa-circle-check"></i>
+							        Available
+							    </span>
+							
+							    <span th:unless="${food.available}"
+							          class="status-badge status-unavailable">
+							        <i class="fa fa-circle-xmark"></i>
+							        Unavailable
+							    </span>
+							
+							</div>
+						</td>
+
+
+                        <!-- Actions -->
+                        <td>
+
+						<div class="action-buttons">
+						
+						    <a th:href="@{/admin/foods/view/{id}(id=${food.id})}"
+						       class="action-btn view-btn"
+						       title="View Food">
+						
+						        <i class="fa fa-eye"></i>
+						
+						    </a>						
+						
+						    <a th:href="@{/admin/foods/edit/{id}(id=${food.id})}"
+						       class="action-btn edit-btn"
+						       title="Edit Food">
+						
+						        <i class="fa fa-pen"></i>
+						
+						    </a>
+						
+						
+						    <a th:href="@{/admin/foods/delete/{id}(id=${food.id})}"
+						       class="action-btn delete-btn"
+						       title="Delete Food"
+						       onclick="return confirm('Are you sure you want to delete this food?');">
+						
+						        <i class="fa fa-trash"></i>
+						
+						    </a>
+						
+						</div>
+
+                        </td>
+
+                    </tr>
+
+
+                    <!-- Empty State -->
+                    <tr th:if="${#lists.isEmpty(foods)}">
+
+                        <td colspan="7">
+
+                            <div class="empty-foods">
+
+                                <i class="fa fa-utensils"></i>
+
+                                <h3>No Food Items Found</h3>
+
+                                <p>
+                                    Start adding food items to manage your menu.
+                                </p>
+
+                                <a th:href="@{/admin/foods/add}"
+                                   class="add-food-btn">
+
+                                    <i class="fa fa-plus"></i>
+                                    Add First Food
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+
+    </main>
 
 </div>
 
 </body>
-
 </html>

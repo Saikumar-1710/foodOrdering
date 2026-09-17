@@ -1,6 +1,7 @@
 package com.restaurants.FastFoodShop.Controller;
 
 import org.springframework.stereotype.Controller;
+
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -78,6 +79,40 @@ public class AdminFoodController {
             @PathVariable Integer id) {
 
         foodService.deleteFood(id);
+
+        return "redirect:/admin/foods";
+    }
+    
+    @GetMapping("/view/{id}")
+    public String viewFood(
+            @PathVariable Integer id,
+            Model model) {
+
+        Food food = foodService
+                .getFoodById(id)
+                .orElseThrow(
+                        () -> new RuntimeException("Food Not Found")
+                );
+
+        model.addAttribute("food", food);
+
+        return "admin/food-view";
+    }
+
+
+    @GetMapping("/toggle/{id}")
+    public String toggleAvailability(
+            @PathVariable Integer id) {
+
+        Food food = foodService
+                .getFoodById(id)
+                .orElseThrow(
+                        () -> new RuntimeException("Food Not Found")
+                );
+
+        food.setAvailable(!food.isAvailable());
+
+        foodService.updateFood(food);
 
         return "redirect:/admin/foods";
     }

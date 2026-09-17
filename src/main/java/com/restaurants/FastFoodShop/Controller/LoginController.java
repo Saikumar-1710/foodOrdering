@@ -23,34 +23,29 @@ public class LoginController {
     private final UserService userService;
     private final AttendanceService attendanceService;
 
-    public LoginController(UserService userService,
-                           AttendanceService attendanceService) {
+    public LoginController(
+            UserService userService,
+            AttendanceService attendanceService) {
 
         this.userService = userService;
         this.attendanceService = attendanceService;
     }
 
-    // ==============================
     // HOME
-    // ==============================
 
     @GetMapping("/")
     public String home() {
         return "redirect:/login";
     }
 
-    // ==============================
     // LOGIN PAGE
-    // ==============================
 
     @GetMapping("/login")
     public String loginPage() {
         return "login";
     }
 
-    // ==============================
     // LOGIN
-    // ==============================
 
     @PostMapping("/login")
     public String login(
@@ -59,7 +54,6 @@ public class LoginController {
             HttpSession session,
             Model model) {
 
-        // Validate user
         User user = userService.login(userName, password);
 
         if (user == null) {
@@ -71,7 +65,6 @@ public class LoginController {
             return "login";
         }
 
-        // Store logged-in user in session
         session.setAttribute("loggedUser", user);
         session.setAttribute("userName", user.getUserName());
         session.setAttribute(
@@ -79,12 +72,9 @@ public class LoginController {
                 user.getRole().getRoleName()
         );
 
-        // Get user role
         String role = user.getRole().getRoleName();
 
-        // ==============================
         // STAFF LOGIN
-        // ==============================
 
         if ("STAFF".equalsIgnoreCase(role)) {
 
@@ -98,7 +88,6 @@ public class LoginController {
                             )
                             .orElse(null);
 
-            // Create attendance if it doesn't exist
             if (attendance == null) {
 
                 attendance = new Attendance();
@@ -111,10 +100,7 @@ public class LoginController {
 
                 attendanceService.saveAttendance(attendance);
 
-            }
-
-            // If attendance exists but login time is missing
-            else if (attendance.getLoginTime() == null) {
+            } else if (attendance.getLoginTime() == null) {
 
                 attendance.setLoginTime(LocalDateTime.now());
                 attendance.setLogoutTime(null);
@@ -126,39 +112,24 @@ public class LoginController {
             return "redirect:/staff/dashboard";
         }
 
-        // ==============================
         // ADMIN LOGIN
-        // ==============================
 
         if ("ADMIN".equalsIgnoreCase(role)) {
-
             return "redirect:/admin/dashboard";
         }
 
-        // ==============================
         // CUSTOMER LOGIN
-        // ==============================
 
         if ("CUSTOMER".equalsIgnoreCase(role)) {
-
             return "redirect:/customer/dashboard";
         }
 
-        // ==============================
-        // INVALID ROLE
-        // ==============================
-
-        model.addAttribute(
-                "error",
-                "Role Not Found"
-        );
+        model.addAttribute("error", "Role Not Found");
 
         return "login";
     }
 
-    // ==============================
     // LOGOUT
-    // ==============================
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
@@ -166,14 +137,12 @@ public class LoginController {
         User user =
                 (User) session.getAttribute("loggedUser");
 
-        // ==============================
         // STAFF LOGOUT / ATTENDANCE
-        // ==============================
 
         if (user != null &&
-            user.getRole() != null &&
-            "STAFF".equalsIgnoreCase(
-                    user.getRole().getRoleName())) {
+                user.getRole() != null &&
+                "STAFF".equalsIgnoreCase(
+                        user.getRole().getRoleName())) {
 
             LocalDate today = LocalDate.now();
 
@@ -186,7 +155,7 @@ public class LoginController {
                             .orElse(null);
 
             if (attendance != null &&
-                attendance.getLoginTime() != null) {
+                    attendance.getLoginTime() != null) {
 
                 LocalDateTime logoutTime =
                         LocalDateTime.now();
@@ -212,23 +181,25 @@ public class LoginController {
             }
         }
 
-        // Destroy session
+        // DESTROY SESSION
+
         session.invalidate();
 
         return "redirect:/login";
     }
+
+    // GUEST LOGIN
+
     @GetMapping("/guest")
     public String continueAsGuest(HttpSession session) {
 
-        // Mark the current user as guest
         session.setAttribute("isGuest", true);
 
-        // Remove any logged-in user information
         session.removeAttribute("loggedUser");
         session.removeAttribute("userName");
         session.removeAttribute("role");
 
-        // Go to customer dashboard
         return "redirect:/customer/dashboard";
     }
+
 }

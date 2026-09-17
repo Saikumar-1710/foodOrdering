@@ -1,7 +1,7 @@
+
 package com.restaurants.FastFoodShop.Entity;
 
 import java.time.LocalDateTime;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -54,6 +54,9 @@ public class Order {
             orphanRemoval = true
     )
     private List<OrderItem> items = new ArrayList<>();
+
+    // Explicit setters
+
     public void setCustomer(User customer) {
         this.customer = customer;
     }
@@ -85,19 +88,8 @@ public class Order {
     public void setItems(List<OrderItem> items) {
         this.items = items;
     }
- // GETTERS
 
-    public User getStaff() {
-        return staff;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public LocalDateTime getOrderDate() {
-        return orderDate;
-    }
+    // Explicit getters
 
     public Integer getId() {
         return id;
@@ -107,8 +99,16 @@ public class Order {
         return customer;
     }
 
+    public User getStaff() {
+        return staff;
+    }
+
     public Double getTotalAmount() {
         return totalAmount;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public String getPaymentMethod() {
@@ -117,6 +117,10 @@ public class Order {
 
     public String getPaymentStatus() {
         return paymentStatus;
+    }
+
+    public LocalDateTime getOrderDate() {
+        return orderDate;
     }
 
     public List<OrderItem> getItems() {

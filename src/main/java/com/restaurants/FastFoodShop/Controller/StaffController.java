@@ -1,3 +1,4 @@
+
 package com.restaurants.FastFoodShop.Controller;
 
 import java.time.Duration;
@@ -56,26 +57,17 @@ public class StaffController {
 
         Integer staffId = user.getId();
 
-        // =====================================================
-        // GET STAFF ORDERS
-        // =====================================================
-
+        // Get staff orders
         List<Order> orders =
                 orderService.getOrdersByStaff(staffId);
 
-        // =====================================================
-        // GET STAFF ATTENDANCE
-        // =====================================================
-
+        // Get staff attendance
         List<Attendance> attendanceList =
                 attendanceService.getAttendanceByStaff(staffId);
 
         LocalDate today = LocalDate.now();
 
-        // =====================================================
-        // TODAY'S ORDERS
-        // =====================================================
-
+        // Today's orders
         long todayOrders = orders.stream()
                 .filter(order ->
                         order.getOrderDate() != null &&
@@ -84,16 +76,10 @@ public class StaffController {
                                 .equals(today))
                 .count();
 
-        // =====================================================
-        // TOTAL ORDERS
-        // =====================================================
-
+        // Total orders
         long totalOrders = orders.size();
 
-        // =====================================================
-        // COMPLETED ORDERS
-        // =====================================================
-
+        // Completed orders
         long completedOrders = orders.stream()
                 .filter(order ->
                         order.getStatus() != null &&
@@ -101,10 +87,7 @@ public class StaffController {
                                 order.getStatus()))
                 .count();
 
-        // =====================================================
-        // TODAY'S WORKING HOURS
-        // =====================================================
-
+        // Today's working hours
         double todayWorkingHours = 0.0;
 
         Attendance todayAttendance =
@@ -123,6 +106,7 @@ public class StaffController {
                         todayAttendance.getWorkingHours();
 
             }
+
             // If staff is still working
             else if (todayAttendance.getLoginTime() != null) {
 
@@ -147,10 +131,7 @@ public class StaffController {
             }
         }
 
-        // =====================================================
-        // SEND DATA TO THYMELEAF
-        // =====================================================
-
+        // Send data to Thymeleaf
         model.addAttribute("staff", user);
         model.addAttribute("orders", orders);
         model.addAttribute("attendanceList", attendanceList);
@@ -200,11 +181,7 @@ public class StaffController {
             return "redirect:/staff/dashboard";
         }
 
-        // =====================================================
-        // SECURITY CHECK
         // Staff can update only their own order
-        // =====================================================
-
         if (order.getStaff() == null ||
                 !order.getStaff()
                         .getId()
@@ -213,10 +190,7 @@ public class StaffController {
             return "redirect:/staff/dashboard";
         }
 
-        // =====================================================
-        // ALLOWED ORDER STATUSES
-        // =====================================================
-
+        // Allowed order statuses
         if ("PENDING".equalsIgnoreCase(status) ||
                 "PREPARING".equalsIgnoreCase(status) ||
                 "READY".equalsIgnoreCase(status) ||
@@ -267,11 +241,7 @@ public class StaffController {
             return "redirect:/staff/dashboard";
         }
 
-        // =====================================================
-        // SECURITY CHECK
         // Staff can update only their own order
-        // =====================================================
-
         if (order.getStaff() == null ||
                 !order.getStaff()
                         .getId()
@@ -280,10 +250,7 @@ public class StaffController {
             return "redirect:/staff/dashboard";
         }
 
-        // =====================================================
-        // ALLOWED PAYMENT STATUSES
-        // =====================================================
-
+        // Allowed payment statuses
         if ("PENDING".equalsIgnoreCase(paymentStatus) ||
                 "PAID".equalsIgnoreCase(paymentStatus) ||
                 "FAILED".equalsIgnoreCase(paymentStatus)) {

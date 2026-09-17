@@ -1,7 +1,7 @@
+
 package com.restaurants.FastFoodShop.Entity;
 
 import java.time.LocalDate;
-
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
@@ -38,34 +38,7 @@ public class Attendance {
     private LocalDateTime logoutTime;
 
     private Double workingHours;
-
-    // =========================
-    // GETTERS AND SETTERS
-    // =========================
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public User getStaff() {
-        return staff;
-    }
-
-    public void setStaff(User staff) {
-        this.staff = staff;
-    }
-
-    public LocalDate getDate() {
-        return date;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
+    
 
     public LocalDateTime getLoginTime() {
         return loginTime;
@@ -89,5 +62,12 @@ public class Attendance {
 
     public void setWorkingHours(Double workingHours) {
         this.workingHours = workingHours;
+    }
+    public void setStaff(User staff) {
+        this.staff = staff;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 }

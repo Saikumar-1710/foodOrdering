@@ -1,7 +1,6 @@
 package com.restaurants.FastFoodShop.Entity;
 
 import jakarta.persistence.Entity;
-
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -35,6 +34,15 @@ public class OrderItem {
     @ManyToOne
     @JoinColumn(name = "food_id", nullable = false)
     private Food food;
+    
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
     public Order getOrder() {
         return order;
     }
@@ -51,14 +59,6 @@ public class OrderItem {
         this.food = food;
     }
 
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
     public Double getUnitPrice() {
         return unitPrice;
     }
@@ -66,4 +66,5 @@ public class OrderItem {
     public void setUnitPrice(Double unitPrice) {
         this.unitPrice = unitPrice;
     }
+
 }
