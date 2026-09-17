@@ -1,6 +1,7 @@
 package com.restaurants.FastFoodShop.Repository;
 
 import java.util.List;
+
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -28,6 +29,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     List<User> findByEnabledAndRoleRoleName(
             boolean enabled,
             String roleName);
+
     
     long countByRoleRoleName(String roleName);
+
 }

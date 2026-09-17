@@ -5,7 +5,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+
 import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.restaurants.FastFoodShop.Entity.Order;
@@ -20,6 +22,27 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class AdminController {
+
+	
+	@GetMapping("/admin/dashboard")
+	public String adminDashboard(HttpSession session) {
+		
+		User user = (User) session.getAttribute("loggedUser");
+		
+		if(user == null) {
+			return "redirect:/login";
+		}
+		
+		if (user.getRole() == null ||
+	            !"ADMIN".equalsIgnoreCase(user.getRole().getRoleName())) {
+	            return "redirect:/login";
+	        }
+		
+		
+		return "admin/dashboard";
+	}
+
+
 
     private final FoodRepository foodRepository;
     private final OrderRepository orderRepository;
@@ -153,3 +176,5 @@ public class AdminController {
         return "admin/dashboard";
     }
 }
+
+

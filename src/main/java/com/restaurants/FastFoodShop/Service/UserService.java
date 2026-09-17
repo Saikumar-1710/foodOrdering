@@ -1,8 +1,8 @@
 package com.restaurants.FastFoodShop.Service;
 
 import java.util.List;
-import java.util.Optional;
 
+import java.util.Optional;
 import com.restaurants.FastFoodShop.Entity.User;
 
 public interface UserService {

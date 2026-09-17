@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>FoodieGo - Prime User</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<div class="prime-page">
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="prime-header">
+
+        <div class="crown-icon">
+            <i class="fa-solid fa-crown"></i>
+        </div>
+
+        <div>
+            <h1>FoodieGo Prime</h1>
+
+            <p>
+                Welcome,
+                <span th:text="${user.userName}">
+                    Customer
+                </span>
+            </p>
+        </div>
+
+    </div>
+
+
+    <!-- ================= PRIME BANNER ================= -->
+
+    <div class="prime-banner">
+
+        <div class="banner-icon">
+            <i class="fa-solid fa-star"></i>
+        </div>
+
+        <div>
+
+            <h2>
+                Welcome to FoodieGo Prime!
+            </h2>
+
+            <p>
+                Enjoy exclusive benefits, special offers
+                and discounts on your favourite food.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= BENEFITS ================= -->
+
+    <h2 class="section-title">
+        <i class="fa-solid fa-gift"></i>
+        Your Prime Benefits
+    </h2>
+
+
+    <div class="benefits-container">
+
+
+        <!-- BENEFIT 1 -->
+
+        <div class="benefit-card">
+
+            <div class="benefit-icon">
+                <i class="fa-solid fa-percent"></i>
+            </div>
+
+            <h3>10% Discount</h3>
+
+            <p>
+                Get an exclusive
+                <strong>10% discount</strong>
+                on your food orders.
+            </p>
+
+        </div>
+
+
+        <!-- BENEFIT 2 -->
+
+        <div class="benefit-card">
+
+            <div class="benefit-icon">
+                <i class="fa-solid fa-utensils"></i>
+            </div>
+
+            <h3>Premium Food</h3>
+
+            <p>
+                Explore delicious food
+                and customize your favourite meals.
+            </p>
+
+        </div>
+
+
+        <!-- BENEFIT 3 -->
+
+        <div class="benefit-card">
+
+            <div class="benefit-icon">
+                <i class="fa-solid fa-tags"></i>
+            </div>
+
+            <h3>Special Offers</h3>
+
+            <p>
+                Enjoy special offers
+                available exclusively for Prime users.
+            </p>
+
+        </div>
+
+
+        <!-- BENEFIT 4 -->
+
+        <div class="benefit-card">
+
+            <div class="benefit-icon">
+                <i class="fa-solid fa-heart"></i>
+            </div>
+
+            <h3>Better Experience</h3>
+
+            <p>
+                Enjoy a faster and
+                better food ordering experience.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= DISCOUNT MESSAGE ================= -->
+
+    <div class="discount-box">
+
+        <div class="discount-icon">
+            <i class="fa-solid fa-crown"></i>
+        </div>
+
+        <div>
+
+            <h2>
+                Prime Members Save More!
+            </h2>
+
+            <p>
+                Your Prime membership gives you
+                <strong>10% OFF</strong>
+                on eligible food orders.
+            </p>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= BUTTONS ================= -->
+
+    <div class="prime-actions">
+
+        <a href="/customer/menu"
+           class="prime-btn menu-btn">
+
+            <i class="fa-solid fa-utensils"></i>
+
+            Back to Food Menu
+
+        </a>
+
+
+        <a href="/customer/dashboard"
+           class="prime-btn dashboard-btn">
+
+            <i class="fa-solid fa-house"></i>
+
+            Customer Dashboard
+
+        </a>
+
+
+        <a href="/logout"
+           class="prime-btn logout-btn">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </a>
+
+    </div>
+
+
+    <!-- ================= FOOTER ================= -->
+
+    <div class="prime-footer">
+
+        <p>
+            <i class="fa-solid fa-crown"></i>
+            FoodieGo Prime Member
+        </p>
+
+        <span>
+            Enjoy delicious food with exclusive benefits.
+        </span>
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

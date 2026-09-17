@@ -38,12 +38,26 @@
                 </ul>
             </nav>
             <div class="header-actions">
-
+     
                 <div class="search-section">
                     <button class="icon-btn" id="searchBtn"><i class="fa-solid fa-magnifying-glass"></i></button>
                     <input type="text" id="searchInput" placeholder="Search food...">
                     <div id="searchResults"></div>
                 </div>
+				<!-- Guest User -->
+				    <div class="user-status">
+
+				        <span class="guest-badge">
+				            <i class="fa-solid fa-user"></i>
+				            Guest User
+				        </span>
+
+				    </div>
+
+				    <!-- Login -->
+				    <a href="/login" class="icon-btn">
+				        <i class="fa-solid fa-right-to-bracket"></i>
+				    </a>
                 <button class="icon-btn"><i class="fa-solid fa-user"></i></button>
                 <button class="icon-btn cart-btn"><i class="fa-solid fa-cart-shopping"></i><span class="cart-count"></span></button>
                 <button class="icon-btn mobile-menu" id="menuBtn"><i class="fa-solid fa-bars"></i></button>
@@ -169,6 +183,28 @@
                             <span class="price">₹249</span>
                             <button class="btn-small add-cart"> Add</button>
                         </div>
+						<div class="product-actions">
+
+						    <a href="/customer/food/1"
+						       class="btn-small view-btn">
+						        Details
+						    </a>
+
+						    <a href="/customer/customize/1"
+						       class="btn-small customize-btn">
+						        Customize
+						    </a>
+
+						    <button class="btn-small add-cart"
+						            data-id="1"
+						            data-name="Chicken Burger"
+						            data-price="249">
+
+						        <i class="fa-solid fa-cart-plus"></i>
+						        Add
+
+						    </button>
+
                     </div>
                 </article>
 

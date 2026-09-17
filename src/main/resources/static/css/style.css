@@ -728,3 +728,979 @@ input {
     }
 
 }
+/* =========================================
+   FOOD MENU PAGE
+   ========================================= */
+
+body {
+    background: #f5f6fa;
+    color: #222;
+}
+
+
+/* =========================================
+   MENU HEADER
+   ========================================= */
+
+.menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    margin-bottom: 20px;
+}
+
+.menu-header h1 {
+    margin: 0;
+
+    color: #222;
+    font-size: 32px;
+}
+
+.menu-header h1 i {
+    color: #ff6b35;
+}
+
+.menu-header p {
+    margin-top: 6px;
+
+    color: #777;
+}
+
+
+/* =========================================
+   USER BADGES
+   ========================================= */
+
+.user-badge {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 10px 18px;
+
+    border-radius: 30px;
+
+    font-size: 14px;
+
+    font-weight: bold;
+}
+
+
+/* Guest */
+
+.guest-badge {
+    background: #eeeeee;
+
+    color: #444;
+
+    border: 1px solid #ddd;
+}
+
+
+/* Prime */
+
+.prime-badge {
+    background: linear-gradient(
+        45deg,
+        #ff6b00,
+        #ffb400
+    );
+
+    color: white;
+
+    box-shadow:
+        0 5px 15px rgba(255, 107, 0, 0.3);
+}
+
+
+/* =========================================
+   NAVIGATION
+   ========================================= */
+
+.navigation {
+    display: flex;
+
+    gap: 12px;
+
+    margin-bottom: 20px;
+
+    flex-wrap: wrap;
+}
+
+.navigation a {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 10px 16px;
+
+    background: white;
+
+    color: #333;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    box-shadow:
+        0 3px 10px rgba(0, 0, 0, 0.08);
+
+    transition: 0.3s;
+}
+
+.navigation a:hover {
+    background: #ff6b35;
+
+    color: white;
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   FOOD CONTAINER
+   ========================================= */
+
+.food-container {
+    display: grid;
+
+    grid-template-columns:
+        repeat(
+            auto-fit,
+            minmax(280px, 1fr)
+        );
+
+    gap: 25px;
+
+    margin-top: 25px;
+}
+
+
+/* =========================================
+   FOOD CARD
+   ========================================= */
+
+.food-card {
+    background: white;
+
+    border-radius: 18px;
+
+    overflow: hidden;
+
+    box-shadow:
+        0 5px 18px rgba(0, 0, 0, 0.10);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.food-card:hover {
+    transform: translateY(-8px);
+
+    box-shadow:
+        0 15px 30px rgba(0, 0, 0, 0.16);
+}
+
+
+/* =========================================
+   FOOD IMAGE
+   ========================================= */
+
+.food-image {
+    position: relative;
+
+    width: 100%;
+
+    height: 210px;
+
+    overflow: hidden;
+
+    background: #eeeeee;
+}
+
+.food-image img {
+    width: 100%;
+
+    height: 100%;
+
+    object-fit: cover;
+
+    transition:
+        transform 0.4s ease;
+}
+
+.food-card:hover
+.food-image img {
+    transform: scale(1.08);
+}
+
+
+/* No image */
+
+.no-image {
+    height: 100%;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 50px;
+
+    color: #aaa;
+}
+
+
+/* =========================================
+   DISCOUNT BADGE
+   ========================================= */
+
+.discount-badge {
+    position: absolute;
+
+    top: 12px;
+
+    right: 12px;
+
+    background: #e53935;
+
+    color: white;
+
+    padding: 7px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+
+    box-shadow:
+        0 3px 8px rgba(0, 0, 0, 0.2);
+}
+
+
+/* =========================================
+   FOOD INFORMATION
+   ========================================= */
+
+.food-info {
+    padding: 20px;
+}
+
+.food-info h2 {
+    margin-bottom: 8px;
+
+    font-size: 21px;
+
+    color: #222;
+}
+
+.description {
+    min-height: 45px;
+
+    color: #666;
+
+    font-size: 14px;
+
+    line-height: 1.5;
+}
+
+.category {
+    margin: 12px 0;
+
+    color: #555;
+
+    font-size: 14px;
+}
+
+
+/* =========================================
+   PRICE
+   ========================================= */
+
+.price {
+    margin: 15px 0;
+
+    color: #ff6b00;
+
+    font-size: 25px;
+
+    font-weight: bold;
+}
+
+
+/* =========================================
+   NUTRITION
+   ========================================= */
+
+.nutrition {
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 10px;
+
+    margin-bottom: 18px;
+
+    color: #666;
+
+    font-size: 12px;
+}
+
+.nutrition i {
+    color: #ff6b35;
+}
+
+
+/* =========================================
+   CUSTOMIZE BUTTON
+   ========================================= */
+
+.customize-btn {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 12px;
+
+    background:
+        linear-gradient(
+            45deg,
+            #ff6b00,
+            #ffb400
+        );
+
+    color: white;
+
+    text-decoration: none;
+
+    border-radius: 25px;
+
+    font-weight: bold;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.customize-btn:hover {
+    transform: scale(1.03);
+
+    box-shadow:
+        0 5px 15px
+        rgba(255, 107, 0, 0.3);
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 700px) {
+
+    .menu-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 15px;
+    }
+
+    .menu-header h1 {
+        font-size: 26px;
+    }
+
+    .food-container {
+        grid-template-columns: 1fr;
+    }
+
+}
+.login-message {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+}
+/* =====================================================
+   FOODIEGO PRIME PAGE
+   ===================================================== */
+
+.prime-page {
+
+    min-height: 100vh;
+
+    padding: 40px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff8e1,
+            #fff3cd,
+            #ffffff
+        );
+
+    font-family: Arial, sans-serif;
+
+    box-sizing: border-box;
+}
+
+
+/* ================= HEADER ================= */
+
+.prime-header {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    padding: 30px;
+
+    background: white;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,0.12);
+
+    border-left: 8px solid #f5b301;
+}
+
+
+.crown-icon {
+
+    width: 80px;
+
+    height: 80px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ffd700,
+            #ffb300
+        );
+
+    color: white;
+
+    font-size: 38px;
+
+    box-shadow:
+        0 5px 15px rgba(245,179,1,0.4);
+}
+
+
+.prime-header h1 {
+
+    margin: 0;
+
+    font-size: 38px;
+
+    color: #222;
+}
+
+
+.prime-header p {
+
+    margin: 8px 0 0;
+
+    font-size: 20px;
+
+    color: #666;
+}
+
+
+.prime-header p span {
+
+    font-weight: bold;
+
+    color: #e69500;
+}
+
+
+/* ================= PRIME BANNER ================= */
+
+.prime-banner {
+
+    max-width: 1100px;
+
+    margin: 30px auto;
+
+    padding: 30px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 25px;
+
+    border-radius: 20px;
+
+    color: white;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff9800,
+            #ff6f00
+        );
+
+    box-shadow:
+        0 10px 25px rgba(255,111,0,0.3);
+}
+
+
+.banner-icon {
+
+    width: 70px;
+
+    height: 70px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: rgba(255,255,255,0.2);
+
+    border-radius: 50%;
+
+    font-size: 35px;
+}
+
+
+.prime-banner h2 {
+
+    margin: 0 0 8px;
+
+    font-size: 30px;
+}
+
+
+.prime-banner p {
+
+    margin: 0;
+
+    font-size: 17px;
+
+    line-height: 1.6;
+}
+
+
+/* ================= SECTION TITLE ================= */
+
+.section-title {
+
+    max-width: 1100px;
+
+    margin: 35px auto 20px;
+
+    font-size: 28px;
+
+    color: #333;
+}
+
+
+.section-title i {
+
+    color: #ff9800;
+
+    margin-right: 10px;
+}
+
+
+/* ================= BENEFITS ================= */
+
+.benefits-container {
+
+    max-width: 1100px;
+
+    margin: auto;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 20px;
+}
+
+
+.benefit-card {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    text-align: center;
+
+    min-height: 210px;
+
+    box-shadow:
+        0 6px 20px rgba(0,0,0,0.10);
+
+    transition:
+        transform 0.3s,
+        box-shadow 0.3s;
+}
+
+
+.benefit-card:hover {
+
+    transform:
+        translateY(-8px);
+
+    box-shadow:
+        0 12px 30px rgba(0,0,0,0.18);
+}
+
+
+.benefit-icon {
+
+    width: 65px;
+
+    height: 65px;
+
+    margin: auto;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #fff3cd;
+
+    color: #ff9800;
+
+    font-size: 28px;
+}
+
+
+.benefit-card h3 {
+
+    margin: 15px 0 10px;
+
+    font-size: 21px;
+
+    color: #222;
+}
+
+
+.benefit-card p {
+
+    color: #666;
+
+    line-height: 1.5;
+
+    margin: 0;
+}
+
+
+.benefit-card strong {
+
+    color: #e67e00;
+}
+
+
+/* ================= DISCOUNT BOX ================= */
+
+.discount-box {
+
+    max-width: 1100px;
+
+    margin: 35px auto;
+
+    padding: 25px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
+
+    background: #fff;
+
+    border-radius: 18px;
+
+    border: 2px dashed #ff9800;
+
+    box-shadow:
+        0 5px 15px rgba(0,0,0,0.08);
+}
+
+
+.discount-icon {
+
+    width: 60px;
+
+    height: 60px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    background: #ff9800;
+
+    color: white;
+
+    border-radius: 50%;
+
+    font-size: 25px;
+}
+
+
+.discount-box h2 {
+
+    margin: 0 0 5px;
+
+    color: #333;
+}
+
+
+.discount-box p {
+
+    margin: 0;
+
+    color: #666;
+
+    font-size: 16px;
+}
+
+
+.discount-box strong {
+
+    color: #e65100;
+
+    font-size: 19px;
+}
+
+
+/* ================= BUTTONS ================= */
+
+.prime-actions {
+
+    max-width: 1100px;
+
+    margin: 30px auto;
+
+    display: flex;
+
+    justify-content: center;
+
+    gap: 18px;
+
+    flex-wrap: wrap;
+}
+
+
+.prime-btn {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: 10px;
+
+    padding: 14px 24px;
+
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    font-size: 16px;
+
+    font-weight: bold;
+
+    transition:
+        transform 0.2s,
+        box-shadow 0.2s;
+}
+
+
+.prime-btn:hover {
+
+    transform:
+        translateY(-3px);
+
+    box-shadow:
+        0 7px 18px rgba(0,0,0,0.18);
+}
+
+
+/* Menu button */
+
+.menu-btn {
+
+    background: #ff9800;
+
+    color: white;
+}
+
+
+/* Dashboard button */
+
+.dashboard-btn {
+
+    background: #333;
+
+    color: white;
+}
+
+
+/* Logout button */
+
+.logout-btn {
+
+    background: #e53935;
+
+    color: white;
+}
+
+
+/* ================= FOOTER ================= */
+
+.prime-footer {
+
+    max-width: 1100px;
+
+    margin: 40px auto 0;
+
+    padding-top: 20px;
+
+    border-top: 1px solid #ddd;
+
+    text-align: center;
+
+    color: #777;
+}
+
+
+.prime-footer p {
+
+    margin: 0 0 8px;
+
+    font-weight: bold;
+
+    color: #555;
+}
+
+
+.prime-footer i {
+
+    color: #ffb300;
+
+    margin-right: 5px;
+}
+
+
+/* ================= RESPONSIVE ================= */
+
+@media (max-width: 900px) {
+
+    .benefits-container {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 600px) {
+
+    .prime-page {
+
+        padding: 20px;
+    }
+
+
+    .prime-header {
+
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+
+    .prime-header h1 {
+
+        font-size: 30px;
+    }
+
+
+    .prime-banner {
+
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+
+    .benefits-container {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .discount-box {
+
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+
+    .prime-actions {
+
+        flex-direction: column;
+    }
+
+
+    .prime-btn {
+
+        width: 100%;
+
+        box-sizing: border-box;
+    }
+
+}

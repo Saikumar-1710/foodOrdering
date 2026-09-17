@@ -1,3 +1,4 @@
+
 package com.restaurants.FastFoodShop.Entity;
 
 import java.time.LocalDate;
@@ -37,4 +38,36 @@ public class Attendance {
     private LocalDateTime logoutTime;
 
     private Double workingHours;
+    
+
+    public LocalDateTime getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(LocalDateTime loginTime) {
+        this.loginTime = loginTime;
+    }
+
+    public LocalDateTime getLogoutTime() {
+        return logoutTime;
+    }
+
+    public void setLogoutTime(LocalDateTime logoutTime) {
+        this.logoutTime = logoutTime;
+    }
+
+    public Double getWorkingHours() {
+        return workingHours;
+    }
+
+    public void setWorkingHours(Double workingHours) {
+        this.workingHours = workingHours;
+    }
+    public void setStaff(User staff) {
+        this.staff = staff;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
 }

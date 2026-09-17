@@ -281,3 +281,84 @@ button[type="submit"]:hover {
         width: 90%;
     }
 }
+/* ==============================
+   GUEST USER
+   ============================== */
+
+.guest-login {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.guest-login p {
+    color: #eeeeee;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.guest-login a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 10px 22px;
+
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 25px;
+
+    color: #ffffff;
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: all 0.3s ease;
+}
+
+.guest-login a:hover {
+    background: #ffffff;
+    color: #ff6b00;
+
+    transform: translateY(-3px);
+
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
+}
+/* Guest User */
+
+.guest-login {
+    text-align: center;
+    margin-top: 18px;
+}
+
+.guest-login p {
+    color: #eeeeee;
+    font-size: 13px;
+    margin-bottom: 10px;
+}
+
+.guest-login a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    padding: 10px 20px;
+
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-radius: 25px;
+
+    color: white;
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    transition: 0.3s ease;
+}
+
+.guest-login a:hover {
+    background: white;
+    color: #ff6b00;
+    transform: translateY(-2px);
+}

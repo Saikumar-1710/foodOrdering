@@ -2,6 +2,8 @@ package com.restaurants.FastFoodShop.Entity;
 
 import com.restaurants.FastFoodShop.Enum.CustomizationType;
 
+
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -57,4 +59,57 @@ public class CustomizationOption {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_id", nullable = false)
     private Food food;
+    
+    // Explicit getter
+    public Food getFood() {
+        return food;
+    }
+
+    // Explicit setter
+    public void setFood(Food food) {
+        this.food = food;
+    }
+
+    // Explicit getter for id
+    public Integer getId() {
+        return id;
+    }
+
+    // Explicit getter/setter for priceAdjustment
+  
+
+    public void setPriceAdjustment(Double priceAdjustment) {
+        this.priceAdjustment = priceAdjustment;
+    }
+
+    
+    public Double getPriceAdjustment() {
+        return priceAdjustment;
+    }
+
+    public Double getCalories() {
+        return calories;
+    }
+
+    public Double getProtein() {
+        return protein;
+    }
+
+    public Double getCarbohydrates() {
+        return carbohydrates;
+    }
+
+    public Double getFats() {
+        return fats;
+    }
+
+    public Double getFiber() {
+        return fiber;
+    }
+
+    public Double getMagnesium() {
+        return magnesium;
+    }
+
+	
 }

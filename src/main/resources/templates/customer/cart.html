@@ -1,285 +1,573 @@
+```html
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>My Cart</title>
+    <title>My Cart | FoodService</title>
 
-    <link rel="stylesheet"
-          th:href="@{/css/style.css}">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
 
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: "Poppins", Arial, sans-serif;
+            background: #fff7f2;
+            color: #222;
+        }
+
+        .cart-page {
+            min-height: 100vh;
+            padding: 40px 20px 70px;
+        }
+
+        .cart-wrapper {
+            max-width: 1250px;
+            margin: auto;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .cart-title h1 {
+            margin: 0;
+            font-size: 38px;
+            color: #222;
+        }
+
+        .cart-title p {
+            margin-top: 8px;
+            color: #777;
+        }
+
+        .top-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .top-actions a {
+            padding: 11px 20px;
+            border-radius: 9px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .continue-btn {
+            background: white;
+            color: #ff6b35;
+            border: 2px solid #ff6b35;
+        }
+
+        .dashboard-btn {
+            background: #ff6b35;
+            color: white;
+        }
+
+        .top-actions a:hover {
+            transform: translateY(-3px);
+        }
+
+        .cart-card {
+            background: white;
+            border-radius: 18px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-bottom: 25px;
+            overflow-x: auto;
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 850px;
+        }
+
+        .cart-table th {
+            background: #fff1e9;
+            color: #333;
+            padding: 16px 12px;
+            text-align: left;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        .cart-table td {
+            padding: 18px 12px;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+
+        .cart-table tbody tr {
+            transition: 0.3s;
+        }
+
+        .cart-table tbody tr:hover {
+            background: #fffaf7;
+        }
+
+        .food-name {
+            font-weight: 700;
+            color: #222;
+            font-size: 16px;
+        }
+
+        .customization {
+            margin-top: 7px;
+            color: #777;
+            font-size: 13px;
+        }
+
+        .quantity-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            background: #f3f3f3;
+            font-weight: 600;
+        }
+
+        .price {
+            color: #ff6b35;
+            font-weight: 700;
+        }
+
+        .remove-btn {
+            background: #fff0f0 !important;
+            color: #d63031 !important;
+            border: 1px solid #ffd0d0 !important;
+            padding: 9px 15px !important;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .remove-btn:hover {
+            background: #d63031 !important;
+            color: white !important;
+            transform: translateY(-2px);
+        }
+
+        .nutrition-title {
+            font-size: 24px;
+            margin: 0 0 18px;
+        }
+
+        .nutrition-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 12px;
+        }
+
+        .nutrition-card {
+            padding: 18px 12px;
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .nutrition-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .nutrition-card span {
+            display: block;
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        .nutrition-card strong {
+            font-size: 19px;
+            color: #222;
+        }
+
+        .checkout-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+            padding: 25px;
+            background: white;
+            border-radius: 18px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            flex-wrap: wrap;
+        }
+
+        .total-label {
+            color: #777;
+            margin-bottom: 5px;
+        }
+
+        .total-price {
+            margin: 0;
+            color: #ff6b35;
+            font-size: 32px;
+        }
+
+        .checkout-btn {
+            display: inline-block;
+            padding: 15px 35px;
+            background: #ff6b35;
+            color: white;
+            border-radius: 10px;
+            font-size: 17px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .checkout-btn:hover {
+            background: #e85622;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .empty-cart {
+            max-width: 600px;
+            margin: 60px auto;
+            background: white;
+            border-radius: 20px;
+            padding: 60px 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .empty-cart .icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+        }
+
+        .empty-cart h2 {
+            margin-bottom: 10px;
+        }
+
+        .empty-cart p {
+            color: #777;
+            margin-bottom: 25px;
+        }
+
+        .shop-btn {
+            display: inline-block;
+            padding: 13px 25px;
+            background: #ff6b35;
+            color: white;
+            border-radius: 9px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 1000px) {
+            .nutrition-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 650px) {
+            .cart-title h1 {
+                font-size: 30px;
+            }
+
+            .nutrition-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .checkout-section {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .checkout-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="cart-page">
 
-    <h1>My Cart</h1>
+    <div class="cart-wrapper">
 
-    <a href="/customer/menu">
-        Continue Shopping
-    </a>
+        <!-- HEADER -->
+        <div class="cart-header">
 
-    <hr>
+            <div class="cart-title">
+                <h1>🛒 My Cart</h1>
+                <p>Review your selected food before checkout.</p>
+            </div>
 
-    <div th:if="${#lists.isEmpty(cart.items)}">
+            <div class="top-actions">
+                <a class="continue-btn" href="/customer/menu">
+                    ← Continue Shopping
+                </a>
 
-        <h2>Your cart is empty.</h2>
+                <a class="dashboard-btn" href="/customer/dashboard">
+                    Dashboard
+                </a>
+            </div>
 
-    </div>
+        </div>
 
-    <div th:unless="${#lists.isEmpty(cart.items)}">
 
-        <table border="1">
+        <!-- EMPTY CART -->
+        <div class="empty-cart"
+             th:if="${#lists.isEmpty(cart.items)}">
 
-            <thead>
+            <div class="icon">🛒</div>
 
-            <tr>
+            <h2>Your cart is empty</h2>
 
-                <th>Food</th>
+            <p>
+                Add some delicious food to your cart and come back here.
+            </p>
 
-                <th>Quantity</th>
+            <a class="shop-btn" href="/customer/menu">
+                Browse Food Menu
+            </a>
 
-                <th>Price</th>
+        </div>
 
-                <th>Calories</th>
 
-                <th>Protein</th>
+        <!-- CART WITH ITEMS -->
+        <div th:unless="${#lists.isEmpty(cart.items)}">
 
-                <th>Carbohydrates</th>
+            <!-- ITEMS -->
+            <div class="cart-card">
 
-                <th>Fats</th>
+                <table class="cart-table">
 
-                <th>Fiber</th>
+                    <thead>
 
-                <th>Magnesium</th>
+                    <tr>
+                        <th>Food</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Calories</th>
+                        <th>Protein</th>
+                        <th>Carbs</th>
+                        <th>Fats</th>
+                        <th>Fiber</th>
+                        <th>Magnesium</th>
+                        <th>Action</th>
+                    </tr>
 
-                <th>Action</th>
+                    </thead>
 
-            </tr>
+                    <tbody>
 
-            </thead>
+                    <tr th:each="item : ${cart.items}">
 
-            <tbody>
+                        <td>
 
-            <tr th:each="item : ${cart.items}">
+                            <div class="food-name"
+                                 th:text="${item.food.name}">
+                                Food Name
+                            </div>
 
-                <td>
+                            <div class="customization"
+                                 th:if="${!#lists.isEmpty(item.selectedOptions)}">
 
-                    <b th:text="${item.food.name}">
-                    </b>
+                                <span>Customization: </span>
 
-                    <div>
+                                <span th:each="selected : ${item.selectedOptions}">
 
-                        <small>
-                            Customization:
-                        </small>
+                                    <span th:text="${selected.option.name}">
+                                        Option
+                                    </span>
 
-                        <span
-                            th:each="selected : ${item.selectedOptions}">
+                                </span>
 
-                            <span
-                                th:text="${selected.option.name}">
+                            </div>
+
+                        </td>
+
+                        <td>
+                            <span class="quantity-badge"
+                                  th:text="${item.quantity}">
+                                1
                             </span>
-                            &nbsp;
+                        </td>
 
-                        </span>
+                        <td class="price">
+                            ₹<span th:text="${item.unitPrice}">
+                                0
+                            </span>
+                        </td>
 
+                        <td th:text="${item.calories}">
+                            0
+                        </td>
+
+                        <td>
+                            <span th:text="${item.protein}">
+                                0
+                            </span> g
+                        </td>
+
+                        <td th:text="${item.carbohydrates}">
+                            0
+                        </td>
+
+                        <td th:text="${item.fats}">
+                            0
+                        </td>
+
+                        <td th:text="${item.fiber}">
+                            0
+                        </td>
+
+                        <td th:text="${item.magnesium}">
+                            0
+                        </td>
+
+                        <td>
+
+                            <form
+                                th:action="@{/customer/cart/remove/{id}(id=${item.id})}"
+                                method="post">
+
+                                <button
+                                    type="submit"
+                                    class="remove-btn">
+                                    Remove
+                                </button>
+
+                            </form>
+
+                        </td>
+
+                    </tr>
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <!-- NUTRITION -->
+            <div class="cart-card">
+
+                <h2 class="nutrition-title">
+                    🍎 Complete Cart Nutrition
+                </h2>
+
+                <div class="nutrition-grid">
+
+                    <div class="nutrition-card">
+                        <span>Calories</span>
+                        <strong
+                            th:text="${#aggregates.sum(cart.items.![calories * quantity])}">
+                            0
+                        </strong>
                     </div>
 
-                </td>
-
-                <td th:text="${item.quantity}">
-                </td>
-
-                <td>
-                    ₹
-                    <span th:text="${item.unitPrice}">
-                    </span>
-                </td>
-
-                <td th:text="${item.calories}">
-                </td>
-
-                <td>
-                    <span th:text="${item.protein}">
-                    </span>
-                    g
-                </td>
-
-                <td th:text="${item.carbohydrates}">
-                </td>
-
-                <td th:text="${item.fats}">
-                </td>
-
-                <td th:text="${item.fiber}">
-                </td>
-
-                <td th:text="${item.magnesium}">
-                </td>
-
-                <td>
-
-                    <form
-                        th:action="@{/customer/cart/remove/{id}(id=${item.id})}"
-                        method="post">
-
-                        <button type="submit">
-                            Remove
-                        </button>
-
-                    </form>
-
-                </td>
-
-            </tr>
-
-            </tbody>
-
-        </table>
-
-        <hr>
-
-        <h2>
-            Complete Cart Nutrition
-        </h2>
-
-        <table border="1">
-
-            <tr>
-                <th>Nutrient</th>
-                <th>Total</th>
-            </tr>
-
-            <tr>
-
-                <td>Calories</td>
-
-                <td>
-
-                    <span
-                        th:text="${#aggregates.sum(cart.items.![calories * quantity])}">
-                    </span>
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td>Protein</td>
-
-                <td>
-
-                    <span
-                        th:text="${#aggregates.sum(cart.items.![protein * quantity])}">
-                    </span>
-
-                    g
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td>Carbohydrates</td>
-
-                <td>
-
-                    <span
-                        th:text="${#aggregates.sum(cart.items.![carbohydrates * quantity])}">
-                    </span>
-
-                    g
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td>Fats</td>
-
-                <td>
-
-                    <span
-                        th:text="${#aggregates.sum(cart.items.![fats * quantity])}">
-                    </span>
-
-                    g
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td>Fiber</td>
-
-                <td>
-
-                    <span
-                        th:text="${#aggregates.sum(cart.items.![fiber * quantity])}">
-                    </span>
-
-                    g
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td>Magnesium</td>
-
-                <td>
-
-                    <span
-                        th:text="${#aggregates.sum(cart.items.![magnesium * quantity])}">
-                    </span>
-
-                    mg
-
-                </td>
-
-            </tr>
-
-        </table>
-
-        <br>
-
-        <h2>
-            Total Price
-        </h2>
-
-        <h2>
-
-            ₹
-
-            <span
-                th:text="${#aggregates.sum(cart.items.![unitPrice * quantity])}">
-            </span>
-
-        </h2>
-
-        <br>
-
-        <a href="/customer/checkout">
-
-            <button>
-                Checkout
-            </button>
-
-        </a>
+                    <div class="nutrition-card">
+                        <span>Protein</span>
+                        <strong>
+                            <span
+                                th:text="${#aggregates.sum(cart.items.![protein * quantity])}">
+                                0
+                            </span>
+                            g
+                        </strong>
+                    </div>
+
+                    <div class="nutrition-card">
+                        <span>Carbohydrates</span>
+                        <strong>
+                            <span
+                                th:text="${#aggregates.sum(cart.items.![carbohydrates * quantity])}">
+                                0
+                            </span>
+                            g
+                        </strong>
+                    </div>
+
+                    <div class="nutrition-card">
+                        <span>Fats</span>
+                        <strong>
+                            <span
+                                th:text="${#aggregates.sum(cart.items.![fats * quantity])}">
+                                0
+                            </span>
+                            g
+                        </strong>
+                    </div>
+
+                    <div class="nutrition-card">
+                        <span>Fiber</span>
+                        <strong>
+                            <span
+                                th:text="${#aggregates.sum(cart.items.![fiber * quantity])}">
+                                0
+                            </span>
+                            g
+                        </strong>
+                    </div>
+
+                    <div class="nutrition-card">
+                        <span>Magnesium</span>
+                        <strong>
+                            <span
+                                th:text="${#aggregates.sum(cart.items.![magnesium * quantity])}">
+                                0
+                            </span>
+                            mg
+                        </strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- TOTAL + CHECKOUT -->
+            <div class="checkout-section">
+
+                <div>
+
+                    <div class="total-label">
+                        Total Order Amount
+                    </div>
+
+                    <h2 class="total-price">
+                        ₹<span
+                            th:text="${#aggregates.sum(cart.items.![unitPrice * quantity])}">
+                            0
+                        </span>
+                    </h2>
+
+                </div>
+
+                <a class="checkout-btn"
+                   href="/customer/checkout">
+                    Proceed to Checkout →
+                </a>
+
+            </div>
+
+        </div>
 
     </div>
 
 </div>
 
 </body>
-
 </html>
+```

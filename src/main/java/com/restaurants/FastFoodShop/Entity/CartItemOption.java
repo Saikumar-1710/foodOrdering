@@ -30,4 +30,12 @@ public class CartItemOption {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="option_id", nullable=false)
 	private CustomizationOption option;
+	
+	public void setCartItem(CartItem cartItem) {
+	    this.cartItem = cartItem;
+	}
+
+	public void setOption(CustomizationOption option) {
+	    this.option = option;
+	}
 }

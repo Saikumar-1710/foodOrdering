@@ -72,6 +72,22 @@
         <button type="submit">
             Login
         </button>
+		
+		<div class="guest-login">
+		    <p>Don't want to login?</p>
+
+		    <a th:href="@{/guest}" class="guest-btn">
+		        Continue as Guest
+		    </a>
+		</div>
+		<div class="demo">
+
+		    <h4>Demo Users</h4>
+
+		    <p>Admin : admin / admin123</p>
+		    <p>Staff : staff / staff123</p>
+		    <p>Customer : customer / customer123</p>
+           </div>
 
         <div class="register">
             Don't have an account?
@@ -85,12 +101,7 @@
             <span><i class="fa-brands fa-apple"></i></span>
         </div>
 
-        <div class="demo">
-            <h4>Demo Users</h4>
-            <p><span>Admin</span> : admin / admin123</p>
-            <p><span>Staff</span> : staff / staff123</p>
-            <p><span>Customer</span> : customer / customer123</p>
-        </div>
+        
 
     </form>
 

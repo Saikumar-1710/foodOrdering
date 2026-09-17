@@ -1,11 +1,13 @@
 package com.restaurants.FastFoodShop.Service;
 
+import com.restaurants.FastFoodShop.Entity.User;
+
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 
-import com.restaurants.FastFoodShop.Entity.User;
 import com.restaurants.FastFoodShop.Repository.UserRepository;
 
 @Service

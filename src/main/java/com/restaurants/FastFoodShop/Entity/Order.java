@@ -1,3 +1,4 @@
+
 package com.restaurants.FastFoodShop.Entity;
 
 import java.time.LocalDateTime;
@@ -53,4 +54,76 @@ public class Order {
             orphanRemoval = true
     )
     private List<OrderItem> items = new ArrayList<>();
+
+    // Explicit setters
+
+    public void setCustomer(User customer) {
+        this.customer = customer;
+    }
+
+    public void setStaff(User staff) {
+        this.staff = staff;
+    }
+
+    public void setTotalAmount(Double totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public void setPaymentMethod(String paymentMethod) {
+        this.paymentMethod = paymentMethod;
+    }
+
+    public void setPaymentStatus(String paymentStatus) {
+        this.paymentStatus = paymentStatus;
+    }
+
+    public void setOrderDate(LocalDateTime orderDate) {
+        this.orderDate = orderDate;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
+    }
+
+    // Explicit getters
+
+    public Integer getId() {
+        return id;
+    }
+
+    public User getCustomer() {
+        return customer;
+    }
+
+    public User getStaff() {
+        return staff;
+    }
+
+    public Double getTotalAmount() {
+        return totalAmount;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public String getPaymentMethod() {
+        return paymentMethod;
+    }
+
+    public String getPaymentStatus() {
+        return paymentStatus;
+    }
+
+    public LocalDateTime getOrderDate() {
+        return orderDate;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
 }
