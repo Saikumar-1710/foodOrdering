@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>My Orders</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background: #f8f9fa; padding: 40px; }
+        .container { max-width: 500px; margin: 0 auto; }
+        .card { background: white; padding: 20px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); margin-bottom: 15px; }
+        a { text-decoration: none; color: #007bff; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>📦 My Orders</h2>
+    <div id="ordersContainer"></div>
+    
+    <br>
+    <a href="dashboard.html">← Dashboard</a>
+</div>
+
+<script>
+    const orders = JSON.parse(localStorage.getItem('ordersHistory')) || [];
+    const container = document.getElementById('ordersContainer');
+
+    if (orders.length === 0) {
+        container.innerHTML = '<p>You have not placed any orders yet.</p>';
+    } else {
+        container.innerHTML = '';
+        orders.forEach(order => {
+            container.innerHTML += `
+                <div class="card">
+                    <h3>Order ${order.id}</h3>
+                    <p>Date: ${order.date}</p>
+                    <p>Subtotal: ₹${order.subtotal.toFixed(2)}</p>
+                    <p>Discount: -₹${order.discount.toFixed(2)}</p>
+                    <p><strong>Final Amount: ₹${order.finalAmount.toFixed(2)}</strong></p>
+                </div>`;
+        });
+    }
+</script>
+
+</body>
+</html>

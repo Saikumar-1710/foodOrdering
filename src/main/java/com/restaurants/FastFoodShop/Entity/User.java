@@ -1,51 +1,60 @@
 package com.restaurants.FastFoodShop.Entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import jakarta.persistence.*;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 @Entity
-@Table(name="users")
+@Table(name = "users")
 public class User {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
-	
-	@Column(nullable=false)
-	private String fullName;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-	@Column(nullable=false,unique= true)
-	private String userName;
-	
-	@Column(nullable=false)
-	private String password;
-	
-	@Column(nullable=false,unique=true)
-	private String email;
-	
-	//@Pattern(regexp = "^[6-9][0-9]{9}$")
-	@Column(nullable=false, unique=true, length=10)
-	private String phone;
-	
-	@Column(nullable=false)
-	private boolean enabled = true;
-	//maintain the relationship with role table
-	
-	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="role_id", nullable=false)
-	private Role role;
-	
+    @Column(nullable = false, unique = true)
+    private String userName;
+
+    @Column(nullable = false)
+    private String password;
+
+    private String email;
+
+    private String role; // e.g., "ROLE_ADMIN", "ROLE_USER", "ROLE_STAFF"
+
+    private boolean isPrime;
+
+    private double dailyProteinTarget;
+
+    public User() {}
+
+    public User(Long id, String userName, String password, String email, String role, boolean isPrime, double dailyProteinTarget) {
+        this.id = id;
+        this.userName = userName;
+        this.password = password;
+        this.email = email;
+        this.role = role;
+        this.isPrime = isPrime;
+        this.dailyProteinTarget = dailyProteinTarget;
+    }
+
+    // Getters and Setters
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public String getUserName() { return userName; }
+    public void setUserName(String userName) { this.userName = userName; }
+
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
+
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
+
+    public String getRole() { return role; }
+    public void setRole(String role) { this.role = role; }
+
+    public boolean isPrime() { return isPrime; }
+    public void setPrime(boolean prime) { this.isPrime = prime; }
+
+    public double getDailyProteinTarget() { return dailyProteinTarget; }
+    public void setDailyProteinTarget(double dailyProteinTarget) { this.dailyProteinTarget = dailyProteinTarget; }
 }

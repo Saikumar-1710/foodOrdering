@@ -9,9 +9,9 @@ public interface UserService {
 
 	User saveUser(User user);
 	User updateUser(User user);
-	void deleteUser(Integer id);
+	void deleteUser(Long id);
 	
-	Optional<User> getUserById(Integer id);
+	Optional<User> getUserById(Long id);
 	Optional<User> getByUserName(String userName);
 	List<User> getAllUsers();
 	boolean existByUserName(String userName);

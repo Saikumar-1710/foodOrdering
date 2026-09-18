@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Food Recommendation System</title>
+    <style>
+        :root {
+            /* Colorful Vivid Gradient Background */
+            --bg-gradient: radial-gradient(circle at 10% 20%, #ff6b6b 0%, #70a1ff 50%, #2ed573 100%);
+            
+            /* Glassmorphism Card & Container Colors */
+            --card-bg: rgba(255, 255, 255, 0.88);
+            --card-border: rgba(255, 255, 255, 0.6);
+            
+            /* High-Contrast Accents */
+            --accent-emerald: #10b981;
+            --accent-purple: #7c3aed;
+            --accent-pink: #ec4899;
+            --accent-orange: #f97316;
+            --accent-blue: #0284c7;
+
+            --text-main: #0f172a;
+            --text-muted: #475569;
+        }
+
+        body { 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            margin: 0; 
+            padding: 40px 20px; 
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 35px;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(16px);
+        }
+
+        h2 { 
+            color: var(--accent-purple); 
+            font-size: 28px; 
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 5px; 
+            letter-spacing: -0.3px;
+        }
+
+        .sub-text { 
+            font-size: 15px; 
+            color: var(--text-muted); 
+            margin-bottom: 25px; 
+            line-height: 1.6;
+        }
+
+        .input-section {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #cbd5e1;
+            padding: 18px 24px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .input-section label {
+            font-weight: 700;
+            color: var(--text-main);
+            font-size: 16px;
+        }
+
+        .input-section input {
+            padding: 10px 16px;
+            font-size: 16px;
+            border: 2px solid #cbd5e1;
+            border-radius: 10px;
+            width: 120px;
+            outline: none;
+            font-weight: bold;
+            color: var(--accent-purple);
+            transition: border-color 0.2s;
+        }
+
+        .input-section input:focus {
+            border-color: var(--accent-purple);
+        }
+
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); 
+            gap: 25px; 
+            margin-bottom: 35px; 
+        }
+
+        .card { 
+            background: #ffffff; 
+            border-radius: 20px; 
+            overflow: hidden;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05); 
+            text-align: center; 
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 2px solid #e0e7ff;
+        }
+
+        .card:hover {
+            transform: translateY(-6px) scale(1.02);
+            box-shadow: 0 20px 30px rgba(124, 58, 237, 0.2);
+            border-color: var(--accent-purple);
+        }
+
+        .food-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background-color: #f1f5f9;
+        }
+
+        .card-body {
+            padding: 18px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card h3 {
+            margin: 5px 0 10px 0;
+            color: var(--text-main);
+            font-size: 19px;
+            font-weight: 700;
+        }
+
+        .badges-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .badge { 
+            padding: 4px 12px; 
+            border-radius: 20px; 
+            font-weight: 700; 
+            font-size: 12px;
+            display: inline-block;
+            width: fit-content;
+        }
+
+        .badge-protein {
+            background: #dcfce7;
+            color: #15803d;
+            border: 1px solid #86efac;
+        }
+
+        .badge-calories {
+            background: #ffedd5;
+            color: #c2410c;
+            border: 1px solid #fed7aa;
+        }
+
+        .badge-fats {
+            background: #fef9c3;
+            color: #a16207;
+            border: 1px solid #fef08a;
+        }
+
+        .price {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--accent-orange);
+            margin-bottom: 16px;
+        }
+
+        .btn { 
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9); 
+            color: white; 
+            border: none; 
+            padding: 12px 15px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: 700;
+            width: 100%;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 14px rgba(139, 92, 246, 0.4);
+            font-size: 15px;
+        }
+
+        .btn:hover {
+            background: linear-gradient(135deg, #a78bfa, #7c3aed);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 92, 246, 0.6);
+        }
+
+        .btn-cart { 
+            background: linear-gradient(135deg, #10b981, #059669); 
+            color: white; 
+            padding: 14px 32px; 
+            border-radius: 30px; 
+            text-decoration: none; 
+            display: inline-block; 
+            font-size: 16px;
+            font-weight: 700;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        .btn-cart:hover {
+            background: linear-gradient(135deg, #34d399, #10b981);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>🥗 Food Recommendation System</h2>
+    <p class="sub-text">Enter your protein requirement to dynamically scale serving sizes, calories, fats, and pricing:</p>
+
+    <div class="input-section">
+        <label for="proteinInput">🥩 Enter Required Protein (gm):</label>
+        <input type="number" id="proteinInput" value="30" min="1" oninput="updateRecommendations()">
+    </div>
+
+    <div class="grid" id="recList"></div>
+
+    <div style="text-align: center; margin-top: 25px;">
+        <a href="cart.html" class="btn-cart">Proceed to Cart 🛒 (<span id="cartCount">0</span>)</a>
+    </div>
+</div>
+
+<script>
+    // Base database containing nutritional information per standard serving
+    const foodDatabase = [
+        { 
+            id: 1, 
+            name: 'Grilled Chicken', 
+            baseProtein: 35, 
+            baseCalories: 320,
+            baseFats: 10,
+            basePrice: 250, 
+            image: 'https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=400&q=80' 
+        },
+        { 
+            id: 2, 
+            name: 'Protein Bowl', 
+            baseProtein: 42, 
+            baseCalories: 450,
+            baseFats: 14,
+            basePrice: 300, 
+            image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=400&q=80' 
+        },
+        { 
+            id: 3, 
+            name: 'Chicken Salad', 
+            baseProtein: 30, 
+            baseCalories: 280,
+            baseFats: 8,
+            basePrice: 220, 
+            image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=400&q=80' 
+        },
+        { 
+            id: 4, 
+            name: 'Paneer Tikka', 
+            baseProtein: 20, 
+            baseCalories: 380,
+            baseFats: 18,
+            basePrice: 180, 
+            image: 'https://images.unsplash.com/photo-1567188040759-fb8a883dc6d8?auto=format&fit=crop&w=400&q=80' 
+        }
+    ];
+
+    function updateRecommendations() {
+        const requiredProtein = parseFloat(document.getElementById("proteinInput").value);
+        const container = document.getElementById("recList");
+        container.innerHTML = "";
+
+        if (isNaN(requiredProtein) || requiredProtein <= 0) {
+            container.innerHTML = "<p style='color: #ef4444; font-weight: bold;'>Please enter a valid protein target.</p>";
+            return;
+        }
+
+        // Save active protein target to LocalStorage
+        localStorage.setItem('proteinRequirement', requiredProtein);
+
+        foodDatabase.forEach(item => {
+            // Calculate proportional scaling ratio
+            const ratio = requiredProtein / item.baseProtein;
+            
+            // Scaled values
+            const scaledCalories = Math.round(item.baseCalories * ratio);
+            const scaledFats = Math.round(item.baseFats * ratio);
+            const scaledPrice = Math.round(item.basePrice * ratio);
+
+            const card = document.createElement("div");
+            card.className = "card";
+            card.innerHTML = `
+                <img src="${item.image}" alt="${item.name}" class="food-img" onerror="this.src='https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=400'">
+                <div class="card-body">
+                    <div>
+                        <h3>${item.name}</h3>
+                        <div class="badges-wrapper">
+                            <span class="badge badge-protein">🥩 ${requiredProtein}g Protein</span>
+                            <span class="badge badge-calories">🔥 ${scaledCalories} kcal</span>
+                            <span class="badge badge-fats">🥑 ${scaledFats}g Fats</span>
+                        </div>
+                        <div class="price">₹${scaledPrice}</div>
+                    </div>
+                    <button class="btn" onclick="addToCart(${item.id}, ${requiredProtein}, ${scaledCalories}, ${scaledFats}, ${scaledPrice})">Add to Cart</button>
+                </div>
+            `;
+            container.appendChild(card);
+        });
+    }
+
+    function addToCart(id, protein, calories, fats, price) {
+        let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        const baseItem = foodDatabase.find(x => x.id === id);
+
+        const cartItemIndex = cart.findIndex(x => x.id === id && x.protein === protein);
+
+        if (cartItemIndex > -1) {
+            cart[cartItemIndex].qty += 1;
+        } else {
+            cart.push({
+                id: baseItem.id,
+                name: baseItem.name,
+                image: baseItem.image,
+                protein: protein,
+                calories: calories,
+                fats: fats,
+                price: price,
+                qty: 1
+            });
+        }
+
+        localStorage.setItem('cartItems', JSON.stringify(cart));
+        updateCartCount();
+        alert(`Added ${baseItem.name} (${protein}g Protein) to Cart!`);
+    }
+
+    function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
+        let count = cart.reduce((sum, item) => sum + item.qty, 0);
+        document.getElementById('cartCount').innerText = count;
+    }
+
+    // Initial setup on page load
+    const savedProtein = localStorage.getItem('proteinRequirement');
+    if (savedProtein) {
+        document.getElementById('proteinInput').value = savedProtein;
+    }
+    updateRecommendations();
+    updateCartCount();
+</script>
+
+</body>
+</html>

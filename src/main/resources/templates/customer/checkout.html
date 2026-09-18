@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Checkout</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff7f2;
+}
+
+.page {
+    max-width: 1000px;
+    margin: auto;
+    padding: 45px 20px;
+}
+
+h1 {
+    text-align: center;
+    color: #ff6b35;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1.3fr .8fr;
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+
+.item {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.price {
+    color: #ff6b35;
+    font-weight: bold;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+}
+
+.discount {
+    color: #198754;
+}
+
+.final {
+    border-top: 2px solid #eee;
+    padding-top: 18px;
+    margin-top: 10px;
+    font-size: 23px;
+    font-weight: bold;
+    color: #ff6b35;
+}
+
+.payment {
+    margin: 12px 0;
+}
+
+.payment label {
+    display: block;
+    padding: 15px;
+    border: 2px solid #eee;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.payment label:hover {
+    border-color: #ff6b35;
+}
+
+button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 16px;
+    border: none;
+    border-radius: 10px;
+    background: #ff6b35;
+    color: white;
+    font-size: 17px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: .3s;
+}
+
+button:hover {
+    transform: translateY(-3px);
+}
+
+.back {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #ff6b35;
+    text-decoration: none;
+}
+
+@media(max-width:750px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="page">
+
+<h1>🛍️ Prime Checkout</h1>
+
+<div class="grid">
+
+    <div class="card">
+
+        <h2>Order Summary</h2>
+
+        <div
+            class="item"
+            th:each="item : ${cart.items}">
+
+            <div>
+
+                <strong
+                    th:text="${item.food.name}">
+                    Food
+                </strong>
+
+                <div>
+                    Qty:
+                    <span th:text="${item.quantity}">
+                        1
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="price">
+
+                ₹<span
+                    th:text="${item.unitPrice * item.quantity}">
+                    0
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card">
+
+        <h2>Payment</h2>
+
+        <form
+            action="/customer/checkout"
+            method="post"
+            onsubmit="return placeOrderAnimation()">
+
+            <div class="payment">
+
+                <input
+                    type="radio"
+                    id="cash"
+                    name="paymentMethod"
+                    value="CASH"
+                    checked>
+
+                <label for="cash">
+                    💵 Cash
+                </label>
+
+            </div>
+
+            <div class="payment">
+
+                <input
+                    type="radio"
+                    id="card"
+                    name="paymentMethod"
+                    value="CARD">
+
+                <label for="card">
+                    💳 Card
+                </label>
+
+            </div>
+
+            <div class="payment">
+
+                <input
+                    type="radio"
+                    id="online"
+                    name="paymentMethod"
+                    value="ONLINE">
+
+                <label for="online">
+                    📱 Online
+                </label>
+
+            </div>
+
+            <hr>
+
+            <div class="summary-row">
+
+                <span>Subtotal</span>
+
+                <strong>
+                    ₹<span th:text="${subtotal}">
+                        0
+                    </span>
+                </strong>
+
+            </div>
+
+            <div class="summary-row discount">
+
+                <span>Prime Discount</span>
+
+                <strong>
+                    -₹<span th:text="${discount}">
+                        0
+                    </span>
+                </strong>
+
+            </div>
+
+            <div class="final">
+
+                Final Amount:
+
+                ₹<span th:text="${finalAmount}">
+                    0
+                </span>
+
+            </div>
+
+            <button
+                id="placeButton"
+                type="submit">
+
+                Place Order 🎉
+
+            </button>
+
+        </form>
+
+        <a
+            class="back"
+            href="/customer/cart">
+
+            ← Back to Cart
+
+        </a>
+
+    </div>
+
+</div>
+
+</div>
+
+<script>
+
+function placeOrderAnimation() {
+
+    const button =
+        document.getElementById(
+            "placeButton");
+
+    button.innerText =
+        "Placing Order...";
+
+    button.disabled = true;
+
+    return true;
+}
+
+</script>
+
+</body>
+
+</html>

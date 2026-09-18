@@ -1,285 +1,267 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-
+<html lang="en">
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart Management</title>
+    <style>
+        :root {
+            /* Colorful Vivid Gradient Background */
+            --bg-gradient: radial-gradient(circle at 10% 20%, #ff6b6b 0%, #70a1ff 50%, #2ed573 100%);
+            
+            /* Glassmorphism Card & Container Colors */
+            --card-bg: rgba(255, 255, 255, 0.88);
+            --card-border: rgba(255, 255, 255, 0.6);
+            
+            /* High-Contrast Neon Accents */
+            --accent-emerald: #10b981;
+            --accent-purple: #7c3aed;
+            --accent-pink: #ec4899;
+            --accent-orange: #f97316;
+            --accent-blue: #0284c7;
 
-    <title>My Cart</title>
+            --text-main: #0f172a;
+            --text-muted: #475569;
+        }
 
-    <link rel="stylesheet"
-          th:href="@{/css/style.css}">
+        body { 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            margin: 0; 
+            padding: 40px 20px; 
+            color: var(--text-main);
+            min-height: 100vh;
+        }
 
+        .container {
+            max-width: 550px;
+            margin: 0 auto;
+        }
+
+        .cart-box { 
+            background: var(--card-bg); 
+            padding: 32px; 
+            border-radius: 24px; 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); 
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(16px);
+        }
+
+        h2 { 
+            color: var(--accent-blue); 
+            font-size: 26px; 
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 20px; 
+            letter-spacing: -0.3px;
+        }
+
+        .item-row { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            padding: 16px 0; 
+            border-bottom: 2px dashed #cbd5e1; 
+        }
+
+        .btn-qty { 
+            width: 32px; 
+            height: 32px; 
+            border-radius: 8px; 
+            background: #e0f2fe; 
+            color: #0284c7; 
+            border: 1px solid #7dd3fc; 
+            font-weight: bold; 
+            cursor: pointer; 
+            transition: all 0.2s ease;
+        }
+
+        .btn-qty:hover {
+            background: #0284c7;
+            color: white;
+        }
+
+        .btn-remove { 
+            background: #ffe4e6; 
+            color: #e11d48; 
+            border: 1px solid #fecdd3; 
+            padding: 6px 12px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-weight: 600;
+            margin-left: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-remove:hover {
+            background: #e11d48;
+            color: white;
+        }
+
+        .cart-summary {
+            background: #f8fafc; 
+            padding: 20px; 
+            border-radius: 16px; 
+            margin-top: 24px;
+            border: 2px solid #e2e8f0;
+        }
+
+        .cart-summary p {
+            display: flex;
+            justify-content: space-between;
+            margin: 8px 0;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .cart-summary h3 {
+            display: flex;
+            justify-content: space-between;
+            font-size: 20px;
+            color: var(--text-main);
+            font-weight: 800;
+            margin-top: 12px;
+            margin-bottom: 0;
+            padding-top: 12px;
+            border-top: 2px solid #cbd5e1;
+        }
+
+        .btn-order { 
+            background: linear-gradient(135deg, #10b981, #059669); 
+            color: white; 
+            border: none; 
+            padding: 14px; 
+            width: 100%; 
+            border-radius: 14px; 
+            font-size: 16px; 
+            font-weight: 700;
+            cursor: pointer; 
+            margin-top: 20px; 
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        .btn-order:hover {
+            background: linear-gradient(135deg, #34d399, #10b981);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+        }
+    </style>
 </head>
-
 <body>
 
 <div class="container">
+    <div class="cart-box">
+        <h2>🛒 My Cart</h2>
+        <div id="cartItems"></div>
 
-    <h1>My Cart</h1>
+        <div class="cart-summary">
+            <p><span>Subtotal:</span> <span>₹<span id="subtotal">0.00</span></span></p>
+            <p style="color: #059669;"><span>Prime Discount (10%):</span> <span>-₹<span id="discount">0.00</span></span></p>
+            <h3>
+                <span>Final Total:</span> 
+                <span style="color: var(--accent-blue);">₹<span id="finalTotal">0.00</span></span>
+            </h3>
+        </div>
 
-    <a href="/customer/menu">
-        Continue Shopping
-    </a>
-
-    <hr>
-
-    <div th:if="${#lists.isEmpty(cart.items)}">
-
-        <h2>Your cart is empty.</h2>
-
+        <button class="btn-order" onclick="placeOrder()">Place Order</button>
     </div>
-
-    <div th:unless="${#lists.isEmpty(cart.items)}">
-
-        <table border="1">
-
-            <thead>
-
-            <tr>
-
-                <th>Food</th>
-
-                <th>Quantity</th>
-
-                <th>Price</th>
-
-                <th>Calories</th>
-
-                <th>Protein</th>
-
-                <th>Carbohydrates</th>
-
-                <th>Fats</th>
-
-                <th>Fiber</th>
-
-                <th>Magnesium</th>
-
-                <th>Action</th>
-
-            </tr>
-
-            </thead>
-
-            <tbody>
-
-            <tr th:each="item : ${cart.items}">
-
-                <td>
-
-                    <b th:text="${item.food.name}">
-                    </b>
-
-                    <div>
-
-                        <small>
-                            Customization:
-                        </small>
-
-                        <span
-                            th:each="selected : ${item.selectedOptions}">
-
-                            <span
-                                th:text="${selected.option.name}">
-                            </span>
-                            &nbsp;
-
-                        </span>
-
-                    </div>
-
-                </td>
-
-                <td th:text="${item.quantity}">
-                </td>
-
-                <td>
-                    ₹
-                    <span th:text="${item.unitPrice}">
-                    </span>
-                </td>
-
-                <td th:text="${item.calories}">
-                </td>
-
-                <td>
-                    <span th:text="${item.protein}">
-                    </span>
-                    g
-                </td>
-
-                <td th:text="${item.carbohydrates}">
-                </td>
-
-                <td th:text="${item.fats}">
-                </td>
-
-                <td th:text="${item.fiber}">
-                </td>
-
-                <td th:text="${item.magnesium}">
-                </td>
-
-                <td>
-
-                    <form
-                        th:action="@{/customer/cart/remove/{id}(id=${item.id})}"
-                        method="post">
-
-                        <button type="submit">
-                            Remove
-                        </button>
-
-                    </form>
-
-                </td>
-
-            </tr>
-
-            </tbody>
-
-        </table>
-
-        <hr>
-
-        <h2>
-            Complete Cart Nutrition
-        </h2>
-
-        <table border="1">
-
-            <tr>
-                <th>Nutrient</th>
-                <th>Total</th>
-            </tr>
-
-            <tr>
-
-                <td>Calories</td>
-
-                <td>
-
-                    <span
-                        th:text="${#aggregates.sum(cart.items.![calories * quantity])}">
-                    </span>
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td>Protein</td>
-
-                <td>
-
-                    <span
-                        th:text="${#aggregates.sum(cart.items.![protein * quantity])}">
-                    </span>
-
-                    g
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td>Carbohydrates</td>
-
-                <td>
-
-                    <span
-                        th:text="${#aggregates.sum(cart.items.![carbohydrates * quantity])}">
-                    </span>
-
-                    g
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td>Fats</td>
-
-                <td>
-
-                    <span
-                        th:text="${#aggregates.sum(cart.items.![fats * quantity])}">
-                    </span>
-
-                    g
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td>Fiber</td>
-
-                <td>
-
-                    <span
-                        th:text="${#aggregates.sum(cart.items.![fiber * quantity])}">
-                    </span>
-
-                    g
-
-                </td>
-
-            </tr>
-
-            <tr>
-
-                <td>Magnesium</td>
-
-                <td>
-
-                    <span
-                        th:text="${#aggregates.sum(cart.items.![magnesium * quantity])}">
-                    </span>
-
-                    mg
-
-                </td>
-
-            </tr>
-
-        </table>
-
-        <br>
-
-        <h2>
-            Total Price
-        </h2>
-
-        <h2>
-
-            ₹
-
-            <span
-                th:text="${#aggregates.sum(cart.items.![unitPrice * quantity])}">
-            </span>
-
-        </h2>
-
-        <br>
-
-        <a href="/customer/checkout">
-
-            <button>
-                Checkout
-            </button>
-
-        </a>
-
-    </div>
-
 </div>
 
-</body>
+<script>
+    let cart = JSON.parse(localStorage.getItem('cartItems')) || [];
 
+    function renderCart() {
+        const container = document.getElementById('cartItems');
+        container.innerHTML = '';
+
+        if (cart.length === 0) {
+            container.innerHTML = '<p style="color: var(--text-muted); text-align: center; padding: 20px; font-size: 14px;">Your cart is empty.</p>';
+            document.getElementById('subtotal').innerText = '0.00';
+            document.getElementById('discount').innerText = '0.00';
+            document.getElementById('finalTotal').innerText = '0.00';
+            return;
+        }
+
+        let subtotal = 0;
+        cart.forEach((item, index) => {
+            let total = item.price * item.qty;
+            subtotal += total;
+
+            container.innerHTML += `
+                <div class="item-row">
+                    <div>
+                        <strong style="font-size: 15px; color: var(--text-main);">${item.name}</strong><br>
+                        <span style="color: var(--accent-orange); font-weight: 700; font-size: 14px;">₹${item.price}</span> x ${item.qty} = <strong>₹${total}</strong>
+                    </div>
+                    <div style="display: flex; align-items: center;">
+                        <button class="btn-qty" onclick="updateQty(${index}, -1)">-</button>
+                        <span style="margin: 0 10px; font-weight: 700; font-size: 14px;">${item.qty}</span>
+                        <button class="btn-qty" onclick="updateQty(${index}, 1)">+</button>
+                        <button class="btn-remove" onclick="removeItem(${index})">Remove</button>
+                    </div>
+                </div>`;
+        });
+
+        let discount = subtotal * 0.10;
+        let finalTotal = subtotal - discount;
+
+        document.getElementById('subtotal').innerText = subtotal.toFixed(2);
+        document.getElementById('discount').innerText = discount.toFixed(2);
+        document.getElementById('finalTotal').innerText = finalTotal.toFixed(2);
+    }
+
+    function updateQty(index, change) {
+        if (cart[index].qty + change > 0) {
+            cart[index].qty += change;
+        } else {
+            cart.splice(index, 1);
+        }
+        saveAndRender();
+    }
+
+    function removeItem(index) {
+        cart.splice(index, 1);
+        saveAndRender();
+    }
+
+    function saveAndRender() {
+        localStorage.setItem('cartItems', JSON.stringify(cart));
+        renderCart();
+    }
+
+    function placeOrder() {
+        if (cart.length === 0) return alert('Cart is empty!');
+
+        let subtotal = parseFloat(document.getElementById('subtotal').innerText);
+        let discount = parseFloat(document.getElementById('discount').innerText);
+        let finalTotal = parseFloat(document.getElementById('finalTotal').innerText);
+
+        const newOrder = {
+            id: "#ORD " + Math.floor(1000 + Math.random() * 9000),
+            date: new Date().toLocaleDateString(),
+            subtotal: subtotal,
+            discount: discount,
+            finalAmount: finalTotal
+        };
+
+        // Save order to history array
+        let ordersHistory = JSON.parse(localStorage.getItem('ordersHistory')) || [];
+        ordersHistory.push(newOrder);
+        localStorage.setItem('ordersHistory', JSON.stringify(ordersHistory));
+
+        // Save latest order for success screen
+        localStorage.setItem('latestOrder', JSON.stringify(newOrder));
+
+        // Clear Cart
+        localStorage.removeItem('cartItems');
+        
+        window.location.href = 'order-success.html';
+    }
+
+    renderCart();
+</script>
+
+</body>
 </html>

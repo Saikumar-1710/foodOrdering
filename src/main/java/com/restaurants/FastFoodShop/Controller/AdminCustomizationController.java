@@ -1,104 +1,44 @@
 package com.restaurants.FastFoodShop.Controller;
 
-import java.util.List;
-
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
 import com.restaurants.FastFoodShop.Entity.CustomizationOption;
 import com.restaurants.FastFoodShop.Entity.Food;
 import com.restaurants.FastFoodShop.Service.CustomizationOptionService;
 import com.restaurants.FastFoodShop.Service.FoodService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/customizations")
 public class AdminCustomizationController {
 
-    private final CustomizationOptionService customizationService;
+    @Autowired
+    private FoodService foodService;
 
-    private final FoodService foodService;
-
-    public AdminCustomizationController(
-            CustomizationOptionService customizationService,
-            FoodService foodService) {
-
-        this.customizationService =
-                customizationService;
-
-        this.foodService =
-                foodService;
-    }
+    @Autowired
+    private CustomizationOptionService customizationOptionService;
 
     @GetMapping("/food/{foodId}")
-    public String customizationList(
-            @PathVariable Integer foodId,
-            Model model) {
+    public String getCustomizationsForFood(@PathVariable Long foodId, Model model) {
+        Food food = foodService.findFoodById(foodId)
+                .orElseThrow(() -> new RuntimeException("Food not found with ID: " + foodId));
 
-        Food food = foodService
-                .getFoodById(foodId)
-                .orElseThrow(
-                        () -> new RuntimeException(
-                                "Food Not Found"
-                        )
-                );
-
-        List<CustomizationOption> options =
-                customizationService
-                        .getOptionByFood(foodId);
-
-        model.addAttribute(
-                "food",
-                food
-        );
-
-        model.addAttribute(
-                "options",
-                options
-        );
-
-        return "admin/customization-list";
+        List<CustomizationOption> options = customizationOptionService.getOptionByFood(foodId);
+        model.addAttribute("food", food);
+        model.addAttribute("options", options);
+        return "admin/customizations";
     }
 
-    @GetMapping("/add/{foodId}")
-    public String addCustomization(
-            @PathVariable Integer foodId,
-            Model model) {
-
-        Food food = foodService
-                .getFoodById(foodId)
-                .orElseThrow(
-                        () -> new RuntimeException(
-                                "Food Not Found"
-                        )
-                );
-
-        CustomizationOption option =
-                new CustomizationOption();
-
+    @PostMapping("/add")
+    public String addCustomization(@RequestParam Long foodId, @ModelAttribute CustomizationOption option) {
+        Food food = foodService.findFoodById(foodId)
+                .orElseThrow(() -> new RuntimeException("Food not found with ID: " + foodId));
+        
         option.setFood(food);
-
-        model.addAttribute(
-                "food",
-                food
-        );
-
-        model.addAttribute(
-                "option",
-                option
-        );
-
-        return "admin/add-customization";
-    }
-
-    @PostMapping("/save")
-    public String saveCustomization(
-            @ModelAttribute("option")
-            CustomizationOption option) {
-
-        customizationService.saveOption(option);
-
-        return "redirect:/admin/customizations/food/"
-                + option.getFood().getId();
+        customizationOptionService.saveOption(option);
+        return "redirect:/admin/customizations/food/" + foodId;
     }
 }

@@ -1,33 +1,37 @@
 package com.restaurants.FastFoodShop.Entity;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="cart_item_options")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Table(name = "cart_item_options")
 public class CartItemOption {
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "cart_item_id",nullable=false)
-	private CartItem cartItem;
-	
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name="option_id", nullable=false)
-	private CustomizationOption option;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "cart_item_id")
+    private CartItem cartItem;
+
+    @ManyToOne
+    @JoinColumn(name = "option_id")
+    private CustomizationOption option;
+
+    public CartItemOption() {}
+
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
+
+    public CartItem getCartItem() { return cartItem; }
+    public void setCartItem(CartItem cartItem) { this.cartItem = cartItem; }
+
+    public CustomizationOption getOption() { return option; }
+    public void setOption(CustomizationOption option) { this.option = option; }
 }

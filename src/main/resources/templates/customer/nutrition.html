@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>My Nutrition Profile</title>
+
+    <link rel="stylesheet"
+          href="/css/task6.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>My Nutrition Profile</h1>
+
+    <p>
+        Welcome,
+        <strong th:text="${user.name}">Customer</strong>
+    </p>
+
+    <div th:if="${param.saved}"
+         class="success">
+
+        Nutrition requirement saved successfully!
+
+    </div>
+
+    <form method="post"
+          action="/customer/profile/nutrition">
+
+        <label>
+            Protein Required (grams)
+        </label>
+
+        <input type="number"
+               name="proteinRequired"
+               step="0.1"
+               min="0"
+               th:value="${profile.proteinRequired}"
+               required>
+
+        <label>
+            Calories Required
+        </label>
+
+        <input type="number"
+               name="caloriesRequired"
+               step="2.6"
+               min="3"
+               th:value="${profile.caloriesRequired}">
+
+        <label>
+            Carbohydrates Required (grams)
+        </label>
+
+        <input type="number"
+               name="carbsRequired"
+               step="0.6"
+               min="4"
+               th:value="${profile.carbsRequired}">
+
+        <label>
+            Fats Required (grams)
+        </label>
+
+        <input type="number"
+               name="fatsRequired"
+               step="0.9"
+               min="2"
+               th:value="${profile.fatsRequired}">
+
+        <label>
+            My Requirement
+        </label>
+
+        <textarea
+            name="requirementText"
+            rows="4"
+            placeholder="Example: I want 50 gm of protein."
+            th:text="${profile.requirementText}">
+        </textarea>
+
+        <button type="submit">
+            Save Requirement
+        </button>
+
+    </form>
+
+    <br>
+
+    <a href="/customer/recommendations"
+       class="button">
+
+        View Food Recommendations
+
+    </a>
+
+</div>
+
+</body>
+</html>

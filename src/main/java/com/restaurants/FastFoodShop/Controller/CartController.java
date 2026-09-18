@@ -1,70 +1,35 @@
 package com.restaurants.FastFoodShop.Controller;
 
-import com.restaurants.FastFoodShop.Entity.Cart;
-import com.restaurants.FastFoodShop.Entity.User;
-import com.restaurants.FastFoodShop.Service.CartService;
-
-import jakarta.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/customer/cart")
+@RequestMapping("/customer")
 public class CartController {
 
-    private final CartService cartService;
-
-    public CartController(CartService cartService) {
-        this.cartService = cartService;
-    }
-
-    @PostMapping("/add")
-    public String addToCart(
-            @RequestParam Integer foodId,
-            @RequestParam(required = false) List<Integer> optionIds,
-            HttpSession session) {
-
-        User user =
-                (User) session.getAttribute("loggedUser");
-
-        cartService.addToCart(
-                user,
-                foodId,
-                optionIds
-        );
-
-        return "redirect:/customer/cart";
-    }
-
-    @GetMapping
-    public String cart(
-            HttpSession session,
-            Model model) {
-
-        User user =
-                (User) session.getAttribute("loggedUser");
-
-        Cart cart = cartService.getCart(user);
-
-        model.addAttribute("cart", cart);
-
+    @GetMapping("/cart")
+    public String showCart() {
         return "customer/cart";
     }
 
-    @PostMapping("/remove/{id}")
-    public String removeItem(
-            @PathVariable Integer id,
-            HttpSession session) {
+    @GetMapping("/checkout")
+    public String showCheckout() {
+        return "customer/checkout";
+    }
 
-        User user =
-                (User) session.getAttribute("loggedUser");
+    @GetMapping("/orders")
+    public String showOrders() {
+        return "customer/orders";
+    }
 
-        cartService.removeCartItem(user, id);
+    @GetMapping("/nutrition")
+    public String showNutritionProfile() {
+        return "customer/nutrition-profile";
+    }
 
-        return "redirect:/customer/cart";
+    @GetMapping("/recommendations")
+    public String showRecommendations() {
+        return "customer/recommendations";
     }
 }

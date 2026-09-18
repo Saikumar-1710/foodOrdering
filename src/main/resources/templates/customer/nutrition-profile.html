@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prime Nutrition Requirement</title>
+    <style>
+        :root {
+            /* Colorful Vivid Gradient Background */
+            --bg-gradient: radial-gradient(circle at 10% 20%, #ff6b6b 0%, #70a1ff 50%, #2ed573 100%);
+            
+            /* Glassmorphism Card & Container Colors */
+            --card-bg: rgba(255, 255, 255, 0.88);
+            --card-border: rgba(255, 255, 255, 0.6);
+            
+            /* High-Contrast Neon Accents */
+            --accent-emerald: #10b981;
+            --accent-purple: #7c3aed;
+            --accent-orange: #f97316;
+            --accent-blue: #0284c7;
+
+            --text-main: #0f172a;
+            --text-muted: #475569;
+        }
+
+        body { 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            margin: 0; 
+            padding: 40px 20px; 
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+        }
+
+        .card { 
+            background: var(--card-bg); 
+            padding: 35px 30px; 
+            border-radius: 24px; 
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); 
+            border: 1px solid var(--card-border);
+            backdrop-filter: blur(16px);
+            text-align: center;
+        }
+
+        h2 { 
+            color: var(--accent-purple); 
+            font-size: 26px; 
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 6px; 
+            letter-spacing: -0.3px;
+        }
+
+        .sub-text {
+            color: var(--text-muted);
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 0;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 6px;
+        }
+
+        .input-group input { 
+            width: 100%; 
+            padding: 12px 14px; 
+            font-size: 16px; 
+            font-weight: 600;
+            border: 2px solid #cbd5e1;
+            border-radius: 12px;
+            outline: none;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+            color: var(--text-main);
+            background-color: #ffffff;
+        }
+
+        .input-group input:focus {
+            border-color: var(--accent-purple);
+            box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.2);
+        }
+
+        .btn { 
+            background: linear-gradient(135deg, #10b981, #059669); 
+            color: white; 
+            border: none; 
+            padding: 14px 24px; 
+            border-radius: 12px; 
+            cursor: pointer; 
+            font-weight: 700; 
+            font-size: 16px;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.4);
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover { 
+            background: linear-gradient(135deg, #34d399, #10b981);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.6);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <h2>🌿 Prime Nutrition Requirement</h2>
+        <p class="sub-text">Set your daily nutritional target to start:</p>
+        
+        <!-- Protein Input -->
+        <div class="input-group">
+            <label for="proteinInput">🥩 Protein Target (gm):</label>
+            <input type="number" id="proteinInput" value="50" min="5" max="300" placeholder="e.g. 50">
+        </div>
+
+        <!-- Calories Input -->
+        <div class="input-group">
+            <label for="caloriesInput">🔥 Calories Required (kcal):</label>
+            <input type="number" id="caloriesInput" value="2000" min="500" max="5000" placeholder="e.g. 2000">
+        </div>
+
+        <!-- Fats Input -->
+        <div class="input-group">
+            <label for="fatsInput">🥑 Fats Required (gm):</label>
+            <input type="number" id="fatsInput" value="65" min="5" max="200" placeholder="e.g. 65">
+        </div>
+        
+        <button class="btn" onclick="saveAndProceed()">Save & View Food Items</button>
+    </div>
+</div>
+
+<script>
+    function saveAndProceed() {
+        const protein = document.getElementById('proteinInput').value;
+        const calories = document.getElementById('caloriesInput').value;
+        const fats = document.getElementById('fatsInput').value;
+
+        if (!protein || protein <= 0 || !calories || calories <= 0 || !fats || fats <= 0) {
+            alert('Please enter valid positive values for all targets!');
+            return;
+        }
+        
+        // Save values in localStorage
+        localStorage.setItem('proteinRequirement', protein);
+        localStorage.setItem('caloriesRequirement', calories);
+        localStorage.setItem('fatsRequirement', fats);
+        
+        // Redirect to recommendations page
+        window.location.href = 'recommendations.html';
+    }
+
+    // Load existing targets if set previously
+    const existingProtein = localStorage.getItem('proteinRequirement');
+    const existingCalories = localStorage.getItem('caloriesRequirement');
+    const existingFats = localStorage.getItem('fatsRequirement');
+
+    if (existingProtein) document.getElementById('proteinInput').value = existingProtein;
+    if (existingCalories) document.getElementById('caloriesInput').value = existingCalories;
+    if (existingFats) document.getElementById('fatsInput').value = existingFats;
+</script>
+
+</body>
+</html>

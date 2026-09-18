@@ -1,29 +1,19 @@
 package com.restaurants.FastFoodShop.Controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-
 import com.restaurants.FastFoodShop.Entity.User;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpSession;
-
-@Controller
+@RestController
+@RequestMapping("/api/staff")
 public class StaffController {
 
-	
-	@GetMapping("/staff/dashboard")
-	public String staffDashboard(HttpSession session) {
-		
-		User user = (User) session.getAttribute("loggedUser");
-		
-		if(user == null) {
-			return "redirect:/login";
-		}
-		
-		if(!user.getRole().getRoleName().equalsIgnoreCase("STAFF")) {
-			return "redirect:/login";
-		}
-		
-		return "staff/dashboard";
-	}
+    @PostMapping("/verify")
+    public ResponseEntity<String> verifyStaff(@RequestBody User user) {
+        if (user != null && "ROLE_STAFF".equalsIgnoreCase(user.getRole())) {
+            return ResponseEntity.ok("Staff Access Granted");
+        }
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access Denied");
+    }
 }

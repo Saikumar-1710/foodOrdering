@@ -1,17 +1,17 @@
 package com.restaurants.FastFoodShop.Repository;
 
-import java.util.List;
-
+import com.restaurants.FastFoodShop.Entity.CustomizationOption;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.restaurants.FastFoodShop.Entity.CustomizationOption;
+import java.util.List;
 
 @Repository
-public interface CustomizationOptionRepository
-        extends JpaRepository<CustomizationOption, Integer> {
+public interface CustomizationOptionRepository extends JpaRepository<CustomizationOption, Long> {
 
-    List<CustomizationOption> findByFood_IdAndAvailableTrue(
-            Integer foodId
-    );
+    // Derived Query Method for Spring Data JPA
+    List<CustomizationOption> findByFoodId(Long foodId);
+    
+    // Overload for Integer foodId if your entity/controller uses Integer
+    List<CustomizationOption> findByFoodId(Integer foodId);
 }

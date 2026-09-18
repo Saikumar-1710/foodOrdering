@@ -1,33 +1,45 @@
 package com.restaurants.FastFoodShop.Controller;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-
+import com.restaurants.FastFoodShop.Entity.Food;
 import com.restaurants.FastFoodShop.Entity.User;
+import com.restaurants.FastFoodShop.Service.FoodService;
+import com.restaurants.FastFoodShop.Service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/api/customer")
 public class CustomerController {
 
-    @GetMapping("/customer/dashboard")
-    public String customerDashboard(
-            HttpSession session) {
+    @Autowired
+    private FoodService foodService;
 
-        User user =
-                (User) session.getAttribute("loggedUser");
+    @Autowired
+    private UserService userService;
 
-        if (user == null) {
-            return "redirect:/login";
-        }
+    @GetMapping("/foods")
+    public ResponseEntity<List<Food>> getAllFoods() {
+        return ResponseEntity.ok(foodService.getAllAvailableFoods());
+    }
 
-        if (!user.getRole()
-                .getRoleName()
-                .equalsIgnoreCase("CUSTOMER")) {
+    @GetMapping("/foods/category")
+    public ResponseEntity<List<Food>> getFoodsByCategory(@RequestParam String category) {
+        return ResponseEntity.ok(foodService.getFoodsByCategory(category));
+    }
 
-            return "redirect:/login";
-        }
+    @GetMapping("/profile/{id}")
+    public ResponseEntity<User> getCustomerProfile(@PathVariable Long id) {
+        // Ensuring ID is handled as Long across calls
+        User user = userService.getUserById(id).orElse(null);
+        return ResponseEntity.ok(user);
+    }
 
-        return "customer/dashboard";
+    @GetMapping("/foods/{id}")
+    public ResponseEntity<Food> getFoodById(@PathVariable Long id) {
+        Food food = foodService.getFoodById(id);
+        return ResponseEntity.ok(food);
     }
 }

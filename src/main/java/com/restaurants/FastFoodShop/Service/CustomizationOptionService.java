@@ -1,13 +1,10 @@
 package com.restaurants.FastFoodShop.Service;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.restaurants.FastFoodShop.Entity.CustomizationOption;
+import java.util.List;
 
 public interface CustomizationOptionService {
-
-	CustomizationOption saveOption(CustomizationOption customizationOption);
+    List<CustomizationOption> getOptionByFood(Long foodId);
     List<CustomizationOption> getOptionByFood(Integer foodId);
-	Optional<CustomizationOption> getOptionById(Integer id);
+    CustomizationOption saveOption(CustomizationOption option);
 }
