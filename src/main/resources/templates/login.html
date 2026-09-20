@@ -76,9 +76,11 @@
 		<div class="guest-login">
 		    <p>Don't want to login?</p>
 
-		    <a th:href="@{/guest}" class="guest-btn">
-		        Continue as Guest
-		    </a>
+			<a href="/guest"
+			   class="guest-btn"
+			   onclick="window.location.href='/guest'; return false;">
+			    Continue as Guest
+			</a>
 		</div>
 		<div class="demo">
 

@@ -38,6 +38,8 @@ import java.util.List;
 
 
 
+
+
 import java.util.Optional;
 
 
@@ -46,6 +48,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.restaurants.FastFoodShop.Entity.Food;
 import com.restaurants.FastFoodShop.Entity.User;
@@ -69,38 +72,76 @@ public class CustomerController {
     @GetMapping("/customer/dashboard")
     public String customerDashboard(HttpSession session, Model model) {
 
-        User user =
-                (User) session.getAttribute("loggedUser");
+        Boolean isGuest = (Boolean) session.getAttribute("isGuest");
 
-        if (user == null) {
-        	/*model.addAttribute("isGuest", true);
+        // Guest user
+        if (Boolean.TRUE.equals(isGuest)) {
+
+            model.addAttribute("isGuest", true);
             model.addAttribute("isPrime", false);
 
             return "customer/dashboard";
-        }*/
-
-          return "redirect:/login";
         }
-//Logged in user 
+
+        // Logged-in customer
+        User user = (User) session.getAttribute("loggedUser");
+
+        if (user == null) {
+            return "redirect:/login";
+        }
+
         if (user.getRole() == null ||
                 !"CUSTOMER".equalsIgnoreCase(
                         user.getRole().getRoleName())) {
 
-        	    return "redirect:/login";
-        	}
+            return "redirect:/login";
+        }
 
         model.addAttribute("user", user);
-       /* model.addAttribute("isGuest", false);
-        model.addAttribute("isPrime", true);*/
-        model.addAttribute(
-                "isPrime",
-                user.isPrimeUser()
-        );
+        model.addAttribute("isGuest", false);
+        model.addAttribute("isPrime", user.isPrimeUser());
+
+        return "customer/dashboard";
+    
+    }
+  /*  @GetMapping("/customer/dashboard")
+    public String customerDashboard(
+            @RequestParam(value = "guest", required = false) Boolean guest,
+            HttpSession session,
+            Model model) {
+
+        // Guest user
+        if (Boolean.TRUE.equals(guest)) {
+
+            session.setAttribute("isGuest", true);
+
+            model.addAttribute("isGuest", true);
+            model.addAttribute("isPrime", false);
+
+            return "customer/dashboard";
+        }
+
+        // Logged-in customer
+        User user = (User) session.getAttribute("loggedUser");
+
+        if (user == null) {
+            return "redirect:/login";
+        }
+
+        if (user.getRole() == null ||
+                !"CUSTOMER".equalsIgnoreCase(
+                        user.getRole().getRoleName())) {
+
+            return "redirect:/login";
+        }
+
+        model.addAttribute("user", user);
+        model.addAttribute("isGuest", false);
+        model.addAttribute("isPrime", user.isPrimeUser());
 
         return "customer/dashboard";
     }
-
-
+*/
     // ==============================
     // GUEST + PRIME FOOD PAGE
     // ==============================

@@ -1,6 +1,7 @@
 package com.restaurants.FastFoodShop.Controller;
 
 import java.time.Duration;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -198,8 +199,9 @@ public class LoginController {
         session.removeAttribute("loggedUser");
         session.removeAttribute("userName");
         session.removeAttribute("role");
+     //   return "redirect:/customer/dashboard?guest=true";
 
-        return "redirect:/customer/dashboard";
+       return "redirect:/customer/dashboard";
     }
 
 }
