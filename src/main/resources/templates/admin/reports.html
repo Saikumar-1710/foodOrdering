@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Admin Reports</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/reports.css}">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+        Admin Reports
+    </h1>
+
+    <hr>
+
+    <!-- Date Filter -->
+
+    <h2>
+        Report Filter
+    </h2>
+
+    <div
+            th:if="${error}"
+            class="report-error"
+            th:text="${error}">
+    </div>
+
+    <form
+            class="report-filter"
+            th:action="@{/admin/reports}"
+            method="get">
+
+        <label>
+            From Date:
+        </label>
+
+        <input
+                type="date"
+                name="fromDate"
+                th:value="${fromDate}">
+
+        &nbsp;
+
+        <label>
+            To Date:
+        </label>
+
+        <input
+                type="date"
+                name="toDate"
+                th:value="${toDate}">
+
+        &nbsp;
+
+        <button type="submit">
+            Apply Filter
+        </button>
+
+    </form>
+
+    <hr>
+
+
+    <!-- Statistics -->
+
+    <div class="summary-cards">
+
+        <div class="summary-card">
+
+            <h3>
+                Total Sales
+            </h3>
+
+            <p>
+                ₹
+                <span th:text="${totalSales}">
+            </span>
+            </p>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <h3>
+                Total Expenditure
+            </h3>
+
+            <p>
+                ₹
+                <span th:text="${totalExpenditure}">
+            </span>
+            </p>
+
+        </div>
+
+
+        <div class="summary-card">
+
+            <h3>
+                Number of Orders
+            </h3>
+
+            <p th:text="${numberOfOrders}">
+            </p>
+
+        </div>
+
+    </div>
+    <hr>
+
+    <h2>
+        Best-Selling Food
+    </h2>
+
+    <table border="1">
+
+        <tr>
+
+            <th>
+                Food
+            </th>
+
+        </tr>
+
+        <tr>
+
+            <td
+                    th:text="${bestSellingFood}">
+            </td>
+
+        </tr>
+
+    </table>
+
+    <br>
+
+
+    <!-- Food-wise and Category-wise Sales -->
+
+    <hr>
+
+    <div class="report-grid">
+
+        <!-- Food-wise Sales -->
+
+        <div class="report-card">
+
+            <h2>
+                Food-wise Sales
+            </h2>
+
+            <table border="1">
+
+                <tr>
+
+                    <th>
+                        Food Name
+                    </th>
+
+                    <th>
+                        Total Sales
+                    </th>
+
+                </tr>
+
+                <tr th:each="entry : ${foodWiseSales}">
+
+                    <td
+                            th:text="${entry.key}">
+                    </td>
+
+                    <td>
+
+                        ₹
+
+                        <span
+                                th:text="${entry.value}">
+                    </span>
+
+                    </td>
+
+                </tr>
+
+                <tr
+                        th:if="${#maps.isEmpty(foodWiseSales)}">
+
+                    <td colspan="2">
+
+                        No sales found for the selected date range.
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+            <h2>
+                Food-wise Sales Chart
+            </h2>
+
+            <div class="chart-container">
+                <canvas id="foodSalesChart"></canvas>
+            </div>
+
+        </div>
+
+
+        <!-- Category-wise Sales -->
+
+        <div class="report-card">
+
+            <h2>
+                Category-wise Sales
+            </h2>
+
+            <table border="1">
+
+                <tr>
+
+                    <th>
+                        Category
+                    </th>
+
+                    <th>
+                        Total Sales
+                    </th>
+
+                </tr>
+
+                <tr th:each="entry : ${categoryWiseSales}">
+
+                    <td
+                            th:text="${entry.key}">
+                    </td>
+
+                    <td>
+
+                        ₹
+
+                        <span
+                                th:text="${entry.value}">
+                    </span>
+
+                    </td>
+
+                </tr>
+
+                <tr
+                        th:if="${#maps.isEmpty(categoryWiseSales)}">
+
+                    <td colspan="2">
+
+                        No category sales found for the selected date range.
+
+                    </td>
+
+                </tr>
+
+            </table>
+
+            <h2>
+                Category-wise Sales Chart
+            </h2>
+
+            <div class="chart-container">
+
+                <canvas id="categorySalesChart"></canvas>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+    <hr>
+
+    <h2>
+        Monthly Sales
+    </h2>
+
+    <table border="1">
+
+        <tr>
+            <th>Month</th>
+            <th>Total Sales</th>
+        </tr>
+
+        <tr th:each="entry : ${monthlySales}">
+
+            <td th:text="${entry.key}">
+            </td>
+
+            <td>
+                ₹
+                <span th:text="${entry.value}">
+            </span>
+            </td>
+
+        </tr>
+
+    </table>
+
+    <h2>
+        Monthly Sales Chart
+    </h2>
+
+    <div class="chart-container">
+
+        <canvas id="monthlySalesChart"></canvas>
+
+    </div>
+
+    <br>
+
+    <a href="/admin/dashboard">
+        Back to Admin Dashboard
+    </a>
+
+</div>
+
+<script th:inline="javascript">
+
+    const foodSales = /*[[${foodWiseSales}]]*/ {};
+
+    const foodNames = Object.keys(foodSales);
+    const salesValues = Object.values(foodSales);
+
+    const foodChartCanvas =
+        document.getElementById('foodSalesChart');
+
+    if (foodChartCanvas) {
+
+        new Chart(foodChartCanvas, {
+
+            type: 'pie',
+
+            data: {
+
+                labels: foodNames,
+
+                datasets: [{
+
+                    label: 'Food Sales (₹)',
+
+                    data: salesValues
+
+                }]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                maintainAspectRatio: false,
+
+                plugins: {
+
+                    legend: {
+
+                        display: true,
+
+                        position: 'right'
+
+                    }
+
+                }
+
+            }
+
+        });
+
+    }
+
+</script>
+
+<script th:inline="javascript">
+
+    const categorySales = /*[[${categoryWiseSales}]]*/ {};
+
+    const categoryNames =
+        Object.keys(categorySales);
+
+    const categoryValues =
+        Object.values(categorySales);
+
+    const categoryCtx =
+        document
+            .getElementById('categorySalesChart')
+            .getContext('2d');
+
+    new Chart(categoryCtx, {
+
+        type: 'pie',
+
+        data: {
+
+            labels: categoryNames,
+
+            datasets: [{
+
+                label: 'Category Sales (₹)',
+
+                data: categoryValues
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            plugins: {
+
+                legend: {
+
+                    display: true,
+
+                    position: 'right'
+
+                }
+
+            }
+
+        }
+
+    });
+
+</script>
+
+<script th:inline="javascript">
+
+    const monthlySales = /*[[${monthlySales}]]*/ {};
+
+    const monthNames =
+        Object.keys(monthlySales);
+
+    const monthlyValues =
+        Object.values(monthlySales);
+
+    const monthlyCtx =
+        document
+            .getElementById('monthlySalesChart')
+            .getContext('2d');
+
+    new Chart(monthlyCtx, {
+
+        type: 'line',
+
+        data: {
+
+            labels: monthNames,
+
+            datasets: [{
+
+                label: 'Monthly Sales (₹)',
+
+                data: monthlyValues,
+
+                fill: false,
+
+                tension: 0.2
+
+            }]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true,
+
+                    title: {
+
+                        display: true,
+
+                        text: 'Sales (₹)'
+
+                    }
+
+                },
+
+                x: {
+
+                    title: {
+
+                        display: true,
+
+                        text: 'Month'
+
+                    }
+
+                }
+
+            }
+
+        }
+
+    });
+
+</script>
+
+</body>
+
+</html>

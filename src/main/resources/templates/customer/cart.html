@@ -44,6 +44,8 @@
 
                 <th>Price</th>
 
+                <th>Subtotal</th>
+
                 <th>Calories</th>
 
                 <th>Protein</th>
@@ -66,6 +68,8 @@
 
             <tr th:each="item : ${cart.items}">
 
+                <!-- Food and Customization -->
+
                 <td>
 
                     <b th:text="${item.food.name}">
@@ -78,11 +82,12 @@
                         </small>
 
                         <span
-                            th:each="selected : ${item.selectedOptions}">
+                                th:each="selected : ${item.selectedOptions}">
 
                             <span
-                                th:text="${selected.option.name}">
+                                    th:text="${selected.option.name}">
                             </span>
+
                             &nbsp;
 
                         </span>
@@ -91,41 +96,110 @@
 
                 </td>
 
-                <td th:text="${item.quantity}">
-                </td>
+                <!-- Quantity -->
 
                 <td>
+
+                    <form
+                            th:action="@{/customer/cart/decrease/{id}(id=${item.id})}"
+                            method="post"
+                            style="display:inline;">
+
+                        <button type="submit">
+                            −
+                        </button>
+
+                    </form>
+
+                    <span th:text="${item.quantity}">
+                    </span>
+
+                    <form
+                            th:action="@{/customer/cart/increase/{id}(id=${item.id})}"
+                            method="post"
+                            style="display:inline;">
+
+                        <button type="submit">
+                            +
+                        </button>
+
+                    </form>
+
+                </td>
+
+                <!-- Unit Price -->
+
+                <td>
+
                     ₹
                     <span th:text="${item.unitPrice}">
                     </span>
+
                 </td>
+
+                <!-- Subtotal -->
+
+                <td>
+
+                    ₹
+                    <span
+                            th:text="${item.unitPrice * item.quantity}">
+                    </span>
+
+                </td>
+
+                <!-- Nutrition -->
 
                 <td th:text="${item.calories}">
                 </td>
 
                 <td>
+
                     <span th:text="${item.protein}">
                     </span>
                     g
-                </td>
 
-                <td th:text="${item.carbohydrates}">
-                </td>
-
-                <td th:text="${item.fats}">
-                </td>
-
-                <td th:text="${item.fiber}">
-                </td>
-
-                <td th:text="${item.magnesium}">
                 </td>
 
                 <td>
 
+                    <span th:text="${item.carbohydrates}">
+                    </span>
+                    g
+
+                </td>
+
+                <td>
+
+                    <span th:text="${item.fats}">
+                    </span>
+                    g
+
+                </td>
+
+                <td>
+
+                    <span th:text="${item.fiber}">
+                    </span>
+                    g
+
+                </td>
+
+                <td>
+
+                    <span th:text="${item.magnesium}">
+                    </span>
+                    mg
+
+                </td>
+
+                <!-- Remove -->
+
+                <td>
+
                     <form
-                        th:action="@{/customer/cart/remove/{id}(id=${item.id})}"
-                        method="post">
+                            th:action="@{/customer/cart/remove/{id}(id=${item.id})}"
+                            method="post">
 
                         <button type="submit">
                             Remove
@@ -143,6 +217,8 @@
 
         <hr>
 
+        <!-- Complete Cart Nutrition -->
+
         <h2>
             Complete Cart Nutrition
         </h2>
@@ -150,18 +226,23 @@
         <table border="1">
 
             <tr>
+
                 <th>Nutrient</th>
+
                 <th>Total</th>
+
             </tr>
 
             <tr>
 
-                <td>Calories</td>
+                <td>
+                    Calories
+                </td>
 
                 <td>
 
                     <span
-                        th:text="${#aggregates.sum(cart.items.![calories * quantity])}">
+                            th:text="${#aggregates.sum(cart.items.![calories * quantity])}">
                     </span>
 
                 </td>
@@ -170,28 +251,14 @@
 
             <tr>
 
-                <td>Protein</td>
-
                 <td>
-
-                    <span
-                        th:text="${#aggregates.sum(cart.items.![protein * quantity])}">
-                    </span>
-
-                    g
-
+                    Protein
                 </td>
 
-            </tr>
-
-            <tr>
-
-                <td>Carbohydrates</td>
-
                 <td>
 
                     <span
-                        th:text="${#aggregates.sum(cart.items.![carbohydrates * quantity])}">
+                            th:text="${#aggregates.sum(cart.items.![protein * quantity])}">
                     </span>
 
                     g
@@ -202,12 +269,14 @@
 
             <tr>
 
-                <td>Fats</td>
+                <td>
+                    Carbohydrates
+                </td>
 
                 <td>
 
                     <span
-                        th:text="${#aggregates.sum(cart.items.![fats * quantity])}">
+                            th:text="${#aggregates.sum(cart.items.![carbohydrates * quantity])}">
                     </span>
 
                     g
@@ -218,12 +287,14 @@
 
             <tr>
 
-                <td>Fiber</td>
+                <td>
+                    Fats
+                </td>
 
                 <td>
 
                     <span
-                        th:text="${#aggregates.sum(cart.items.![fiber * quantity])}">
+                            th:text="${#aggregates.sum(cart.items.![fats * quantity])}">
                     </span>
 
                     g
@@ -234,12 +305,32 @@
 
             <tr>
 
-                <td>Magnesium</td>
+                <td>
+                    Fiber
+                </td>
 
                 <td>
 
                     <span
-                        th:text="${#aggregates.sum(cart.items.![magnesium * quantity])}">
+                            th:text="${#aggregates.sum(cart.items.![fiber * quantity])}">
+                    </span>
+
+                    g
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <td>
+                    Magnesium
+                </td>
+
+                <td>
+
+                    <span
+                            th:text="${#aggregates.sum(cart.items.![magnesium * quantity])}">
                     </span>
 
                     mg
@@ -252,6 +343,8 @@
 
         <br>
 
+        <!-- Total Price -->
+
         <h2>
             Total Price
         </h2>
@@ -261,7 +354,7 @@
             ₹
 
             <span
-                th:text="${#aggregates.sum(cart.items.![unitPrice * quantity])}">
+                    th:text="${#aggregates.sum(cart.items.![unitPrice * quantity])}">
             </span>
 
         </h2>

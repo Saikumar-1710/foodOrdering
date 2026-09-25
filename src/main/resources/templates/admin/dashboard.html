@@ -37,12 +37,26 @@
 
             <li><a href="#"><i class="fa fa-cart-shopping"></i> Orders</a></li>
 
-            <li><a href="#"><i class="fa fa-chart-line"></i> Reports</a></li>
+            <li>
+                <a th:href="@{/admin/reports}">
+                    <i class="fa fa-chart-line"></i>
+                    Reports
+                </a>
+            </li>
 
-            <li><a th:href="@{/logout}">
-                <i class="fa fa-right-from-bracket"></i>
-                Logout
-            </a></li>
+            <li>
+                <a th:href="@{/admin/expenses}">
+                    <i class="fa fa-money-bill-wave"></i>
+                    Expenses
+                </a>
+            </li>
+
+            <li>
+                <a th:href="@{/logout}">
+                    <i class="fa fa-right-from-bracket"></i>
+                    Logout
+                </a>
+            </li>
 
         </ul>
 

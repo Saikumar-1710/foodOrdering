@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Expense Management</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Expense Management</h1>
+
+    <hr>
+
+    <a th:href="@{/admin/expenses/add}">
+        Add Expense
+    </a>
+
+    <br>
+    <br>
+
+    <table border="1">
+
+        <thead>
+
+        <tr>
+
+            <th>ID</th>
+
+            <th>Description</th>
+
+            <th>Amount</th>
+
+            <th>Date</th>
+
+            <th>Action</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        <tr th:each="expense : ${expenses}">
+
+            <td th:text="${expense.id}">
+            </td>
+
+            <td th:text="${expense.description}">
+            </td>
+
+            <td>
+
+                ₹
+
+                <span th:text="${expense.amount}">
+                </span>
+
+            </td>
+
+            <td th:text="${expense.expenseDate}">
+            </td>
+
+            <td>
+
+                <a th:href="@{/admin/expenses/delete/{id}(id=${expense.id})}"
+                   onclick="return confirm('Are you sure you want to delete this expense?');">
+
+                    Delete
+
+                </a>
+
+            </td>
+
+        </tr>
+
+        <tr th:if="${#lists.isEmpty(expenses)}">
+
+            <td colspan="5">
+
+                No expenses found.
+
+            </td>
+
+        </tr>
+
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <a th:href="@{/admin/reports}">
+        Back to Reports
+    </a>
+
+    &nbsp; | &nbsp;
+
+    <a th:href="@{/admin/dashboard}">
+        Back to Dashboard
+    </a>
+
+</div>
+
+</body>
+
+</html>

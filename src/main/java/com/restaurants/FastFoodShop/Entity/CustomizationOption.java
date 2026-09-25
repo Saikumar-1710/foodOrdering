@@ -54,6 +54,9 @@ public class CustomizationOption {
     @Column(name = "available", nullable = false)
     private boolean available = true;
 
+    @Column(nullable = false)
+    private Integer stock = 0;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_id", nullable = false)
     private Food food;

@@ -22,6 +22,32 @@ public class CartController {
         this.cartService = cartService;
     }
 
+    @PostMapping("/increase/{id}")
+    public String increaseQuantity(
+            @PathVariable Integer id,
+            HttpSession session) {
+
+        User user =
+                (User) session.getAttribute("loggedUser");
+
+        cartService.increaseQuantity(user, id);
+
+        return "redirect:/customer/cart";
+    }
+
+    @PostMapping("/decrease/{id}")
+    public String decreaseQuantity(
+            @PathVariable Integer id,
+            HttpSession session) {
+
+        User user =
+                (User) session.getAttribute("loggedUser");
+
+        cartService.decreaseQuantity(user, id);
+
+        return "redirect:/customer/cart";
+    }
+
     @PostMapping("/add")
     public String addToCart(
             @RequestParam Integer foodId,

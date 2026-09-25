@@ -1,0 +1,232 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f6fa;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 30px auto;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 25px;
+}
+
+h2 {
+    margin-top: 25px;
+    margin-bottom: 15px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+
+th {
+    background: #f0f0f0;
+}
+
+button {
+    padding: 10px 18px;
+    border: none;
+    cursor: pointer;
+}
+
+input[type="date"] {
+    padding: 9px;
+}
+
+canvas {
+    background: white;
+    padding: 15px;
+    margin-bottom: 25px;
+}
+.summary-cards {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0 30px 0;
+}
+
+.summary-card {
+    flex: 1;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.summary-card h3 {
+    margin: 0 0 10px 0;
+    font-size: 18px;
+}
+
+.summary-card p {
+    margin: 0;
+    font-size: 28px;
+    font-weight: bold;
+}
+.report-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.report-card {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    min-width: 0;
+}
+
+.report-card h2 {
+    margin-top: 0;
+}
+
+.report-card table {
+    width: 100%;
+}
+
+.report-card canvas {
+    width: 100% !important;
+    max-width: 100%;
+}
+
+@media (max-width: 900px) {
+
+    .report-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
+@media (max-width: 900px) {
+
+    .summary-cards {
+        flex-direction: column;
+    }
+
+    .summary-card {
+        width: auto;
+    }
+
+}
+/* Report Date Filter */
+
+.report-filter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.report-filter input[type="date"] {
+    padding: 9px 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.report-filter button {
+    padding: 10px 18px;
+    border-radius: 5px;
+    background: #333;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.report-filter button:hover {
+    opacity: 0.9;
+}
+
+/* Mobile Date Filter */
+
+@media (max-width: 600px) {
+
+    .report-filter {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .report-filter input[type="date"],
+    .report-filter button {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+}
+/* Responsive Chart Containers */
+
+.chart-container {
+    position: relative;
+    width: 100%;
+    max-width: 900px;
+    height: 400px;
+    margin: 20px auto;
+}
+
+/* Mobile */
+
+@media (max-width: 600px) {
+
+    .chart-container {
+        width: 100%;
+        height: 300px;
+        margin: 15px auto;
+    }
+
+}
+/* Space between report tables and charts */
+
+.report-card {
+    margin-bottom: 30px;
+}
+
+.report-card table {
+    margin-bottom: 30px;
+}
+
+.report-card canvas {
+    margin-top: 20px;
+}
+
+/* Category-wise section spacing */
+
+h2 {
+    margin-top: 35px;
+    margin-bottom: 20px;
+}
+
+table {
+    margin-bottom: 35px;
+}
+
+/* Give charts their own breathing space */
+
+canvas {
+    display: block;
+    margin-top: 20px;
+    margin-bottom: 40px;
+}
+
+.report-error {
+    margin: 15px 0;
+    padding: 12px;
+    border: 1px solid #dc3545;
+    border-radius: 5px;
+    color: #dc3545;
+    background: #fff5f5;
+    font-weight: 600;
+}
