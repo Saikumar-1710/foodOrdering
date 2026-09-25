@@ -47,6 +47,8 @@ public class AdminCustomizationController {
                 customizationService
                         .getOptionByFood(foodId);
 
+        int totalCustomizations = options.size();
+
         model.addAttribute(
                 "food",
                 food
@@ -55,6 +57,11 @@ public class AdminCustomizationController {
         model.addAttribute(
                 "options",
                 options
+        );
+
+        model.addAttribute(
+                "totalCustomizations",
+                totalCustomizations
         );
 
         return "admin/customization-list";
@@ -89,6 +96,99 @@ public class AdminCustomizationController {
         );
 
         return "admin/add-customization";
+    }
+
+    @GetMapping("/edit/{id}")
+    public String editCustomization(
+            @PathVariable Integer id,
+            Model model) {
+
+        CustomizationOption option =
+                customizationService
+                        .getOptionById(id)
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Customization Not Found"
+                                )
+                        );
+
+        model.addAttribute(
+                "food",
+                option.getFood()
+        );
+
+        model.addAttribute(
+                "option",
+                option
+        );
+
+        return "admin/add-customization";
+    }
+
+    @PostMapping("/delete/{id}")
+    public String deleteCustomization(
+            @PathVariable Integer id) {
+
+        CustomizationOption option =
+                customizationService
+                        .getOptionById(id)
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Customization Not Found"
+                                )
+                        );
+
+        Integer foodId =
+                option.getFood().getId();
+
+        customizationService.deleteOption(id);
+
+        return "redirect:/admin/customizations/food/"
+                + foodId;
+    }
+
+    @PostMapping("/increase-stock/{id}")
+    public String increaseStock(
+            @PathVariable Integer id) {
+
+        CustomizationOption option =
+                customizationService
+                        .getOptionById(id)
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Customization Not Found"
+                                )
+                        );
+
+        Integer foodId =
+                option.getFood().getId();
+
+        customizationService.increaseStock(id);
+
+        return "redirect:/admin/customizations/food/"
+                + foodId;
+    }
+
+    @PostMapping("/decrease-stock/{id}")
+    public String decreaseStock(
+            @PathVariable Integer id) {
+
+        CustomizationOption option =
+                customizationService
+                        .getOptionById(id)
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Customization Not Found"
+                                )
+                        );
+
+        Integer foodId =
+                option.getFood().getId();
+
+        customizationService.decreaseStock(id);
+
+        return "redirect:/admin/customizations/food/"
+                + foodId;
     }
 
     @PostMapping("/save")

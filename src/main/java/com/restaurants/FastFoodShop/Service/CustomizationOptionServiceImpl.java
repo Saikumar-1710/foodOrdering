@@ -38,4 +38,48 @@ public class CustomizationOptionServiceImpl
         return customizationOptionRepository
                 .findById(id);
     }
+
+    @Override
+    public void deleteOption(Integer id) {
+
+        customizationOptionRepository.deleteById(id);
+    }
+
+    @Override
+    public void increaseStock(Integer id) {
+
+        CustomizationOption option =
+                customizationOptionRepository
+                        .findById(id)
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Customization Not Found"
+                                )
+                        );
+
+        option.setStock(option.getStock() + 1);
+
+        customizationOptionRepository.save(option);
+    }
+
+    @Override
+    public void decreaseStock(Integer id) {
+
+        CustomizationOption option =
+                customizationOptionRepository
+                        .findById(id)
+                        .orElseThrow(
+                                () -> new RuntimeException(
+                                        "Customization Not Found"
+                                )
+                        );
+
+        if (option.getStock() > 0) {
+
+            option.setStock(option.getStock() - 1);
+
+        }
+
+        customizationOptionRepository.save(option);
+    }
 }

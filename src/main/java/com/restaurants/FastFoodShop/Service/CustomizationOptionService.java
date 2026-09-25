@@ -8,6 +8,14 @@ import com.restaurants.FastFoodShop.Entity.CustomizationOption;
 public interface CustomizationOptionService {
 
 	CustomizationOption saveOption(CustomizationOption customizationOption);
-    List<CustomizationOption> getOptionByFood(Integer foodId);
+
+	List<CustomizationOption> getOptionByFood(Integer foodId);
+
 	Optional<CustomizationOption> getOptionById(Integer id);
+
+	void deleteOption(Integer id);
+
+	void increaseStock(Integer id);
+
+	void decreaseStock(Integer id);
 }

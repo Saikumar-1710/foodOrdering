@@ -31,6 +31,16 @@
 
     </h2>
 
+    <h3>
+
+        Total Customizations:
+
+        <span
+                th:text="${totalCustomizations}">
+    </span>
+
+    </h3>
+
     <a
             th:href="@{/admin/customizations/add/{id}(id=${food.id})}">
 
@@ -68,6 +78,10 @@
             <th>Magnesium</th>
 
             <th>Available</th>
+
+            <th>Stock</th>
+
+            <th>Actions</th>
 
         </tr>
 
@@ -125,7 +139,67 @@
                     th:text="${option.magnesium}">
             </td>
 
-            <td th:text="${option.available}"></td>
+            <td
+                    th:text="${option.available}">
+            </td>
+
+            <td>
+
+                <form
+                        th:action="@{/admin/customizations/decrease-stock/{id}(id=${option.id})}"
+                        method="post"
+                        style="display:inline;">
+
+                    <button type="submit">
+                        −
+                    </button>
+
+                </form>
+
+                <span
+                        th:text="${option.stock}">
+    </span>
+
+                <form
+                        th:action="@{/admin/customizations/increase-stock/{id}(id=${option.id})}"
+                        method="post"
+                        style="display:inline;">
+
+                    <button type="submit">
+                        +
+                    </button>
+
+                </form>
+
+            </td>
+
+            <td>
+
+                <a
+                        th:href="@{/admin/customizations/edit/{id}(id=${option.id})}">
+
+                    Edit
+
+                </a>
+
+                &nbsp;
+
+                <form
+                        th:action="@{/admin/customizations/delete/{id}(id=${option.id})}"
+                        method="post"
+                        style="display:inline;">
+
+                    <button
+                            type="submit"
+                            onclick="return confirm('Are you sure you want to delete this customization?');">
+
+                        Delete
+
+                    </button>
+
+                </form>
+
+            </td>
 
         </tr>
 

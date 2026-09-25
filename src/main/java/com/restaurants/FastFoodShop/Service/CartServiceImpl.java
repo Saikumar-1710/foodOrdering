@@ -127,7 +127,53 @@ public class CartServiceImpl implements CartService {
 
         cartRepository.save(cart);
     }
+    @Override
+    @Transactional
+    public void increaseQuantity(
+            User user,
+            Integer cartItemId) {
 
+        Cart cart = getCart(user);
+
+        for (CartItem item : cart.getItems()) {
+
+            if (item.getId().equals(cartItemId)) {
+
+                item.setQuantity(item.getQuantity() + 1);
+                break;
+            }
+        }
+
+        cartRepository.save(cart);
+    }
+
+    @Override
+    @Transactional
+    public void decreaseQuantity(
+            User user,
+            Integer cartItemId) {
+
+        Cart cart = getCart(user);
+
+        for (CartItem item : cart.getItems()) {
+
+            if (item.getId().equals(cartItemId)) {
+
+                if (item.getQuantity() > 1) {
+
+                    item.setQuantity(item.getQuantity() - 1);
+
+                } else {
+
+                    cart.getItems().remove(item);
+                }
+
+                break;
+            }
+        }
+
+        cartRepository.save(cart);
+    }
     @Override
     @Transactional
     public void removeCartItem(

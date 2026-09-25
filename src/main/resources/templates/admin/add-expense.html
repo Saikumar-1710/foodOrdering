@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Add Expense</title>
+
+    <link rel="stylesheet"
+          th:href="@{/css/style.css}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Add Expense</h1>
+
+    <hr>
+
+    <form th:action="@{/admin/expenses/save}"
+          th:object="${expense}"
+          method="post">
+
+        <div>
+
+            <label>
+                Description:
+            </label>
+
+            <br>
+
+            <input type="text"
+                   th:field="*{description}"
+                   placeholder="Example: Ingredients"
+                   required>
+
+        </div>
+
+        <br>
+
+        <div>
+
+            <label>
+                Amount:
+            </label>
+
+            <br>
+
+            <input type="number"
+                   step="0.01"
+                   min="0"
+                   th:field="*{amount}"
+                   placeholder="Example: 5000"
+                   required>
+
+        </div>
+
+        <br>
+
+        <div>
+
+            <label>
+                Expense Date:
+            </label>
+
+            <br>
+
+            <input type="date"
+                   th:field="*{expenseDate}"
+                   required>
+
+        </div>
+
+        <br>
+
+        <button type="submit">
+            Save Expense
+        </button>
+
+        <a th:href="@{/admin/expenses}">
+            Cancel
+        </a>
+
+    </form>
+
+</div>
+
+</body>
+
+</html>
